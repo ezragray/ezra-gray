@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ezra Gray</title>
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background-color: #fff;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #000;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── LAYOUT ── */
+.wrapper { display: flex; min-height: 100vh; }
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 215px;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 26px 18px 40px 22px;
+  scrollbar-width: none;
+}
+.sidebar::-webkit-scrollbar { display: none; }
+
+.main {
+  margin-left: 215px;
+  padding: 26px 26px 80px 0;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── SIDEBAR ── */
+.sidebar a,
+.sidebar span.lnk {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline;
+  line-height: 1.5;
+}
+.sidebar a:hover,
+.sidebar span.lnk:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.site-name { margin-bottom: 14px; display: block; }
+
+.nav-links { margin-bottom: 20px; }
+.nav-links a { display: block; }
+
+/* exhibition list */
+.exh-list { font-size: 11px; }
+.exh-list .yr { display: block; margin-top: 11px; margin-bottom: 3px; }
+.exh-list .entry {
+  display: block;
+  margin-bottom: 8px;
+  line-height: 1.45;
+  font-size: 11px;
+}
+.exh-list .entry .venue {
+  display: block;
+  color: #666;
+  font-size: 11px;
+}
+.exh-list .grp-head {
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 3px;
+}
+
+.contact-block {
+  margin-top: 20px;
+  font-size: 11px;
+  line-height: 1.7;
+  color: #666;
+}
+.contact-block a {
+  color: #666;
+  text-decoration: none;
+  font-size: 11px;
+}
+.contact-block a:hover { text-decoration: underline; }
+
+/* ── VIEWS ── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── HOME image stream ── */
+.img-stream { display: flex; flex-direction: column; }
+.img-stream img.full { width: 100%; display: block; margin-bottom: 12px; }
+.img-stream img.med  { width: 60%; display: block; margin-bottom: 12px; }
+.img-stream .pair { display: flex; gap: 0; margin-bottom: 12px; }
+.img-stream .pair img { width: 50%; display: block; }
+
+/* ── EXHIBITION DETAIL ── */
+.back-btn {
+  display: inline-block;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  color: #000;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  margin-bottom: 18px;
+}
+.back-btn:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+.exh-detail h2 {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  font-weight: normal;
+  margin-bottom: 2px;
+}
+.exh-meta {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 18px;
+  line-height: 1.5;
+}
+
+/* carousel */
+.carousel-wrap {
+  position: relative;
+  overflow: hidden;
+  background: #f2f2f2;
+  cursor: grab;
+  margin-bottom: 8px;
+}
+.carousel-wrap:active { cursor: grabbing; }
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.3s ease;
+  will-change: transform;
+}
+.carousel-track img {
+  min-width: 100%;
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.carousel-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.carousel-counter {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 10px;
+  color: #999;
+}
+.carousel-btns { display: flex; gap: 10px; }
+.c-btn {
+  background: none;
+  border: none;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  cursor: pointer;
+  color: #000;
+  padding: 0;
+}
+.c-btn:hover { text-decoration: underline; }
+
+/* exhibition text */
+.exh-text {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  line-height: 1.7;
+  max-width: 540px;
+  margin-bottom: 24px;
+  white-space: pre-wrap;
+}
+
+/* audio */
+.audio-block {
+  margin-bottom: 18px;
+  padding: 7px 0 5px;
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+.audio-label {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 10px;
+  color: #999;
+  margin-bottom: 5px;
+}
+.audio-block audio { width: 100%; height: 24px; display: block; }
+
+
+/* ── RESPONSIVE LAYOUT IMPROVEMENTS ── */
+@media (max-width: 768px) {
+
+  .wrapper {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 18px !important;
+    border-bottom: 1px solid #eee;
+  }
+
+  .main {
+    margin-left: 0 !important;
+    padding: 18px !important;
+  }
+
+  body {
+    font-size: 14px;
+  }
+
+  .img-stream img.med {
+    width: 100% !important;
+  }
+
+  .img-stream .pair {
+    flex-direction: column !important;
+  }
+
+  .img-stream .pair img {
+    width: 100% !important;
+  }
+
+  .carousel-track img {
+    max-height: 70vh !important;
+  }
+}
+
+/* ── LIGHTBOX ── */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  cursor: zoom-out;
+}
+
+.lightbox img {
+  max-width: 95%;
+  max-height: 95%;
+  object-fit: contain;
+}
+
+img {
+  cursor: zoom-in;
+}
+
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!-- ══════════════════════
+     SIDEBAR
+══════════════════════ -->
+<div class="sidebar">
+
+  <div class="site-name">
+    <span class="lnk" onclick="showHome()">Ezra Gray</span>
+  </div>
+
+  <div class="nav-links">
+    <a onclick="showHome()">Home</a>
+    <a onclick="showContact()">Contact</a>
+  </div>
+
+  <div class="exh-list">
+
+    Selected exhibitions<br><br>
+
+    <!-- SOLO -->
+    <span class="yr">2024</span>
+    <span class="entry">
+      <span class="lnk" onclick="showExh('sweetie')"><em>Sweetie (Relationships Play Out)</em></span>
+      <span class="venue">Solo exhibition<br>Unit 17, Vancouver</span>
+    </span>
+
+    <span class="yr">2020</span>
+    <span class="entry">
+      <span class="lnk" onclick="showExh('maximumyearn')"><em>Maximum Yearn</em></span>
+      <span class="venue">Solo exhibition<br>Unit 17, Vancouver</span>
+    </span>
+
+    <span class="yr">2018</span>
+    <span class="entry">
+      <span class="lnk" onclick="showExh('joechgod')"><em>Joech God</em></span>
+      <span class="venue">Solo exhibition<br>Emalin, London</span>
+    </span>
+
+    <span class="yr">2017</span>
+    <span class="entry">
+      <span class="lnk" onclick="showExh('brownspace')"><em>Brown Space</em></span>
+      <span class="venue">Solo exhibition<br>Almanac Inn, Turin</span>
+    </span>
+    <span class="entry">
+      <span class="lnk" onclick="showExh('infinitive')"><em>Infinitive</em></span>
+      <span class="venue">Solo exhibition<br>Jeffrey Stark, New York City</span>
+    </span>
+
+    <span class="yr">2016</span>
+    <span class="entry">
+      <span class="lnk" onclick="showExh('honolulu')"><em>Honolulu Triennale</em></span>
+      with Sean Nicholas Savage<br>
+      <span class="venue">Honolulu / Zurich</span>
+    </span>
+
+    <!-- GROUP -->
+    <span class="grp-head">Group exhibitions</span><br>
+
+    <span class="yr">2025</span>
+    <span class="entry">
+      <a href="https://rinomina.com/exhibition/should-be-allowed-could-be-forbidden-must-be-wanted-can-be-done-can-be-but-does-not-have-to/" target="_blank"><em>Should be allowed, could be forbidden...</em></a>
+      <span class="venue">Rinomina, Paris<br>Oct 14 – Dec 18, 2025</span>
+    </span>
+    <span class="entry">
+      <em>The 12th House</em>, <a href="https://www.instagram.com/thewhiteermine/" target="_blank">The White Ermine</a>
+      <span class="venue">Düsseldorf<br>Mar 22 – Jun 2025</span>
+    </span>
+    <span class="entry">
+      <a href="https://www.instagram.com/hisssss________/" target="_blank"><em>Hisssss</em></a>
+      <span class="venue">Los Angeles, May 27, 2025</span>
+    </span>
+
+    <span class="yr">2024</span>
+    <span class="entry">
+      <a href="https://mediump.com/Sofia-Duchovny-Ezra-Grey-brains-2024" target="_blank"><em>Brains</em></a> w/ Sophia Duchovny<br>
+      <a href="https://www.instagram.com/_mediump_/" target="_blank">Medium P</a>
+      <span class="venue">Berlin<br>Dec 13, 2024 – Mar 31, 2025</span>
+    </span>
+
+    <span class="yr">2021</span>
+    <span class="entry">
+      <a href="https://imlabor.org/twobytwobytwo/011/" target="_blank"><em>Nothing but Murmurs</em></a>
+      <span class="venue">2x2x2 by im labor, Tokyo<br>Sep 19 – Oct 23, 2021</span>
+    </span>
+
+    <span class="yr">2019</span>
+    <span class="entry">
+      <a href="https://www.unit17.org/super-natural" target="_blank"><em>SUPER NATURAL</em></a>
+      <span class="venue">Unit 17, Vancouver<br>Jan 26 – Mar 17, 2019</span>
+    </span>
+
+    <span class="yr">2017</span>
+    <span class="entry">
+      <a href="http://maxruf.com/Samstag_05.08..pdf" target="_blank"><em>Samstag</em></a>
+      <span class="venue">Keifholzstrasse 401, Berlin<br>Aug 5, 2017</span>
+    </span>
+
+    <span class="yr">2016</span>
+    <span class="entry">
+      <a href="https://viktorwang.com/With-Institutions-Like-These" target="_blank"><em>With Institutions Like These…</em></a>
+      <span class="venue">Lancaster Gate, London<br>Mar 19 – Apr 10, 2016</span>
+    </span>
+    <span class="entry">
+      <a href="https://emalin.co.uk/exhibitions/folly" target="_blank"><em>Folly</em></a>
+      <span class="venue">Emalin Projects<br>Dunmore Pineapple, Scotland<br>Mar 26 – 28, 2016</span>
+    </span>
+
+    <span class="yr">2014</span>
+    <span class="entry">
+      <em>Rundgang</em>
+      <span class="venue">Kunstakademie Düsseldorf<br>Feb 2014</span>
+    </span>
+
+    <span class="yr">2013</span>
+    <span class="entry">
+      <em>A process of recognition</em>
+      <span class="venue">Battat Contemporary, Montréal<br>Feb 28 – Apr 13, 2013</span>
+    </span>
+
+    <span class="yr">2012</span>
+    <span class="entry">
+      <em>6 POSITION</em>
+      <span class="venue">WWTWO, Montréal, Nov 2012</span>
+    </span>
+
+  </div>
+
+  <div class="contact-block" id="contact-anchor">
+    <br>
+    Paris, France<br>
+    <br>
+    MA Painting<br>
+    Royal College of Art, London<br>
+    BFA, Concordia University, Montréal
+  </div>
+
+</div>
+
+<!-- ══════════════════════
+     MAIN
+══════════════════════ -->
+<div class="main">
+
+  <!-- HOME -->
+  <div id="view-home" class="view active">
+    <div class="img-stream">
+
+      <!-- SWEETIE 2024 -->
+      <img class="full" src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/EzraGray-Sweetie-RelationshipsPlayOut.jpg" alt="">
+      <img class="full" src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6830.jpg" alt="">
+      <img class="full" src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6832.jpg" alt="">
+      <img class="full" src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6835.jpg" alt="">
+
+      <!-- MAXIMUM YEARN 2020 -->
+      <img class="full" src="maxmium yearn/Unit17-EzraGray-MaximumYearn2.webp" alt="">
+      <img class="full" src="maxmium yearn/Unit17-EzraGray-MaximumYearn4.webp" alt="">
+      <img class="full" src="maxmium yearn/Unit17-EzraGray-MaximumYearn5.webp" alt="">
+      <div class="pair">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync2_j.webp" alt="">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync3_j.webp" alt="">
+      </div>
+      <img class="full" src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Guido.webp" alt="">
+      <img class="full" src="maxmium yearn/Unit17-EzraGray-MaximumYearn-OldBatch_jp.webp" alt="">
+      <div class="pair">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled_jp.webp" alt="">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled2_j.webp" alt="">
+      </div>
+      <img class="full" src="maxmium yearn/Unit17-EzraGray-MaximumYearn-ComeonWilly (1).webp" alt="">
+      <img class="full" src="maxmium yearn/Unit17-EzraGray-MaximumYearn13.webp" alt="">
+      <img class="full" src="maxmium yearn/Unit17-EzraGray-MaximumYearn6 (1).webp" alt="">
+
+      <!-- JOECH GOD 2018 -->
+      <img class="full" src="joech god/180703-Emalin-1-_MGL2562.jpg" alt="">
+      <img class="full" src="joech god/180703-Emalin-2-_MGL2564.jpg" alt="">
+      <img class="full" src="joech god/180703-Emalin-3-_MGL2566.jpg" alt="">
+      <img class="full" src="joech god/180703-Emalin-4-_MGL2569.jpg" alt="">
+      <img class="full" src="joech god/180703-Emalin-5-_MGL2571.jpg" alt="">
+      <img class="full" src="joech god/180703-Emalin-6-_MGL2572.jpg" alt="">
+      <img class="full" src="joech god/180703-Emalin-7-_MGL2576.jpg" alt="">
+      <img class="full" src="joech god/180703-Emalin-8-_MGL2577.jpg" alt="">
+      <img class="full" src="joech god/180703-Emalin-9-_MGL2581.jpg" alt="">
+      <div class="pair">
+        <img src="joech god/180703-Emalin-10-_MGL2582.jpg" alt="">
+        <img src="joech god/180703-Emalin-11-_MGL2583.jpg" alt="">
+      </div>
+      <img class="full" src="joech god/180703-Emalin-12-_MGL2585.jpg" alt="">
+      <img class="full" src="joech god/180703-Emalin-13-_MGL2587.jpg" alt="">
+      <div class="pair">
+        <img src="joech god/180703-Emalin-14-_MGL2588.jpg" alt="">
+        <img src="joech god/180703-Emalin-15-_MGL2589.jpg" alt="">
+      </div>
+      <img class="full" src="joech god/180703-Emalin-16-_MGL2590.jpg" alt="">
+      <img class="full" src="joech god/180703-Emalin-17-_MGL2591.jpg" alt="">
+      <img class="full" src="joech god/180703-Emalin-18-_MGL2592.jpg" alt="">
+      <div class="pair">
+        <img src="joech god/180703-Emalin-19-_MGL2593.jpg" alt="">
+        <img src="joech god/180703-Emalin-20-_MGL2594.jpg" alt="">
+      </div>
+      <img class="full" src="joech god/180703-Emalin-21-_MGL2600.jpg" alt="">
+      <img class="full" src="joech god/180703-Emalin-22-_MGL2601.jpg" alt="">
+      <img class="full" src="joech god/180703-Emalin-23-_MGL2602.jpg" alt="">
+      <div class="pair">
+        <img src="joech god/180703-Emalin-24-_MGL2603.jpg" alt="">
+        <img src="joech god/180703-Emalin-25-_MGL2604.jpg" alt="">
+      </div>
+
+      <!-- BROWN SPACE 2017 -->
+      <img class="full" src="Brown Space/IMG_8200.jpg" alt="">
+      <img class="full" src="Brown Space/IMG_8208.jpg" alt="">
+      <img class="full" src="Brown Space/IMG_8216.jpg" alt="">
+      <img class="full" src="Brown Space/IMG_8223.jpg" alt="">
+      <div class="pair">
+        <img src="Brown Space/IMG_8229 (1).jpg" alt="">
+        <img src="Brown Space/IMG_8244 (1).jpg" alt="">
+      </div>
+      <img class="full" src="Brown Space/IMG_8254.jpg" alt="">
+
+      <!-- INFINITIVE 2017 -->
+      <img class="full" src="Infinitive/Copy of JS.Inst_04.jpg" alt="">
+      <img class="full" src="Infinitive/Copy of JS.Inst_05.jpg" alt="">
+      <img class="full" src="Infinitive/Copy of JS.Inst_06.jpg" alt="">
+      <img class="full" src="Infinitive/JS.Inst_07.jpg" alt="">
+
+      <!-- HONOLULU 2016 -->
+      <img class="full" src="honolulu/Installation_1.jpg" alt="">
+      <img class="full" src="honolulu/Installation_2.jpg" alt="">
+      <div class="pair">
+        <img src="honolulu/Installation_3.jpg" alt="">
+        <img src="honolulu/Installation_4 (1).jpg" alt="">
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       SWEETIE
+  ══════════════════════ -->
+  <div id="view-sweetie" class="view">
+    <button class="back-btn" onclick="showHome()">← back</button>
+    <h2>Sweetie (Relationships Play Out)</h2>
+    <div class="exh-meta">Solo exhibition<br>7 March – 11 May 2024<br>Unit 17, Vancouver</div>
+
+    <div class="carousel-wrap" id="car-sweetie">
+      <div class="carousel-track" id="track-sweetie">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/EzraGray-Sweetie-RelationshipsPlayOut.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6830.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6832.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6835.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6837.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6842.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6853.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6855.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6856.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6857.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6861.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6868.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6869.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6876.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6879.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6883.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6886.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6889.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6894.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6900.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6901.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6909.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6915.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6917.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6921.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6922-2.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6928.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6933.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6934.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6936.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6950.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6952.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6953.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6961.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6962.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6965.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6971.jpg" alt="">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6974.jpg" alt="">
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <span class="carousel-counter" id="cnt-sweetie">1 / 38</span>
+      <div class="carousel-btns">
+        <button class="c-btn" onclick="cMove('sweetie',-1)">← prev</button>
+        <button class="c-btn" onclick="cMove('sweetie',1)">next →</button>
+      </div>
+    </div>
+
+    <div class="audio-block">
+      <div class="audio-label">Hey Can You Hear Me? — audio</div>
+      <audio controls>
+        <source src="maxmium yearn/maximumyearn-sm.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+
+    <div class="exh-text">Two brothers are left alone to eat pizza and watch the Simpsons. This is only allowed on school nights when their parents go out to play doubles badminton. The parents believe that the cartoon has a calming, corralling effect.
+
+After pizza and TV, they run out of things to do and get tired of each other's company. The older brother turns to reading a book about impressive or disgusting animals, while the younger wanders around the unusually quiet house. He finds himself upstairs in the parents' bathroom with all the lights on. The brightness makes it feel quieter. He approaches the large mirror with caution. Mirrors hold a mystical, quasi-forbidden quality in his mind. More than once he'd seen mirrors removed from the hands of children by grown ups for unknowable reasons. With his parents still out and his brother downstairs picking his nose on the couch, he takes the opportunity to find out what the fuss is about. He gets in close so that he appears six inches from himself, staring deep into the iris and at all the little details, like a beetle in a jar. Then he begins making faces: pleading, grinning, crazed expressions. An unnerving, glitchy feeling comes over him, at the centre of which is the question: "who is making these faces? Me, or the reflection?" Then, like the sound of strings rising, the mirror no longer feels inanimate, it only frightens him; as he rushes off he wonders if it is watching him leave. Downstairs, he tries to behave normally, secretly embarrassed that he let it get to him.
+
+* * *
+
+Before I could call anyone a friend, a boy came up to me in the hall of the community centre and ordered me to follow him. He led me down to the basement level to the building's central furnace and shut it down as if it were his job, by pushing a glowing red button then running off like he'd lit a fuse. I mention him because, for the next ten years, it was this type of boy that ended up being my friend. I kept finding myself under the wings of miscreant little shits.
+
+Grown ups declared the rules of childhood and some children repeated them — tattle-tales, teacher's pets, children I wanted nothing to do with. At recess we would wonder where all the soccer balls had gone, and then after a short search I would find a boy alone in some corner of the school grounds who had gathered them all, every last one, trying to kick them up onto the roof. I could see the dozen he already succeeded with, way up there, four stories up, peering over the edge of the gutter and I shared in his satisfaction.
+
+For a summer, my closest friend was a genuine kleptomaniac. He stole from everyone. He stole from school, he stole from the corner store, he stole from his parents, he stole from me. Children are much closer to the earth, that is, to the ground, so they make good scavengers. It also means that I remember the heat of that summer, not by a sun that beat down on us, or the kind of hot wind that would never cool you down, but by the temperature of the sidewalk and a warm bolt I would pick up and clean against my shirt. Everything was dusty and the grass was all dead.
+
+One sunny afternoon my kleptomaniac friend showed me how the trunks to most cars weren't really locked, and could easily be opened by pushing the keyhole which itself was a button. We wandered through the alleys behind our neighbours' houses and he would show me how to reach over and unlock a variety of gates, or slip in between broken fences to steal things from garages and tool sheds. Like a convict, he'd cut a hole in the wall behind his dresser, where he kept the kinds of strange objects a child like that might find valuable. Nicorette gum, sunglasses, a tire-pressure gauge, an emergency candle stick, a jam jar full of ball-bearings, a hearing aid, sets of keys, keychains, a little silver dolphin with crystals for eyes, saw blades and drill bits (gold coloured) and cash. All of it qualified as treasure to me.
+
+You could say I was a bad judge of character, but back then another ten year old boy could impress in me the feeling that he had lived a much longer life than I had, had gone through phases and had experiences that for some reason I had missed. The way he spoke of his past dealings, it was as if my friend had given up on the big scores and was now only stealing for sport. At my house, he asked to see my stash, which I was nervous about showing him and for good reason — he was a seasoned stealer, and I hadn't stolen anything; most of mine was souvenirs from trips with my family or little birthday gifts from classmates that I would keep in a small trunk in my closet.
+
+A few weeks later, he pulled my little bronze Eiffel Tower out from behind his dresser, the one my parents had bought in Paris when I was a baby. He was so excited to show it to me that he forgot I was the one he'd stolen it from. When I asked him if it was mine, whether he had stolen it from me, he said with complete earnestness that he found it on the street. I so badly wanted to believe him that I pictured my Eiffel Tower still safe at home, among my other souvenirs. I think I really did believe him, until later one day when he said that I could have it if I wanted — which seemed so out of character that it might as well have been a confession. For whatever reason, I felt that lying was worse than stealing, and our friendship ended then. Later, I heard he went on to start fires.
+
+* * *
+
+An old teacher would say it's a little "subject heavy", and she might be right. The subject problem is important to me and recently it's where I've been finding a way in.
+
+I have a friend who paints, I suspect, as if it were a stage of his digestion; he says he doesn't "get" something until he's painted it. Then he saves all of his image sources in binders, in the form of jpg's trapped in A4 plastic sleeves. Maybe I don't really "get" something until I've painted it, but once I've finished, I don't feel for it the way I used to.
+
+Something Monet wrote about painting his dying wife: "I find myself staring at her tragic countenance, automatically trying to identify things like 'the proportions of light'."
+
+I wonder what this says about the weight of a subject, and the painter who wants more than to behold it. Do we confuse callousness with courage? Behind the painting of a woman submerging, a man measures the light on his dying wife.</div>
+  </div>
+
+  <!-- ══════════════════════
+       MAXIMUM YEARN
+  ══════════════════════ -->
+  <div id="view-maximumyearn" class="view">
+    <button class="back-btn" onclick="showHome()">← back</button>
+    <h2>Maximum Yearn</h2>
+    <div class="exh-meta">Solo exhibition<br>August 2020<br>Unit 17, Vancouver</div>
+
+    <div class="carousel-wrap" id="car-maximumyearn">
+      <div class="carousel-track" id="track-maximumyearn">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn2.webp" alt="">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn4.webp" alt="">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn5.webp" alt="">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync2_j.webp" alt="">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync3_j.webp" alt="">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Guido.webp" alt="">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-OldBatch_jp.webp" alt="">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled_jp.webp" alt="">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled2_j.webp" alt="">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-ComeonWilly (1).webp" alt="">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn13.webp" alt="">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn6 (1).webp" alt="">
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <span class="carousel-counter" id="cnt-maximumyearn">1 / 12</span>
+      <div class="carousel-btns">
+        <button class="c-btn" onclick="cMove('maximumyearn',-1)">← prev</button>
+        <button class="c-btn" onclick="cMove('maximumyearn',1)">next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       JOECH GOD
+  ══════════════════════ -->
+  <div id="view-joechgod" class="view">
+    <button class="back-btn" onclick="showHome()">← back</button>
+    <h2>Joech God</h2>
+    <div class="exh-meta">Solo exhibition<br>July 2018<br>Emalin, London</div>
+
+    <div class="carousel-wrap" id="car-joechgod">
+      <div class="carousel-track" id="track-joechgod">
+        <img src="joech god/180703-Emalin-1-_MGL2562.jpg" alt="">
+        <img src="joech god/180703-Emalin-2-_MGL2564.jpg" alt="">
+        <img src="joech god/180703-Emalin-3-_MGL2566.jpg" alt="">
+        <img src="joech god/180703-Emalin-4-_MGL2569.jpg" alt="">
+        <img src="joech god/180703-Emalin-5-_MGL2571.jpg" alt="">
+        <img src="joech god/180703-Emalin-6-_MGL2572.jpg" alt="">
+        <img src="joech god/180703-Emalin-7-_MGL2576.jpg" alt="">
+        <img src="joech god/180703-Emalin-8-_MGL2577.jpg" alt="">
+        <img src="joech god/180703-Emalin-9-_MGL2581.jpg" alt="">
+        <img src="joech god/180703-Emalin-10-_MGL2582.jpg" alt="">
+        <img src="joech god/180703-Emalin-11-_MGL2583.jpg" alt="">
+        <img src="joech god/180703-Emalin-12-_MGL2585.jpg" alt="">
+        <img src="joech god/180703-Emalin-13-_MGL2587.jpg" alt="">
+        <img src="joech god/180703-Emalin-14-_MGL2588.jpg" alt="">
+        <img src="joech god/180703-Emalin-15-_MGL2589.jpg" alt="">
+        <img src="joech god/180703-Emalin-16-_MGL2590.jpg" alt="">
+        <img src="joech god/180703-Emalin-17-_MGL2591.jpg" alt="">
+        <img src="joech god/180703-Emalin-18-_MGL2592.jpg" alt="">
+        <img src="joech god/180703-Emalin-19-_MGL2593.jpg" alt="">
+        <img src="joech god/180703-Emalin-20-_MGL2594.jpg" alt="">
+        <img src="joech god/180703-Emalin-21-_MGL2600.jpg" alt="">
+        <img src="joech god/180703-Emalin-22-_MGL2601.jpg" alt="">
+        <img src="joech god/180703-Emalin-23-_MGL2602.jpg" alt="">
+        <img src="joech god/180703-Emalin-24-_MGL2603.jpg" alt="">
+        <img src="joech god/180703-Emalin-25-_MGL2604.jpg" alt="">
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <span class="carousel-counter" id="cnt-joechgod">1 / 25</span>
+      <div class="carousel-btns">
+        <button class="c-btn" onclick="cMove('joechgod',-1)">← prev</button>
+        <button class="c-btn" onclick="cMove('joechgod',1)">next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       BROWN SPACE
+  ══════════════════════ -->
+  <div id="view-brownspace" class="view">
+    <button class="back-btn" onclick="showHome()">← back</button>
+    <h2>Brown Space</h2>
+    <div class="exh-meta">Solo exhibition<br>February 2017<br>Almanac Inn, Turin</div>
+
+    <div class="carousel-wrap" id="car-brownspace">
+      <div class="carousel-track" id="track-brownspace">
+        <img src="Brown Space/IMG_8200.jpg" alt="">
+        <img src="Brown Space/IMG_8208.jpg" alt="">
+        <img src="Brown Space/IMG_8216.jpg" alt="">
+        <img src="Brown Space/IMG_8223.jpg" alt="">
+        <img src="Brown Space/IMG_8229 (1).jpg" alt="">
+        <img src="Brown Space/IMG_8244 (1).jpg" alt="">
+        <img src="Brown Space/IMG_8254.jpg" alt="">
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <span class="carousel-counter" id="cnt-brownspace">1 / 7</span>
+      <div class="carousel-btns">
+        <button class="c-btn" onclick="cMove('brownspace',-1)">← prev</button>
+        <button class="c-btn" onclick="cMove('brownspace',1)">next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       INFINITIVE
+  ══════════════════════ -->
+  <div id="view-infinitive" class="view">
+    <button class="back-btn" onclick="showHome()">← back</button>
+    <h2>Infinitive</h2>
+    <div class="exh-meta">Solo exhibition<br>February 2017<br>Jeffrey Stark, New York City</div>
+
+    <div class="carousel-wrap" id="car-infinitive">
+      <div class="carousel-track" id="track-infinitive">
+        <img src="Infinitive/Copy of JS.Inst_04.jpg" alt="">
+        <img src="Infinitive/Copy of JS.Inst_05.jpg" alt="">
+        <img src="Infinitive/Copy of JS.Inst_06.jpg" alt="">
+        <img src="Infinitive/JS.Inst_07.jpg" alt="">
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <span class="carousel-counter" id="cnt-infinitive">1 / 4</span>
+      <div class="carousel-btns">
+        <button class="c-btn" onclick="cMove('infinitive',-1)">← prev</button>
+        <button class="c-btn" onclick="cMove('infinitive',1)">next →</button>
+      </div>
+    </div>
+
+    <div class="audio-block">
+      <div class="audio-label">Infinitive ft. Sean Nicholas Savage — audio</div>
+      <audio controls>
+        <source src="Infinitive/Infinitive_ft_Sean_Nicholas_Savage.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       HONOLULU
+  ══════════════════════ -->
+  <div id="view-honolulu" class="view">
+    <button class="back-btn" onclick="showHome()">← back</button>
+    <h2>Honolulu Triennale</h2>
+    <div class="exh-meta">September 2016<br>Honolulu / Zurich<br>with Sean Nicholas Savage</div>
+
+    <div class="carousel-wrap" id="car-honolulu">
+      <div class="carousel-track" id="track-honolulu">
+        <img src="honolulu/Installation_1.jpg" alt="">
+        <img src="honolulu/Installation_2.jpg" alt="">
+        <img src="honolulu/Installation_3.jpg" alt="">
+        <img src="honolulu/Installation_4 (1).jpg" alt="">
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <span class="carousel-counter" id="cnt-honolulu">1 / 4</span>
+      <div class="carousel-btns">
+        <button class="c-btn" onclick="cMove('honolulu',-1)">← prev</button>
+        <button class="c-btn" onclick="cMove('honolulu',1)">next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT (scrolls sidebar) -->
+  <div id="view-contact" class="view">
+    <div style="font-family:'Courier New',Courier,monospace; font-size:11px; line-height:1.7; color:#666;">
+      Paris, France<br><br>
+      MA Painting<br>
+      Royal College of Art, London<br>
+      BFA, Concordia University, Montréal
+    </div>
+  </div>
+
+</div><!-- /main -->
+</div><!-- /wrapper -->
+
+<script>
+// ── carousel state ──────────────────────────────
+var state = {};
+
+function cMove(id, dir) {
+  if (!state[id]) state[id] = 0;
+  var track = document.getElementById('track-' + id);
+  var n = track.children.length;
+  state[id] = (state[id] + dir + n) % n;
+  track.style.transform = 'translateX(-' + (state[id] * 100) + '%)';
+  document.getElementById('cnt-' + id).textContent = (state[id] + 1) + ' / ' + n;
+}
+
+function initSwipe(id) {
+  var el = document.getElementById('car-' + id);
+  if (!el) return;
+  var sx = 0, dragging = false;
+  el.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
+  el.addEventListener('touchend',   function(e){ var dx = e.changedTouches[0].clientX - sx; if(Math.abs(dx)>36) cMove(id, dx<0?1:-1); }, {passive:true});
+  el.addEventListener('mousedown',  function(e){ sx = e.clientX; dragging = true; });
+  el.addEventListener('mouseup',    function(e){ if(!dragging) return; var dx = e.clientX - sx; if(Math.abs(dx)>36) cMove(id, dx<0?1:-1); dragging=false; });
+  el.addEventListener('mouseleave', function(){ dragging=false; });
+}
+
+// init all carousels
+['sweetie','maximumyearn','joechgod','brownspace','infinitive','honolulu'].forEach(initSwipe);
+
+// ── navigation ──────────────────────────────────
+function hideAll() {
+  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+}
+
+function showHome() {
+  hideAll();
+  document.getElementById('view-home').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showExh(key) {
+  hideAll();
+  // reset carousel position
+  if (state[key] !== undefined) {
+    state[key] = 0;
+    var track = document.getElementById('track-' + key);
+    if (track) track.style.transform = 'translateX(0)';
+    var cnt = document.getElementById('cnt-' + key);
+    if (cnt) { var n = track.children.length; cnt.textContent = '1 / ' + n; }
+  }
+  document.getElementById('view-' + key).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showContact() {
+  hideAll();
+  document.getElementById('view-contact').classList.add('active');
+  window.scrollTo(0,0);
+}
+</script>
+
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <img id="lightbox-img" src="">
+</div>
+
+<script>
+var lb = document.getElementById('lightbox');
+var lbImg = document.getElementById('lightbox-img');
+
+document.querySelectorAll('img').forEach(function(img){
+  img.addEventListener('click', function(e){
+    if (img.closest('.carousel-wrap')) {
+      e.stopPropagation();
+    }
+    lbImg.src = img.src;
+    lb.style.display = 'flex';
+  });
+});
+
+lb.addEventListener('click', function(){
+  lb.style.display = 'none';
+  lbImg.src = '';
+});
+</script>
+
+</body>
+</html>
