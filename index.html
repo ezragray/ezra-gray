@@ -6,36 +6,46 @@
 <title>Ezra Gray</title>
 <style>
 
+/* ── RESET ── */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
   background: #fff;
   font-family: 'Courier New', Courier, monospace;
   font-size: 11px;
-  line-height: 1.5;
+  line-height: 1.3;
   color: #000;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
-/* ══════════════════════════════════════
-   DESKTOP LAYOUT
-══════════════════════════════════════ */
+/* ════════════════════════════════════
+   DESKTOP LAYOUT (>680px)
+   Fixed sidebar + scrolling main
+════════════════════════════════════ */
 .wrapper { display: flex; min-height: 100vh; }
 
 .sidebar {
   position: fixed;
   top: 0; left: 0;
-  width: 215px;
+  width: 210px;
   height: 100vh;
   overflow-y: auto;
-  padding: 26px 18px 40px 22px;
+  padding: 24px 16px 40px 20px;
   scrollbar-width: none;
   z-index: 10;
   background: #fff;
 }
 .sidebar::-webkit-scrollbar { display: none; }
 
+.main {
+  margin-left: 210px;
+  padding: 24px 24px 80px 0;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── SIDEBAR TYPOGRAPHY ── */
 .sidebar a,
 .sidebar span.lnk {
   font-family: 'Courier New', Courier, monospace;
@@ -43,8 +53,7 @@ body {
   color: #000;
   text-decoration: none;
   cursor: pointer;
-  display: inline;
-  line-height: 1.5;
+  line-height: 1.3;
 }
 .sidebar a:hover,
 .sidebar span.lnk:hover {
@@ -52,63 +61,112 @@ body {
   text-underline-offset: 2px;
 }
 
-.site-name { margin-bottom: 14px; display: block; }
-.nav-links { margin-bottom: 20px; }
-.nav-links a { display: block; }
-
-.exh-list { font-size: 11px; }
-.exh-list .yr { display: block; margin-top: 11px; margin-bottom: 3px; }
-.exh-list .entry {
+.site-name {
   display: block;
-  margin-bottom: 8px;
-  line-height: 1.45;
+  margin-bottom: 12px;
+}
+
+.nav-links { margin-bottom: 16px; }
+.nav-links a { display: block; line-height: 1.6; }
+
+/* ── EXHIBITION LIST (sidebar / mobile accordion) ── */
+.exh-list { font-size: 11px; }
+
+.exh-item {
+  display: block;
+  margin-bottom: 0;
+}
+
+/* The clickable title row */
+.exh-item-head {
+  display: block;
+  cursor: pointer;
+  padding: 2px 0;
+  line-height: 1.3;
+}
+.exh-item-head:hover .exh-item-title {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.exh-item-year {
+  display: block;
+  color: #999;
+  font-size: 11px;
+  margin-top: 8px;
+}
+
+.exh-item-title {
   font-size: 11px;
 }
-.exh-list .entry .venue {
+
+.exh-item-venue {
   display: block;
   color: #666;
   font-size: 11px;
-}
-.exh-list .grp-head {
-  display: block;
-  margin-top: 16px;
-  margin-bottom: 3px;
+  line-height: 1.3;
+  padding-bottom: 3px;
 }
 
-.main {
-  margin-left: 215px;
-  padding: 26px 26px 80px 0;
-  flex: 1;
-  min-width: 0;
+/* Group exhibition entries (external links) */
+.exh-item-group .exh-item-head { cursor: default; }
+.exh-item-group .exh-item-head:hover .exh-item-title { text-decoration: none; }
+.exh-item-group a {
+  font-size: 11px;
+  color: #000;
+  text-decoration: none;
+}
+.exh-item-group a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── MOBILE ACCORDION PANEL ── */
+.exh-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s ease;
+}
+.exh-panel.open {
+  max-height: 9000px; /* large enough for any content */
+  transition: max-height 0.6s ease;
 }
 
-/* ══════════════════════════════════════
-   VIEWS
-══════════════════════════════════════ */
+/* ── DESKTOP: hide accordion panels in sidebar,
+   show content in main column instead ── */
+@media (min-width: 681px) {
+  .exh-panel { display: none !important; }
+}
+
+/* ════════════════════════════════════
+   MAIN COLUMN VIEWS (desktop)
+════════════════════════════════════ */
 .view { display: none; }
 .view.active { display: block; }
 
-/* ══════════════════════════════════════
-   HOME — images from Homescreen/ folder
-   Non-clickable, very slight opacity so
-   they feel "behind" the text layer
-══════════════════════════════════════ */
+/* ── HOME image stream ── */
 .img-stream { display: flex; flex-direction: column; }
 .img-stream img {
   width: 100%;
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
   opacity: 0.88;
 }
-.img-stream .pair { display: flex; gap: 0; margin-bottom: 12px; }
-.img-stream .pair img { width: 50%; margin-bottom: 0; }
 
-/* ══════════════════════════════════════
-   EXHIBITION DETAIL
-══════════════════════════════════════ */
+/* ── DESKTOP EXH DETAIL ── */
+.exh-detail-header { margin-bottom: 14px; }
+.exh-detail-title {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  font-weight: normal;
+  line-height: 1.3;
+}
+.exh-detail-meta {
+  font-size: 11px;
+  color: #666;
+  line-height: 1.4;
+}
+
 .back-btn {
   display: inline-block;
   font-family: 'Courier New', Courier, monospace;
@@ -118,30 +176,16 @@ body {
   background: none;
   border: none;
   padding: 0;
-  margin-bottom: 18px;
+  margin-bottom: 14px;
 }
 .back-btn:hover { text-decoration: underline; text-underline-offset: 2px; }
 
-.exh-title {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 11px;
-  font-weight: normal;
-  margin-bottom: 2px;
-}
-.exh-meta {
-  font-size: 11px;
-  color: #666;
-  margin-bottom: 18px;
-  line-height: 1.5;
-}
-
 /* ── CAROUSEL ── */
 .carousel-wrap {
-  position: relative;
   overflow: hidden;
-  background: #f2f2f2;
+  background: #f0f0f0;
   cursor: grab;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .carousel-wrap:active { cursor: grabbing; }
 
@@ -153,7 +197,7 @@ body {
 .carousel-track img {
   min-width: 100%;
   width: 100%;
-  max-height: 80vh;
+  max-height: 78vh;
   object-fit: contain;
   object-position: center;
   display: block;
@@ -166,36 +210,30 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 .carousel-counter {
-  font-family: 'Courier New', Courier, monospace;
   font-size: 10px;
-  color: #999;
+  color: #bbb;
 }
 .carousel-btns { display: flex; gap: 10px; }
 .c-btn {
-  background: none;
-  border: none;
+  background: none; border: none;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 11px;
-  cursor: pointer;
-  color: #000;
-  padding: 0;
+  font-size: 11px; cursor: pointer; color: #000; padding: 0;
 }
 .c-btn:hover { text-decoration: underline; }
+
+/* loading state for images */
+.carousel-track.loading { opacity: 0.4; }
 
 /* ── TEXT BUTTON ── */
 .text-btn {
   display: inline-block;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 11px;
-  color: #000;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 0;
-  margin-bottom: 18px;
+  font-size: 11px; color: #000;
+  cursor: pointer; background: none; border: none; padding: 0;
+  margin-bottom: 14px;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -203,155 +241,139 @@ body {
 /* ── TEXT MODAL ── */
 .text-modal-overlay {
   display: none;
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   background: rgba(255,255,255,0.97);
   z-index: 200;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 36px 28px 70px;
+  padding: 32px 28px 70px;
 }
 .text-modal-overlay.open { display: block; }
-
 .text-modal-inner {
-  max-width: 560px;
-  margin: 0 auto;
+  max-width: 560px; margin: 0 auto;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 11px;
-  line-height: 1.8;
+  font-size: 11px; line-height: 1.7;
   white-space: pre-wrap;
 }
-
 .text-modal-close {
   display: block;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 11px;
-  color: #000;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 0;
-  margin-bottom: 28px;
+  font-size: 11px; cursor: pointer;
+  background: none; border: none; padding: 0;
+  margin-bottom: 24px;
 }
 .text-modal-close:hover { text-decoration: underline; }
 
 /* ── AUDIO ── */
 .audio-block {
-  margin-bottom: 18px;
-  padding: 7px 0 5px;
-  border-top: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 14px;
+  padding: 6px 0 4px;
+  border-top: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
 }
 .audio-label {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 10px;
-  color: #999;
-  margin-bottom: 5px;
+  font-size: 10px; color: #bbb; margin-bottom: 4px;
 }
-.audio-block audio { width: 100%; height: 28px; display: block; }
+.audio-block audio { width: 100%; height: 26px; display: block; }
 
 /* ── LIGHTBOX ── */
 .lightbox {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: #000;
-  z-index: 300;
-  align-items: center;
-  justify-content: center;
+  display: none; position: fixed; inset: 0;
+  background: #000; z-index: 300;
+  align-items: center; justify-content: center;
   cursor: zoom-out;
 }
 .lightbox.open { display: flex; }
 .lightbox img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  display: block;
+  max-width: 100%; max-height: 100%;
+  object-fit: contain; display: block;
   pointer-events: none;
 }
 .lightbox-close {
-  position: fixed;
-  top: 14px; right: 18px;
+  position: fixed; top: 14px; right: 18px;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 12px;
-  color: #fff;
-  cursor: pointer;
-  background: none;
-  border: none;
-  z-index: 301;
-  opacity: 0.6;
-  letter-spacing: 0.05em;
+  font-size: 11px; color: #fff; cursor: pointer;
+  background: none; border: none; z-index: 301; opacity: 0.55;
 }
 .lightbox-close:hover { opacity: 1; }
 
 /* ── CONTACT VIEW ── */
 .contact-info {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 11px;
-  line-height: 1.9;
-  color: #666;
+  font-size: 11px; line-height: 1.7; color: #666;
 }
 
-/* ══════════════════════════════════════
-   MOBILE — below 680px
-══════════════════════════════════════ */
+/* ════════════════════════════════════
+   MOBILE (≤680px)
+   Sidebar becomes top nav,
+   exhibitions open as inline accordions
+   directly under their title in the list
+════════════════════════════════════ */
 @media (max-width: 680px) {
 
   .wrapper { flex-direction: column; }
 
   .sidebar {
     position: relative;
-    width: 100%;
-    height: auto;
-    padding: 16px 16px 12px 16px;
+    width: 100%; height: auto;
+    padding: 14px 14px 10px 14px;
     overflow: visible;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #ebebeb;
   }
 
-  .main {
-    margin-left: 0;
-    padding: 0 0 60px 0;
-    width: 100%;
+  /* Hide desktop main-column views on mobile */
+  .main { display: none !important; }
+
+  /* Accordion panel: the exhibition content lives IN the sidebar list */
+  .exh-panel {
+    display: block !important; /* override desktop hide */
   }
 
-  /* Home images: full bleed, non-interactive */
-  .img-stream img {
-    margin-bottom: 5px;
-    opacity: 0.88;
-  }
-  .img-stream .pair { margin-bottom: 5px; }
-
-  /* Exhibition detail: full bleed */
-  .back-btn {
-    display: block;
-    padding: 14px 16px 6px;
-    margin-bottom: 0;
-  }
-  .exh-title { padding: 4px 16px 2px; display: block; }
-  .exh-meta  { padding: 0 16px; margin-bottom: 12px; }
-
-  .carousel-wrap { margin-bottom: 0; }
-  .carousel-track img {
-    max-height: 72vw;
-    min-height: 50vw;
+  /* Panel content padding */
+  .exh-panel-inner {
+    padding: 10px 0 16px 0;
   }
 
-  .carousel-controls { padding: 8px 16px; margin-bottom: 10px; }
-
-  .text-btn   { margin-left: 16px; display: block; }
-  .audio-block { margin: 0 16px 16px; }
-
-  /* Text modal full-screen on mobile */
-  .text-modal-overlay { padding: 20px 16px 60px; }
+  /* Carousel full bleed on mobile */
+  .exh-panel .carousel-wrap {
+    margin-left: -14px;
+    margin-right: -14px;
+    border-radius: 0;
+    margin-bottom: 4px;
+  }
+  .exh-panel .carousel-track img {
+    max-height: 70vw;
+    min-height: 48vw;
+  }
+  .exh-panel .carousel-controls {
+    padding: 6px 0;
+    margin-bottom: 8px;
+  }
+  .exh-panel .audio-block { margin: 0 0 12px; }
+  .exh-panel .text-btn { margin-bottom: 10px; }
 
   /* Contact on mobile */
-  .contact-info { padding: 16px; }
+  #mobile-contact { padding: 14px 0 6px; }
+  #mobile-contact.hidden { display: none; }
 
-  /* When exhibition open: fade home images dramatically */
-  body.exh-open .img-stream img {
-    opacity: 0.12;
-    transition: opacity 0.4s ease;
+  /* Home images: non-interactive, slight fade */
+  #mobile-home { padding-top: 8px; }
+  #mobile-home img {
+    width: 100%;
+    display: block;
+    margin-bottom: 5px;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.88;
   }
+
+  .site-name { margin-bottom: 8px; }
+  .nav-links { margin-bottom: 10px; }
+
+  /* Tighten year labels */
+  .exh-item-year { margin-top: 6px; }
+
+  /* Text modal full screen */
+  .text-modal-overlay { padding: 18px 14px 60px; }
 }
 
 </style>
@@ -372,9 +394,9 @@ body {
 
 <div class="wrapper">
 
-<!-- ══════════════════════════════════
-     SIDEBAR
-══════════════════════════════════════ -->
+<!-- ════════════════════════════════════
+     SIDEBAR / MOBILE NAV
+════════════════════════════════════ -->
 <div class="sidebar">
 
   <div class="site-name">
@@ -386,229 +408,278 @@ body {
     <a onclick="showContact()">Contact</a>
   </div>
 
-  <div class="exh-list">
+  <!-- ════════════════════════════════
+       EXHIBITION LIST
+       Chronological, solo + group mixed
+       Each solo has an .exh-panel that
+       opens inline on mobile
+  ════════════════════════════════════ -->
+  <div class="exh-list" id="exh-list">
 
-    Selected exhibitions<br><br>
+    <!-- 2025 GROUP: Should be allowed -->
+    <div class="exh-item exh-item-group" id="item-rinomina">
+      <div class="exh-item-year">2025</div>
+      <div class="exh-item-head">
+        <span class="exh-item-title">
+          <a href="https://rinomina.com/exhibition/should-be-allowed-could-be-forbidden-must-be-wanted-can-be-done-can-be-but-does-not-have-to/" target="_blank"><em>Should be allowed, could be forbidden...</em></a>
+        </span>
+        <span class="exh-item-venue">Rinomina, Paris<br>Oct 14 – Dec 18, 2025</span>
+      </div>
+    </div>
 
-    <span class="yr">2024</span>
-    <span class="entry">
-      <span class="lnk" onclick="showExh('sweetie')"><em>Sweetie (Relationships Play Out)</em></span>
-      <span class="venue">Solo exhibition<br>Unit 17, Vancouver</span>
-    </span>
+    <!-- 2025 GROUP: The 12th House -->
+    <div class="exh-item exh-item-group" id="item-12house">
+      <div class="exh-item-head">
+        <span class="exh-item-title">
+          <em>The 12th House</em>, <a href="https://www.instagram.com/thewhiteermine/" target="_blank">The White Ermine</a>
+        </span>
+        <span class="exh-item-venue">Düsseldorf<br>Mar 22 – Jun 2025</span>
+      </div>
+    </div>
 
-    <span class="yr">2020</span>
-    <span class="entry">
-      <span class="lnk" onclick="showExh('maximumyearn')"><em>Maximum Yearn</em></span>
-      <span class="venue">Solo exhibition<br>Unit 17, Vancouver</span>
-    </span>
+    <!-- 2025 GROUP: Hisssss -->
+    <div class="exh-item exh-item-group" id="item-hisssss">
+      <div class="exh-item-head">
+        <span class="exh-item-title">
+          <a href="https://www.instagram.com/hisssss________/" target="_blank"><em>Hisssss</em></a>
+        </span>
+        <span class="exh-item-venue">Los Angeles, May 27, 2025</span>
+      </div>
+    </div>
 
-    <span class="yr">2018</span>
-    <span class="entry">
-      <span class="lnk" onclick="showExh('joechgod')"><em>Joech God</em></span>
-      <span class="venue">Solo exhibition<br>Emalin, London</span>
-    </span>
+    <!-- 2024 SOLO: Sweetie -->
+    <div class="exh-item exh-item-solo" id="item-sweetie">
+      <div class="exh-item-year">2024</div>
+      <div class="exh-item-head" onclick="toggleExh('sweetie')">
+        <span class="exh-item-title"><em>Sweetie (Relationships Play Out)</em></span>
+        <span class="exh-item-venue">Solo exhibition<br>Unit 17, Vancouver</span>
+      </div>
+      <div class="exh-panel" id="panel-sweetie">
+        <div class="exh-panel-inner" id="panel-inner-sweetie">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
 
-    <span class="yr">2017</span>
-    <span class="entry">
-      <span class="lnk" onclick="showExh('brownspace')"><em>Brown Space</em></span>
-      <span class="venue">Solo exhibition<br>Almanac Inn, Turin</span>
-    </span>
-    <span class="entry">
-      <span class="lnk" onclick="showExh('infinitive')"><em>Infinitive</em></span>
-      <span class="venue">Solo exhibition<br>Jeffrey Stark, New York City</span>
-    </span>
+    <!-- 2024 GROUP: Brains -->
+    <div class="exh-item exh-item-group" id="item-brains">
+      <div class="exh-item-head">
+        <span class="exh-item-title">
+          <a href="https://mediump.com/Sofia-Duchovny-Ezra-Grey-brains-2024" target="_blank"><em>Brains</em></a> w/ Sophia Duchovny, <a href="https://www.instagram.com/_mediump_/" target="_blank">Medium P</a>
+        </span>
+        <span class="exh-item-venue">Berlin<br>Dec 13, 2024 – Mar 31, 2025</span>
+      </div>
+    </div>
 
-    <span class="yr">2016</span>
-    <span class="entry">
-      <span class="lnk" onclick="showExh('honolulu')"><em>Honolulu</em></span>
-      with Sean Nicholas Savage<br>
-      <span class="venue">Gallery Honolulu, Zurich</span>
-    </span>
+    <!-- 2021 GROUP: Nothing but Murmurs -->
+    <div class="exh-item exh-item-group" id="item-murmurs">
+      <div class="exh-item-year">2021</div>
+      <div class="exh-item-head">
+        <span class="exh-item-title">
+          <a href="https://imlabor.org/twobytwobytwo/011/" target="_blank"><em>Nothing but Murmurs</em></a>
+        </span>
+        <span class="exh-item-venue">2x2x2 by im labor, Tokyo<br>Sep 19 – Oct 23, 2021</span>
+      </div>
+    </div>
 
-    <span class="grp-head">Group exhibitions</span><br>
+    <!-- 2020 SOLO: Maximum Yearn -->
+    <div class="exh-item exh-item-solo" id="item-maximumyearn">
+      <div class="exh-item-year">2020</div>
+      <div class="exh-item-head" onclick="toggleExh('maximumyearn')">
+        <span class="exh-item-title"><em>Maximum Yearn</em></span>
+        <span class="exh-item-venue">Solo exhibition<br>Unit 17, Vancouver</span>
+      </div>
+      <div class="exh-panel" id="panel-maximumyearn">
+        <div class="exh-panel-inner" id="panel-inner-maximumyearn">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
 
-    <span class="yr">2025</span>
-    <span class="entry">
-      <a href="https://rinomina.com/exhibition/should-be-allowed-could-be-forbidden-must-be-wanted-can-be-done-can-be-but-does-not-have-to/" target="_blank"><em>Should be allowed, could be forbidden...</em></a>
-      <span class="venue">Rinomina, Paris<br>Oct 14 – Dec 18, 2025</span>
-    </span>
-    <span class="entry">
-      <em>The 12th House</em>, <a href="https://www.instagram.com/thewhiteermine/" target="_blank">The White Ermine</a>
-      <span class="venue">Düsseldorf<br>Mar 22 – Jun 2025</span>
-    </span>
-    <span class="entry">
-      <a href="https://www.instagram.com/hisssss________/" target="_blank"><em>Hisssss</em></a>
-      <span class="venue">Los Angeles, May 27, 2025</span>
-    </span>
+    <!-- 2019 GROUP: SUPER NATURAL -->
+    <div class="exh-item exh-item-group" id="item-supernatural">
+      <div class="exh-item-year">2019</div>
+      <div class="exh-item-head">
+        <span class="exh-item-title">
+          <a href="https://www.unit17.org/super-natural" target="_blank"><em>SUPER NATURAL</em></a>
+        </span>
+        <span class="exh-item-venue">Unit 17, Vancouver<br>Jan 26 – Mar 17, 2019</span>
+      </div>
+    </div>
 
-    <span class="yr">2024</span>
-    <span class="entry">
-      <a href="https://mediump.com/Sofia-Duchovny-Ezra-Grey-brains-2024" target="_blank"><em>Brains</em></a> w/ Sophia Duchovny<br>
-      <a href="https://www.instagram.com/_mediump_/" target="_blank">Medium P</a>
-      <span class="venue">Berlin<br>Dec 13, 2024 – Mar 31, 2025</span>
-    </span>
+    <!-- 2018 SOLO: Joech God -->
+    <div class="exh-item exh-item-solo" id="item-joechgod">
+      <div class="exh-item-year">2018</div>
+      <div class="exh-item-head" onclick="toggleExh('joechgod')">
+        <span class="exh-item-title"><em>Joech God</em></span>
+        <span class="exh-item-venue">Solo exhibition<br>Emalin, London</span>
+      </div>
+      <div class="exh-panel" id="panel-joechgod">
+        <div class="exh-panel-inner" id="panel-inner-joechgod">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
 
-    <span class="yr">2021</span>
-    <span class="entry">
-      <a href="https://imlabor.org/twobytwobytwo/011/" target="_blank"><em>Nothing but Murmurs</em></a>
-      <span class="venue">2x2x2 by im labor, Tokyo<br>Sep 19 – Oct 23, 2021</span>
-    </span>
+    <!-- 2017 SOLO: Brown Space -->
+    <div class="exh-item exh-item-solo" id="item-brownspace">
+      <div class="exh-item-year">2017</div>
+      <div class="exh-item-head" onclick="toggleExh('brownspace')">
+        <span class="exh-item-title"><em>Brown Space</em></span>
+        <span class="exh-item-venue">Solo exhibition<br>Almanac Inn, Turin</span>
+      </div>
+      <div class="exh-panel" id="panel-brownspace">
+        <div class="exh-panel-inner" id="panel-inner-brownspace">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
 
-    <span class="yr">2019</span>
-    <span class="entry">
-      <a href="https://www.unit17.org/super-natural" target="_blank"><em>SUPER NATURAL</em></a>
-      <span class="venue">Unit 17, Vancouver<br>Jan 26 – Mar 17, 2019</span>
-    </span>
+    <!-- 2017 SOLO: Infinitive -->
+    <div class="exh-item exh-item-solo" id="item-infinitive">
+      <div class="exh-item-head" onclick="toggleExh('infinitive')">
+        <span class="exh-item-title"><em>Infinitive</em></span>
+        <span class="exh-item-venue">Solo exhibition<br>Jeffrey Stark, New York City</span>
+      </div>
+      <div class="exh-panel" id="panel-infinitive">
+        <div class="exh-panel-inner" id="panel-inner-infinitive">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
 
-    <span class="yr">2017</span>
-    <span class="entry">
-      <a href="http://maxruf.com/Samstag_05.08..pdf" target="_blank"><em>Samstag</em></a>
-      <span class="venue">Keifholzstrasse 401, Berlin<br>Aug 5, 2017</span>
-    </span>
+    <!-- 2017 GROUP: Samstag -->
+    <div class="exh-item exh-item-group" id="item-samstag">
+      <div class="exh-item-head">
+        <span class="exh-item-title">
+          <a href="http://maxruf.com/Samstag_05.08..pdf" target="_blank"><em>Samstag</em></a>
+        </span>
+        <span class="exh-item-venue">Keifholzstrasse 401, Berlin<br>Aug 5, 2017</span>
+      </div>
+    </div>
 
-    <span class="yr">2016</span>
-    <span class="entry">
-      <a href="https://viktorwang.com/With-Institutions-Like-These" target="_blank"><em>With Institutions Like These…</em></a>
-      <span class="venue">Lancaster Gate, London<br>Mar 19 – Apr 10, 2016</span>
-    </span>
-    <span class="entry">
-      <a href="https://emalin.co.uk/exhibitions/folly" target="_blank"><em>Folly</em></a>
-      <span class="venue">Emalin Projects, Scotland<br>Mar 26 – 28, 2016</span>
-    </span>
+    <!-- 2016 SOLO: Honolulu -->
+    <div class="exh-item exh-item-solo" id="item-honolulu">
+      <div class="exh-item-year">2016</div>
+      <div class="exh-item-head" onclick="toggleExh('honolulu')">
+        <span class="exh-item-title"><em>Honolulu</em></span>
+        <span class="exh-item-venue">with Sean Nicholas Savage<br>Gallery Honolulu, Zurich</span>
+      </div>
+      <div class="exh-panel" id="panel-honolulu">
+        <div class="exh-panel-inner" id="panel-inner-honolulu">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
 
-    <span class="yr">2014</span>
-    <span class="entry">
-      <em>Rundgang</em>
-      <span class="venue">Kunstakademie Düsseldorf<br>Feb 2014</span>
-    </span>
+    <!-- 2016 GROUP: With Institutions Like These -->
+    <div class="exh-item exh-item-group" id="item-institutions">
+      <div class="exh-item-head">
+        <span class="exh-item-title">
+          <a href="https://viktorwang.com/With-Institutions-Like-These" target="_blank"><em>With Institutions Like These…</em></a>
+        </span>
+        <span class="exh-item-venue">Lancaster Gate, London<br>Mar 19 – Apr 10, 2016</span>
+      </div>
+    </div>
 
-    <span class="yr">2013</span>
-    <span class="entry">
-      <em>A process of recognition</em>
-      <span class="venue">Battat Contemporary, Montréal<br>Feb 28 – Apr 13, 2013</span>
-    </span>
+    <!-- 2016 GROUP: Folly -->
+    <div class="exh-item exh-item-group" id="item-folly">
+      <div class="exh-item-head">
+        <span class="exh-item-title">
+          <a href="https://emalin.co.uk/exhibitions/folly" target="_blank"><em>Folly</em></a>
+        </span>
+        <span class="exh-item-venue">Emalin Projects, Scotland<br>Mar 26 – 28, 2016</span>
+      </div>
+    </div>
 
-    <span class="yr">2012</span>
-    <span class="entry">
-      <em>6 POSITION</em>
-      <span class="venue">WWTWO, Montréal, Nov 2012</span>
-    </span>
+    <!-- 2014 GROUP: Rundgang -->
+    <div class="exh-item exh-item-group" id="item-rundgang">
+      <div class="exh-item-year">2014</div>
+      <div class="exh-item-head">
+        <span class="exh-item-title"><em>Rundgang</em></span>
+        <span class="exh-item-venue">Kunstakademie Düsseldorf<br>Feb 2014</span>
+      </div>
+    </div>
 
+    <!-- 2013 GROUP -->
+    <div class="exh-item exh-item-group" id="item-recognition">
+      <div class="exh-item-year">2013</div>
+      <div class="exh-item-head">
+        <span class="exh-item-title"><em>A process of recognition</em></span>
+        <span class="exh-item-venue">Battat Contemporary, Montréal<br>Feb 28 – Apr 13, 2013</span>
+      </div>
+    </div>
+
+    <!-- 2012 GROUP -->
+    <div class="exh-item exh-item-group" id="item-6position">
+      <div class="exh-item-year">2012</div>
+      <div class="exh-item-head">
+        <span class="exh-item-title"><em>6 POSITION</em></span>
+        <span class="exh-item-venue">WWTWO, Montréal, Nov 2012</span>
+      </div>
+    </div>
+
+  </div><!-- /exh-list -->
+
+  <!-- Mobile-only: home images + contact rendered here -->
+  <div id="mobile-home"></div>
+  <div id="mobile-contact" class="hidden">
+    <div class="contact-info">
+      Paris, France<br><br>
+      ezragray&#64;gmail&#46;com
+    </div>
   </div>
 
 </div><!-- /sidebar -->
 
-<!-- ══════════════════════════════════
-     MAIN
-══════════════════════════════════════ -->
+<!-- ════════════════════════════════════
+     MAIN (desktop only)
+════════════════════════════════════ -->
 <div class="main">
 
-  <!-- HOME — images from Homescreen/ folder, alphabetical -->
+  <!-- HOME -->
   <div id="view-home" class="view active">
-    <div class="img-stream">
-      <img src="Homescreen/image_01.jpg" alt="">
-      <img src="Homescreen/image_02.jpg" alt="">
-      <img src="Homescreen/image_03.jpg" alt="">
-      <img src="Homescreen/image_04.jpg" alt="">
-      <img src="Homescreen/image_05.jpg" alt="">
-      <img src="Homescreen/image_06.jpg" alt="">
-      <img src="Homescreen/image_07.jpg" alt="">
-      <img src="Homescreen/image_08.jpg" alt="">
-      <img src="Homescreen/image_09.jpg" alt="">
-      <img src="Homescreen/image_10.jpg" alt="">
+    <div class="img-stream" id="desktop-home-stream">
+      <!-- populated by JS from Homescreen/ folder -->
     </div>
   </div>
 
   <!-- SWEETIE -->
   <div id="view-sweetie" class="view">
     <button class="back-btn" onclick="showHome()">← back</button>
-    <div class="exh-title">Sweetie (Relationships Play Out)</div>
-    <div class="exh-meta">Solo exhibition<br>7 March – 11 May 2024<br>Unit 17, Vancouver</div>
-
+    <div class="exh-detail-header">
+      <div class="exh-detail-title">Sweetie (Relationships Play Out)</div>
+      <div class="exh-detail-meta">Solo exhibition · 7 March – 11 May 2024 · Unit 17, Vancouver</div>
+    </div>
     <div class="carousel-wrap" id="car-sweetie">
-      <div class="carousel-track" id="track-sweetie">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/EzraGray-Sweetie-RelationshipsPlayOut.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6830.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6832.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6835.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6837.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6842.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6853.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6855.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6856.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6857.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6861.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6868.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6869.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6876.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6879.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6883.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6886.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6889.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6894.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6900.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6901.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6909.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6915.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6917.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6921.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6922-2.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6928.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6933.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6934.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6936.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6950.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6952.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6953.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6961.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6962.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6965.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6971.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6974.jpg" alt="" onclick="openLightbox(this)">
-      </div>
+      <div class="carousel-track" id="track-sweetie"></div>
     </div>
     <div class="carousel-controls">
-      <span class="carousel-counter" id="cnt-sweetie">1 / 38</span>
+      <span class="carousel-counter" id="cnt-sweetie">– / –</span>
       <div class="carousel-btns">
         <button class="c-btn" onclick="cMove('sweetie',-1)">← prev</button>
         <button class="c-btn" onclick="cMove('sweetie',1)">next →</button>
       </div>
     </div>
-
     <div class="audio-block">
       <div class="audio-label">Hey Can You Hear Me? — audio</div>
-      <audio controls>
-        <source src="maxmium yearn/maximumyearn-sm.mp3" type="audio/mpeg">
-      </audio>
+      <audio controls><source src="maxmium yearn/maximumyearn-sm.mp3" type="audio/mpeg"></audio>
     </div>
-
     <button class="text-btn" onclick="openTextModal('sweetie')">Text</button>
   </div>
 
   <!-- MAXIMUM YEARN -->
   <div id="view-maximumyearn" class="view">
     <button class="back-btn" onclick="showHome()">← back</button>
-    <div class="exh-title">Maximum Yearn</div>
-    <div class="exh-meta">Solo exhibition<br>August 2020<br>Unit 17, Vancouver</div>
-
+    <div class="exh-detail-header">
+      <div class="exh-detail-title">Maximum Yearn</div>
+      <div class="exh-detail-meta">Solo exhibition · August 2020 · Unit 17, Vancouver</div>
+    </div>
     <div class="carousel-wrap" id="car-maximumyearn">
-      <div class="carousel-track" id="track-maximumyearn">
-        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn2.webp" alt="" onclick="openLightbox(this)">
-        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn4.webp" alt="" onclick="openLightbox(this)">
-        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn5.webp" alt="" onclick="openLightbox(this)">
-        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync2_j.webp" alt="" onclick="openLightbox(this)">
-        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync3_j.webp" alt="" onclick="openLightbox(this)">
-        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Guido.webp" alt="" onclick="openLightbox(this)">
-        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-OldBatch_jp.webp" alt="" onclick="openLightbox(this)">
-        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled_jp.webp" alt="" onclick="openLightbox(this)">
-        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled2_j.webp" alt="" onclick="openLightbox(this)">
-        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-ComeonWilly (1).webp" alt="" onclick="openLightbox(this)">
-        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn13.webp" alt="" onclick="openLightbox(this)">
-        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn6 (1).webp" alt="" onclick="openLightbox(this)">
-      </div>
+      <div class="carousel-track" id="track-maximumyearn"></div>
     </div>
     <div class="carousel-controls">
-      <span class="carousel-counter" id="cnt-maximumyearn">1 / 12</span>
+      <span class="carousel-counter" id="cnt-maximumyearn">– / –</span>
       <div class="carousel-btns">
         <button class="c-btn" onclick="cMove('maximumyearn',-1)">← prev</button>
         <button class="c-btn" onclick="cMove('maximumyearn',1)">next →</button>
@@ -619,40 +690,15 @@ body {
   <!-- JOECH GOD -->
   <div id="view-joechgod" class="view">
     <button class="back-btn" onclick="showHome()">← back</button>
-    <div class="exh-title">Joech God</div>
-    <div class="exh-meta">Solo exhibition<br>July 2018<br>Emalin, London</div>
-
+    <div class="exh-detail-header">
+      <div class="exh-detail-title">Joech God</div>
+      <div class="exh-detail-meta">Solo exhibition · July 2018 · Emalin, London</div>
+    </div>
     <div class="carousel-wrap" id="car-joechgod">
-      <div class="carousel-track" id="track-joechgod">
-        <img src="joech god/180703-Emalin-1-_MGL2562.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-2-_MGL2564.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-3-_MGL2566.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-4-_MGL2569.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-5-_MGL2571.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-6-_MGL2572.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-7-_MGL2576.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-8-_MGL2577.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-9-_MGL2581.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-10-_MGL2582.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-11-_MGL2583.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-12-_MGL2585.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-13-_MGL2587.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-14-_MGL2588.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-15-_MGL2589.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-16-_MGL2590.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-17-_MGL2591.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-18-_MGL2592.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-19-_MGL2593.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-20-_MGL2594.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-21-_MGL2600.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-22-_MGL2601.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-23-_MGL2602.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-24-_MGL2603.jpg" alt="" onclick="openLightbox(this)">
-        <img src="joech god/180703-Emalin-25-_MGL2604.jpg" alt="" onclick="openLightbox(this)">
-      </div>
+      <div class="carousel-track" id="track-joechgod"></div>
     </div>
     <div class="carousel-controls">
-      <span class="carousel-counter" id="cnt-joechgod">1 / 25</span>
+      <span class="carousel-counter" id="cnt-joechgod">– / –</span>
       <div class="carousel-btns">
         <button class="c-btn" onclick="cMove('joechgod',-1)">← prev</button>
         <button class="c-btn" onclick="cMove('joechgod',1)">next →</button>
@@ -663,22 +709,15 @@ body {
   <!-- BROWN SPACE -->
   <div id="view-brownspace" class="view">
     <button class="back-btn" onclick="showHome()">← back</button>
-    <div class="exh-title">Brown Space</div>
-    <div class="exh-meta">Solo exhibition<br>February 2017<br>Almanac Inn, Turin</div>
-
+    <div class="exh-detail-header">
+      <div class="exh-detail-title">Brown Space</div>
+      <div class="exh-detail-meta">Solo exhibition · February 2017 · Almanac Inn, Turin</div>
+    </div>
     <div class="carousel-wrap" id="car-brownspace">
-      <div class="carousel-track" id="track-brownspace">
-        <img src="Brown Space/IMG_8200.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Brown Space/IMG_8208.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Brown Space/IMG_8216.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Brown Space/IMG_8223.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Brown Space/IMG_8229 (1).jpg" alt="" onclick="openLightbox(this)">
-        <img src="Brown Space/IMG_8244 (1).jpg" alt="" onclick="openLightbox(this)">
-        <img src="Brown Space/IMG_8254.jpg" alt="" onclick="openLightbox(this)">
-      </div>
+      <div class="carousel-track" id="track-brownspace"></div>
     </div>
     <div class="carousel-controls">
-      <span class="carousel-counter" id="cnt-brownspace">1 / 7</span>
+      <span class="carousel-counter" id="cnt-brownspace">– / –</span>
       <div class="carousel-btns">
         <button class="c-btn" onclick="cMove('brownspace',-1)">← prev</button>
         <button class="c-btn" onclick="cMove('brownspace',1)">next →</button>
@@ -689,49 +728,38 @@ body {
   <!-- INFINITIVE -->
   <div id="view-infinitive" class="view">
     <button class="back-btn" onclick="showHome()">← back</button>
-    <div class="exh-title">Infinitive</div>
-    <div class="exh-meta">Solo exhibition<br>February 2017<br>Jeffrey Stark, New York City</div>
-
+    <div class="exh-detail-header">
+      <div class="exh-detail-title">Infinitive</div>
+      <div class="exh-detail-meta">Solo exhibition · February 2017 · Jeffrey Stark, New York City</div>
+    </div>
     <div class="carousel-wrap" id="car-infinitive">
-      <div class="carousel-track" id="track-infinitive">
-        <img src="Infinitive/Copy of JS.Inst_04.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Infinitive/Copy of JS.Inst_05.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Infinitive/Copy of JS.Inst_06.jpg" alt="" onclick="openLightbox(this)">
-        <img src="Infinitive/JS.Inst_07.jpg" alt="" onclick="openLightbox(this)">
-      </div>
+      <div class="carousel-track" id="track-infinitive"></div>
     </div>
     <div class="carousel-controls">
-      <span class="carousel-counter" id="cnt-infinitive">1 / 4</span>
+      <span class="carousel-counter" id="cnt-infinitive">– / –</span>
       <div class="carousel-btns">
         <button class="c-btn" onclick="cMove('infinitive',-1)">← prev</button>
         <button class="c-btn" onclick="cMove('infinitive',1)">next →</button>
       </div>
     </div>
-
     <div class="audio-block">
       <div class="audio-label">Infinitive ft. Sean Nicholas Savage — audio</div>
-      <audio controls>
-        <source src="Infinitive/Infinitive_ft_Sean_Nicholas_Savage.mp3" type="audio/mpeg">
-      </audio>
+      <audio controls><source src="Infinitive/Infinitive_ft_Sean_Nicholas_Savage.mp3" type="audio/mpeg"></audio>
     </div>
   </div>
 
   <!-- HONOLULU -->
   <div id="view-honolulu" class="view">
     <button class="back-btn" onclick="showHome()">← back</button>
-    <div class="exh-title">Honolulu</div>
-    <div class="exh-meta">September 2016<br>Gallery Honolulu, Zurich<br>with Sean Nicholas Savage</div>
-
+    <div class="exh-detail-header">
+      <div class="exh-detail-title">Honolulu</div>
+      <div class="exh-detail-meta">September 2016 · Gallery Honolulu, Zurich · with Sean Nicholas Savage</div>
+    </div>
     <div class="carousel-wrap" id="car-honolulu">
-      <div class="carousel-track" id="track-honolulu">
-        <img src="honolulu/Installation_1.jpg" alt="" onclick="openLightbox(this)">
-        <img src="honolulu/Installation_2.jpg" alt="" onclick="openLightbox(this)">
-        <img src="honolulu/Installation_3.jpg" alt="" onclick="openLightbox(this)">
-        <img src="honolulu/Installation_4 (1).jpg" alt="" onclick="openLightbox(this)">
-      </div>
+      <div class="carousel-track" id="track-honolulu"></div>
     </div>
     <div class="carousel-controls">
-      <span class="carousel-counter" id="cnt-honolulu">1 / 4</span>
+      <span class="carousel-counter" id="cnt-honolulu">– / –</span>
       <div class="carousel-btns">
         <button class="c-btn" onclick="cMove('honolulu',-1)">← prev</button>
         <button class="c-btn" onclick="cMove('honolulu',1)">next →</button>
@@ -751,24 +779,446 @@ body {
 </div><!-- /wrapper -->
 
 <script>
-// ── Exhibition texts ──────────────────────────
-var exhTexts = {
-  sweetie: "Two brothers are left alone to eat pizza and watch the Simpsons. This is only allowed on school nights when their parents go out to play doubles badminton. The parents believe that the cartoon has a calming, corralling effect.\n\nAfter pizza and TV, they run out of things to do and get tired of each other\u2019s company. The older brother turns to reading a book about impressive or disgusting animals, while the younger wanders around the unusually quiet house. He finds himself upstairs in the parents\u2019 bathroom with all the lights on. The brightness makes it feel quieter. He approaches the large mirror with caution. Mirrors hold a mystical, quasi-forbidden quality in his mind. More than once he\u2019d seen mirrors removed from the hands of children by grown ups for unknowable reasons. With his parents still out and his brother downstairs picking his nose on the couch, he takes the opportunity to find out what the fuss is about. He gets in close so that he appears six inches from himself, staring deep into the iris and at all the little details, like a beetle in a jar. Then he begins making faces: pleading, grinning, crazed expressions. An unnerving, glitchy feeling comes over him, at the centre of which is the question: \u201cwho is making these faces? Me, or the reflection?\u201d Then, like the sound of strings rising, the mirror no longer feels inanimate, it only frightens him; as he rushes off he wonders if it is watching him leave. Downstairs, he tries to behave normally, secretly embarrassed that he let it get to him.\n\n* * *\n\nBefore I could call anyone a friend, a boy came up to me in the hall of the community centre and ordered me to follow him. He led me down to the basement level to the building\u2019s central furnace and shut it down as if it were his job, by pushing a glowing red button then running off like he\u2019d lit a fuse. I mention him because, for the next ten years, it was this type of boy that ended up being my friend. I kept finding myself under the wings of miscreant little shits.\n\nGrown ups declared the rules of childhood and some children repeated them \u2014 tattle-tales, teacher\u2019s pets, children I wanted nothing to do with. At recess we would wonder where all the soccer balls had gone, and then after a short search I would find a boy alone in some corner of the school grounds who had gathered them all, every last one, trying to kick them up onto the roof. I could see the dozen he already succeeded with, way up there, four stories up, peering over the edge of the gutter and I shared in his satisfaction.\n\nFor a summer, my closest friend was a genuine kleptomaniac. He stole from everyone. He stole from school, he stole from the corner store, he stole from his parents, he stole from me. Children are much closer to the earth, that is, to the ground, so they make good scavengers. It also means that I remember the heat of that summer, not by a sun that beat down on us, or the kind of hot wind that would never cool you down, but by the temperature of the sidewalk and a warm bolt I would pick up and clean against my shirt. Everything was dusty and the grass was all dead.\n\nOne sunny afternoon my kleptomaniac friend showed me how the trunks to most cars weren\u2019t really locked, and could easily be opened by pushing the keyhole which itself was a button. We wandered through the alleys behind our neighbours\u2019 houses and he would show me how to reach over and unlock a variety of gates, or slip in between broken fences to steal things from garages and tool sheds. Like a convict, he\u2019d cut a hole in the wall behind his dresser, where he kept the kinds of strange objects a child like that might find valuable. Nicorette gum, sunglasses, a tire-pressure gauge, an emergency candle stick, a jam jar full of ball-bearings, a hearing aid, sets of keys, keychains, a little silver dolphin with crystals for eyes, saw blades and drill bits (gold coloured) and cash. All of it qualified as treasure to me.\n\nYou could say I was a bad judge of character, but back then another ten year old boy could impress in me the feeling that he had lived a much longer life than I had, had gone through phases and had experiences that for some reason I had missed. The way he spoke of his past dealings, it was as if my friend had given up on the big scores and was now only stealing for sport. At my house, he asked to see my stash, which I was nervous about showing him and for good reason \u2014 he was a seasoned stealer, and I hadn\u2019t stolen anything; most of mine was souvenirs from trips with my family or little birthday gifts from classmates that I would keep in a small trunk in my closet.\n\nA few weeks later, he pulled my little bronze Eiffel Tower out from behind his dresser, the one my parents had bought in Paris when I was a baby. He was so excited to show it to me that he forgot I was the one he\u2019d stolen it from. When I asked him if it was mine, whether he had stolen it from me, he said with complete earnestness that he found it on the street. I so badly wanted to believe him that I pictured my Eiffel Tower still safe at home, among my other souvenirs. I think I really did believe him, until later one day when he said that I could have it if I wanted \u2014 which seemed so out of character that it might as well have been a confession. For whatever reason, I felt that lying was worse than stealing, and our friendship ended then. Later, I heard he went on to start fires.\n\n* * *\n\nAn old teacher would say it\u2019s a little \u201csubject heavy\u201d, and she might be right. The subject problem is important to me and recently it\u2019s where I\u2019ve been finding a way in.\n\nI have a friend who paints, I suspect, as if it were a stage of his digestion; he says he doesn\u2019t \u201cget\u201d something until he\u2019s painted it. Then he saves all of his image sources in binders, in the form of jpg\u2019s trapped in A4 plastic sleeves. Maybe I don\u2019t really \u201cget\u201d something until I\u2019ve painted it, but once I\u2019ve finished, I don\u2019t feel for it the way I used to.\n\nSomething Monet wrote about painting his dying wife: \u201cI find myself staring at her tragic countenance, automatically trying to identify things like \u2018the proportions of light\u2019.\u201d\n\nI wonder what this says about the weight of a subject, and the painter who wants more than to behold it. Do we confuse callousness with courage? Behind the painting of a woman submerging, a man measures the light on his dying wife."
+/* ════════════════════════════════════════════════════
+   EXHIBITION CONFIG
+   Each solo exhibition declares:
+   - folder:  path to image folder
+   - images:  filenames in alphabetical order
+              (add/remove/rename here to manage gallery)
+   - audio:   optional audio file path
+   - hasText: whether to show a Text button
+              (loads from folder/text.txt)
+════════════════════════════════════════════════════ */
+var EXH = {
+
+  sweetie: {
+    folder: 'Sweetie (Relationships Play Out) @ Unit 17, Vancouver',
+    images: [
+      'EzraGray-Sweetie-RelationshipsPlayOut.jpg',
+      '_DSC6830.jpg','_DSC6832.jpg','_DSC6835.jpg',
+      '_DSC6837.jpg','_DSC6842.jpg','_DSC6853.jpg',
+      '_DSC6855.jpg','_DSC6856.jpg','_DSC6857.jpg',
+      '_DSC6861.jpg','_DSC6868.jpg','_DSC6869.jpg',
+      '_DSC6876.jpg','_DSC6879.jpg','_DSC6883.jpg',
+      '_DSC6886.jpg','_DSC6889.jpg','_DSC6894.jpg',
+      '_DSC6900.jpg','_DSC6901.jpg','_DSC6909.jpg',
+      '_DSC6915.jpg','_DSC6917.jpg','_DSC6921.jpg',
+      '_DSC6922-2.jpg','_DSC6928.jpg','_DSC6933.jpg',
+      '_DSC6934.jpg','_DSC6936.jpg','_DSC6950.jpg',
+      '_DSC6952.jpg','_DSC6953.jpg','_DSC6961.jpg',
+      '_DSC6962.jpg','_DSC6965.jpg','_DSC6971.jpg',
+      '_DSC6974.jpg'
+    ],
+    audio: { src: 'maxmium yearn/maximumyearn-sm.mp3', label: 'Hey Can You Hear Me? — audio' },
+    hasText: true
+  },
+
+  maximumyearn: {
+    folder: 'maxmium yearn',
+    images: [
+      'Unit17-EzraGray-MaximumYearn2.webp',
+      'Unit17-EzraGray-MaximumYearn4.webp',
+      'Unit17-EzraGray-MaximumYearn5.webp',
+      'Unit17-EzraGray-MaximumYearn-ComeonWilly (1).webp',
+      'Unit17-EzraGray-MaximumYearn-Guido.webp',
+      'Unit17-EzraGray-MaximumYearn-LipsSync2_j.webp',
+      'Unit17-EzraGray-MaximumYearn-LipsSync3_j.webp',
+      'Unit17-EzraGray-MaximumYearn-OldBatch_jp.webp',
+      'Unit17-EzraGray-MaximumYearn-Untitled2_j.webp',
+      'Unit17-EzraGray-MaximumYearn-Untitled_jp.webp',
+      'Unit17-EzraGray-MaximumYearn13.webp',
+      'Unit17-EzraGray-MaximumYearn6 (1).webp'
+    ],
+    hasText: false
+  },
+
+  joechgod: {
+    folder: 'joech god',
+    images: [
+      '180703-Emalin-1-_MGL2562.jpg','180703-Emalin-2-_MGL2564.jpg',
+      '180703-Emalin-3-_MGL2566.jpg','180703-Emalin-4-_MGL2569.jpg',
+      '180703-Emalin-5-_MGL2571.jpg','180703-Emalin-6-_MGL2572.jpg',
+      '180703-Emalin-7-_MGL2576.jpg','180703-Emalin-8-_MGL2577.jpg',
+      '180703-Emalin-9-_MGL2581.jpg','180703-Emalin-10-_MGL2582.jpg',
+      '180703-Emalin-11-_MGL2583.jpg','180703-Emalin-12-_MGL2585.jpg',
+      '180703-Emalin-13-_MGL2587.jpg','180703-Emalin-14-_MGL2588.jpg',
+      '180703-Emalin-15-_MGL2589.jpg','180703-Emalin-16-_MGL2590.jpg',
+      '180703-Emalin-17-_MGL2591.jpg','180703-Emalin-18-_MGL2592.jpg',
+      '180703-Emalin-19-_MGL2593.jpg','180703-Emalin-20-_MGL2594.jpg',
+      '180703-Emalin-21-_MGL2600.jpg','180703-Emalin-22-_MGL2601.jpg',
+      '180703-Emalin-23-_MGL2602.jpg','180703-Emalin-24-_MGL2603.jpg',
+      '180703-Emalin-25-_MGL2604.jpg'
+    ],
+    hasText: false
+  },
+
+  brownspace: {
+    folder: 'Brown Space',
+    images: [
+      'IMG_8200.jpg','IMG_8208.jpg','IMG_8216.jpg','IMG_8223.jpg',
+      'IMG_8229 (1).jpg','IMG_8244 (1).jpg','IMG_8254.jpg'
+    ],
+    hasText: false
+  },
+
+  infinitive: {
+    folder: 'Infinitive',
+    images: [
+      'Copy of JS.Inst_04.jpg','Copy of JS.Inst_05.jpg',
+      'Copy of JS.Inst_06.jpg','JS.Inst_07.jpg'
+    ],
+    audio: { src: 'Infinitive/Infinitive_ft_Sean_Nicholas_Savage.mp3', label: 'Infinitive ft. Sean Nicholas Savage — audio' },
+    hasText: false
+  },
+
+  honolulu: {
+    folder: 'honolulu',
+    images: [
+      'Installation_1.jpg','Installation_2.jpg',
+      'Installation_3.jpg','Installation_4 (1).jpg'
+    ],
+    hasText: false
+  }
+
 };
 
-// ── Text modal ────────────────────────────────
+/* ════════════════════════════════════════════════════
+   HOMESCREEN IMAGES
+   Add/remove filenames here in the order you want them.
+   All sourced from the Homescreen/ folder.
+════════════════════════════════════════════════════ */
+var HOMESCREEN_IMAGES = [
+  'image_01.jpg',
+  'image_02.jpg',
+  'image_03.jpg',
+  'image_04.jpg',
+  'image_05.jpg',
+  'image_06.jpg',
+  'image_07.jpg',
+  'image_08.jpg',
+  'image_09.jpg',
+  'image_10.jpg'
+];
+
+/* ════════════════════════════════════════════════════
+   STATE
+════════════════════════════════════════════════════ */
+var carState = {};         // current slide index per exhibition
+var builtDesktop = {};     // track which desktop carousels are built
+var builtPanel = {};       // track which mobile panels are built
+var openPanel = null;      // currently open mobile panel key
+var isMobile = window.innerWidth <= 680;
+window._wasDragging = false;
+
+/* ════════════════════════════════════════════════════
+   RESPONSIVE CHECK
+════════════════════════════════════════════════════ */
+window.addEventListener('resize', function() {
+  isMobile = window.innerWidth <= 680;
+});
+
+/* ════════════════════════════════════════════════════
+   BUILD CAROUSEL IMAGES
+   Returns a <div class="carousel-track"> element
+   populated with imgs from the exhibition config
+════════════════════════════════════════════════════ */
+function buildTrack(key) {
+  var cfg = EXH[key];
+  var track = document.createElement('div');
+  track.className = 'carousel-track';
+  track.id = 'track-' + key;
+  cfg.images.forEach(function(filename) {
+    var img = document.createElement('img');
+    img.src = cfg.folder + '/' + filename;
+    img.alt = '';
+    img.onclick = function() { openLightbox(this); };
+    track.appendChild(img);
+  });
+  return track;
+}
+
+/* ════════════════════════════════════════════════════
+   BUILD PANEL CONTENT (mobile accordion)
+════════════════════════════════════════════════════ */
+function buildPanel(key) {
+  if (builtPanel[key]) return;
+  builtPanel[key] = true;
+
+  var cfg = EXH[key];
+  var inner = document.getElementById('panel-inner-' + key);
+  inner.innerHTML = '';
+
+  // Carousel wrap
+  var wrap = document.createElement('div');
+  wrap.className = 'carousel-wrap';
+  wrap.id = 'mob-car-' + key;
+
+  var track = buildTrack(key);
+  track.id = 'mob-track-' + key;
+  // reset img ids so mobile and desktop don't conflict
+  Array.from(track.querySelectorAll('img')).forEach(function(img) {
+    img.onclick = function() { openLightbox(this); };
+  });
+  wrap.appendChild(track);
+  inner.appendChild(wrap);
+
+  // Controls
+  var controls = document.createElement('div');
+  controls.className = 'carousel-controls';
+  var n = cfg.images.length;
+  controls.innerHTML =
+    '<span class="carousel-counter" id="mob-cnt-' + key + '">1 / ' + n + '</span>' +
+    '<div class="carousel-btns">' +
+      '<button class="c-btn" onclick="mobCMove(\'' + key + '\',-1)">← prev</button>' +
+      '<button class="c-btn" onclick="mobCMove(\'' + key + '\',1)">next →</button>' +
+    '</div>';
+  inner.appendChild(controls);
+
+  // Audio
+  if (cfg.audio) {
+    var ab = document.createElement('div');
+    ab.className = 'audio-block';
+    ab.innerHTML = '<div class="audio-label">' + cfg.audio.label + '</div>' +
+      '<audio controls><source src="' + cfg.audio.src + '" type="audio/mpeg"></audio>';
+    inner.appendChild(ab);
+  }
+
+  // Text button
+  if (cfg.hasText) {
+    var tb = document.createElement('button');
+    tb.className = 'text-btn';
+    tb.textContent = 'Text';
+    tb.onclick = function() { openTextModal(key); };
+    inner.appendChild(tb);
+  }
+
+  // Swipe
+  initSwipe('mob-car-' + key, 'mob-track-' + key, 'mob-cnt-' + key, key, true);
+  carState['mob-' + key] = 0;
+}
+
+/* ════════════════════════════════════════════════════
+   BUILD DESKTOP CAROUSEL
+════════════════════════════════════════════════════ */
+function buildDesktopCarousel(key) {
+  if (builtDesktop[key]) return;
+  builtDesktop[key] = true;
+
+  var cfg = EXH[key];
+  var wrap = document.getElementById('car-' + key);
+  // Clear and insert track
+  var existing = document.getElementById('track-' + key);
+  if (existing) existing.remove();
+
+  var track = buildTrack(key);
+  wrap.appendChild(track);
+
+  var n = cfg.images.length;
+  var cnt = document.getElementById('cnt-' + key);
+  if (cnt) cnt.textContent = '1 / ' + n;
+
+  carState[key] = 0;
+  initSwipe('car-' + key, 'track-' + key, 'cnt-' + key, key, false);
+}
+
+/* ════════════════════════════════════════════════════
+   CAROUSEL MOVEMENT
+════════════════════════════════════════════════════ */
+function cMove(key, dir) {
+  _cMove(key, 'track-' + key, 'cnt-' + key, dir);
+}
+function mobCMove(key, dir) {
+  _cMove('mob-' + key, 'mob-track-' + key, 'mob-cnt-' + key, dir);
+}
+function _cMove(stateKey, trackId, cntId, dir) {
+  if (carState[stateKey] === undefined) carState[stateKey] = 0;
+  var track = document.getElementById(trackId);
+  if (!track) return;
+  var n = track.children.length;
+  carState[stateKey] = (carState[stateKey] + dir + n) % n;
+  track.style.transform = 'translateX(-' + (carState[stateKey] * 100) + '%)';
+  var cnt = document.getElementById(cntId);
+  if (cnt) cnt.textContent = (carState[stateKey] + 1) + ' / ' + n;
+}
+
+/* ════════════════════════════════════════════════════
+   SWIPE / DRAG
+════════════════════════════════════════════════════ */
+function initSwipe(wrapId, trackId, cntId, key, isMobPanel) {
+  var el = document.getElementById(wrapId);
+  if (!el) return;
+  var sx = 0, sy = 0, dragging = false;
+  var stateKey = isMobPanel ? 'mob-' + key : key;
+
+  el.addEventListener('touchstart', function(e) {
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+    window._wasDragging = false;
+  }, {passive: true});
+
+  el.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - sx;
+    var dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 36) {
+      window._wasDragging = true;
+      _cMove(stateKey, trackId, cntId, dx < 0 ? 1 : -1);
+    }
+  }, {passive: true});
+
+  el.addEventListener('mousedown', function(e) {
+    sx = e.clientX; dragging = true; window._wasDragging = false;
+  });
+  el.addEventListener('mouseup', function(e) {
+    if (!dragging) return;
+    var dx = e.clientX - sx;
+    window._wasDragging = Math.abs(dx) > 36;
+    if (window._wasDragging) _cMove(stateKey, trackId, cntId, dx < 0 ? 1 : -1);
+    dragging = false;
+  });
+  el.addEventListener('mouseleave', function() { dragging = false; });
+}
+
+/* ════════════════════════════════════════════════════
+   MOBILE ACCORDION TOGGLE
+════════════════════════════════════════════════════ */
+function toggleExh(key) {
+  if (!isMobile) {
+    // Desktop: open in main column
+    showExh(key);
+    return;
+  }
+
+  var panel = document.getElementById('panel-' + key);
+  if (!panel) return;
+
+  // Close currently open panel
+  if (openPanel && openPanel !== key) {
+    var prev = document.getElementById('panel-' + openPanel);
+    if (prev) prev.classList.remove('open');
+    openPanel = null;
+  }
+
+  if (panel.classList.contains('open')) {
+    // Collapse
+    panel.classList.remove('open');
+    openPanel = null;
+  } else {
+    // Build content if first open
+    buildPanel(key);
+    // Expand
+    panel.classList.add('open');
+    openPanel = key;
+    // Scroll the title into view
+    setTimeout(function() {
+      var head = document.getElementById('item-' + key);
+      if (head) head.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   DESKTOP NAVIGATION
+════════════════════════════════════════════════════ */
+function hideAll() {
+  document.querySelectorAll('.view').forEach(function(v) {
+    v.classList.remove('active');
+  });
+}
+
+function showHome() {
+  if (isMobile) {
+    // Mobile: close any open panel, show home images
+    if (openPanel) {
+      var prev = document.getElementById('panel-' + openPanel);
+      if (prev) prev.classList.remove('open');
+      openPanel = null;
+    }
+    document.getElementById('mobile-home').classList.remove('hidden');
+    document.getElementById('mobile-contact').classList.add('hidden');
+    buildMobileHome();
+    return;
+  }
+  hideAll();
+  document.getElementById('view-home').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showExh(key) {
+  if (isMobile) { toggleExh(key); return; }
+  hideAll();
+  buildDesktopCarousel(key);
+  document.getElementById('view-' + key).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showContact() {
+  if (isMobile) {
+    document.getElementById('mobile-home').classList.add('hidden');
+    document.getElementById('mobile-contact').classList.remove('hidden');
+    return;
+  }
+  hideAll();
+  document.getElementById('view-contact').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+/* ════════════════════════════════════════════════════
+   HOMESCREEN IMAGES
+════════════════════════════════════════════════════ */
+function buildDesktopHome() {
+  var stream = document.getElementById('desktop-home-stream');
+  if (stream.children.length > 0) return;
+  HOMESCREEN_IMAGES.forEach(function(filename) {
+    var img = document.createElement('img');
+    img.src = 'Homescreen/' + filename;
+    img.alt = '';
+    stream.appendChild(img);
+  });
+}
+
+function buildMobileHome() {
+  var el = document.getElementById('mobile-home');
+  if (el.children.length > 0) return;
+  HOMESCREEN_IMAGES.forEach(function(filename) {
+    var img = document.createElement('img');
+    img.src = 'Homescreen/' + filename;
+    img.alt = '';
+    el.appendChild(img);
+  });
+}
+
+/* ════════════════════════════════════════════════════
+   TEXT MODAL (loads from folder/text.txt)
+════════════════════════════════════════════════════ */
 function openTextModal(key) {
+  var cfg = EXH[key];
   var modal = document.getElementById('text-modal');
-  document.getElementById('text-modal-content').textContent = exhTexts[key] || '';
+  var content = document.getElementById('text-modal-content');
+  content.textContent = 'Loading…';
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  fetch(cfg.folder + '/text.txt')
+    .then(function(r) {
+      if (!r.ok) throw new Error('not found');
+      return r.text();
+    })
+    .then(function(txt) {
+      content.textContent = txt;
+    })
+    .catch(function() {
+      content.textContent = '(Text not yet available.)';
+    });
 }
+
 function closeTextModal() {
   document.getElementById('text-modal').classList.remove('open');
   document.body.style.overflow = '';
 }
 
-// ── Lightbox ──────────────────────────────────
+/* ════════════════════════════════════════════════════
+   LIGHTBOX
+════════════════════════════════════════════════════ */
 function openLightbox(img) {
   if (window._wasDragging) return;
   document.getElementById('lightbox-img').src = img.src;
@@ -784,85 +1234,18 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closeLightbox(); closeTextModal(); }
 });
 
-// ── Carousel ──────────────────────────────────
-var state = {};
-window._wasDragging = false;
-
-function cMove(id, dir) {
-  if (!state[id]) state[id] = 0;
-  var track = document.getElementById('track-' + id);
-  var n = track.children.length;
-  state[id] = (state[id] + dir + n) % n;
-  track.style.transform = 'translateX(-' + (state[id] * 100) + '%)';
-  document.getElementById('cnt-' + id).textContent = (state[id] + 1) + ' / ' + n;
-}
-
-function initSwipe(id) {
-  var el = document.getElementById('car-' + id);
-  if (!el) return;
-  var sx = 0, sy = 0, dragging = false;
-
-  el.addEventListener('touchstart', function(e) {
-    sx = e.touches[0].clientX;
-    sy = e.touches[0].clientY;
-    window._wasDragging = false;
-  }, {passive: true});
-
-  el.addEventListener('touchend', function(e) {
-    var dx = e.changedTouches[0].clientX - sx;
-    var dy = e.changedTouches[0].clientY - sy;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 36) {
-      window._wasDragging = true;
-      cMove(id, dx < 0 ? 1 : -1);
-    }
-  }, {passive: true});
-
-  el.addEventListener('mousedown', function(e) {
-    sx = e.clientX; dragging = true; window._wasDragging = false;
-  });
-  el.addEventListener('mouseup', function(e) {
-    if (!dragging) return;
-    var dx = e.clientX - sx;
-    window._wasDragging = Math.abs(dx) > 36;
-    if (window._wasDragging) cMove(id, dx < 0 ? 1 : -1);
-    dragging = false;
-  });
-  el.addEventListener('mouseleave', function() { dragging = false; });
-}
-
-['sweetie','maximumyearn','joechgod','brownspace','infinitive','honolulu'].forEach(initSwipe);
-
-// ── Navigation ────────────────────────────────
-function hideAll() {
-  document.querySelectorAll('.view').forEach(function(v) { v.classList.remove('active'); });
-  document.body.classList.remove('exh-open');
-}
-
-function showHome() {
-  hideAll();
-  document.getElementById('view-home').classList.add('active');
-  window.scrollTo(0, 0);
-}
-
-function showExh(key) {
-  hideAll();
-  state[key] = 0;
-  var track = document.getElementById('track-' + key);
-  if (track) {
-    track.style.transform = 'translateX(0)';
-    var cnt = document.getElementById('cnt-' + key);
-    if (cnt) cnt.textContent = '1 / ' + track.children.length;
+/* ════════════════════════════════════════════════════
+   INIT
+════════════════════════════════════════════════════ */
+(function init() {
+  if (isMobile) {
+    // Mobile: hide main column, build home images inline
+    buildMobileHome();
+  } else {
+    // Desktop: build home image stream
+    buildDesktopHome();
   }
-  document.getElementById('view-' + key).classList.add('active');
-  document.body.classList.add('exh-open');
-  window.scrollTo(0, 0);
-}
-
-function showContact() {
-  hideAll();
-  document.getElementById('view-contact').classList.add('active');
-  window.scrollTo(0, 0);
-}
+})();
 </script>
 
 </body>
