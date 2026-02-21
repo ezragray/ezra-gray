@@ -6,7 +6,6 @@
 <title>Ezra Gray</title>
 <style>
 
-/* ── RESET ── */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
@@ -19,33 +18,32 @@ body {
   overflow-x: hidden;
 }
 
-/* ════════════════════════════════════
-   DESKTOP LAYOUT (>680px)
-   Fixed sidebar + scrolling main
-════════════════════════════════════ */
+/* ══════════════════════════════════════
+   DESKTOP LAYOUT
+══════════════════════════════════════ */
 .wrapper { display: flex; min-height: 100vh; }
 
 .sidebar {
   position: fixed;
   top: 0; left: 0;
-  width: 210px;
+  width: 215px;
   height: 100vh;
   overflow-y: auto;
-  padding: 24px 16px 40px 20px;
+  padding: 26px 18px 40px 22px;
   scrollbar-width: none;
-  z-index: 10;
+  z-index: 20;
   background: #fff;
 }
 .sidebar::-webkit-scrollbar { display: none; }
 
 .main {
-  margin-left: 210px;
-  padding: 24px 24px 80px 0;
+  margin-left: 215px;
   flex: 1;
   min-width: 0;
+  position: relative;
 }
 
-/* ── SIDEBAR TYPOGRAPHY ── */
+/* ── SIDEBAR TYPE ── */
 .sidebar a,
 .sidebar span.lnk {
   font-family: 'Courier New', Courier, monospace;
@@ -53,6 +51,7 @@ body {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+  display: inline;
   line-height: 1.3;
 }
 .sidebar a:hover,
@@ -61,131 +60,99 @@ body {
   text-underline-offset: 2px;
 }
 
-.site-name {
-  display: block;
-  margin-bottom: 12px;
-}
-
-.nav-links { margin-bottom: 16px; }
+.site-name { margin-bottom: 12px; display: block; }
+.nav-links  { margin-bottom: 16px; }
 .nav-links a { display: block; line-height: 1.6; }
 
-/* ── EXHIBITION LIST (sidebar / mobile accordion) ── */
+/* ── EXH LIST ── */
 .exh-list { font-size: 11px; }
 
-.exh-item {
+.exh-section-label {
   display: block;
-  margin-bottom: 0;
+  margin-bottom: 4px;
+  color: #000;
 }
 
-/* The clickable title row */
-.exh-item-head {
+.yr  { display: block; margin-top: 8px; margin-bottom: 1px; color: #999; }
+
+.entry {
   display: block;
-  cursor: pointer;
-  padding: 2px 0;
+  margin-bottom: 5px;
   line-height: 1.3;
-}
-.exh-item-head:hover .exh-item-title {
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.exh-item-year {
-  display: block;
-  color: #999;
-  font-size: 11px;
-  margin-top: 8px;
-}
-
-.exh-item-title {
   font-size: 11px;
 }
-
-.exh-item-venue {
+.entry .venue {
   display: block;
   color: #666;
   font-size: 11px;
   line-height: 1.3;
-  padding-bottom: 3px;
 }
 
-/* Group exhibition entries (external links) */
-.exh-item-group .exh-item-head { cursor: default; }
-.exh-item-group .exh-item-head:hover .exh-item-title { text-decoration: none; }
-.exh-item-group a {
-  font-size: 11px;
-  color: #000;
-  text-decoration: none;
-}
-.exh-item-group a:hover { text-decoration: underline; text-underline-offset: 2px; }
-
-/* ── MOBILE ACCORDION PANEL ── */
-.exh-panel {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.45s ease;
-}
-.exh-panel.open {
-  max-height: 9000px; /* large enough for any content */
-  transition: max-height 0.6s ease;
+.grp-section {
+  display: block;
+  margin-top: 18px;
+  margin-bottom: 4px;
 }
 
-/* ── DESKTOP: hide accordion panels in sidebar,
-   show content in main column instead ── */
-@media (min-width: 681px) {
-  .exh-panel { display: none !important; }
-}
-
-/* ════════════════════════════════════
-   MAIN COLUMN VIEWS (desktop)
-════════════════════════════════════ */
+/* ── VIEWS ── */
 .view { display: none; }
 .view.active { display: block; }
 
-/* ── HOME image stream ── */
-.img-stream { display: flex; flex-direction: column; }
-.img-stream img {
-  width: 100%;
+/* ══════════════════════════════════════
+   HOME — Homescreen/ images
+   Left edge aligned to screen center,
+   extending right. Non-clickable.
+   Spaced loosely but not institutionally.
+══════════════════════════════════════ */
+#view-home {
+  /* images spill from center of full viewport to right */
+  padding: 40px 0 80px 0;
+}
+
+.home-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;   /* loose but not cold */
+}
+
+.home-stream img {
+  /* left edge starts at 0 within .main, which already starts at center */
   display: block;
-  margin-bottom: 10px;
+  width: 90%;          /* fills most of right half */
+  max-width: 900px;
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
-  opacity: 0.88;
+  opacity: 0.92;
 }
 
-/* ── DESKTOP EXH DETAIL ── */
-.exh-detail-header { margin-bottom: 14px; }
-.exh-detail-title {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 11px;
-  font-weight: normal;
-  line-height: 1.3;
-}
-.exh-detail-meta {
-  font-size: 11px;
-  color: #666;
-  line-height: 1.4;
-}
+/* ══════════════════════════════════════
+   EXHIBITION DETAIL
+══════════════════════════════════════ */
+.exh-view { padding: 26px 26px 80px 0; }
 
 .back-btn {
   display: inline-block;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 11px;
-  color: #000;
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 0;
-  margin-bottom: 14px;
+  font-size: 11px; color: #000;
+  cursor: pointer; background: none; border: none;
+  padding: 0; margin-bottom: 14px;
 }
 .back-btn:hover { text-decoration: underline; text-underline-offset: 2px; }
 
+.exh-title {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px; font-weight: normal; line-height: 1.3;
+}
+.exh-meta {
+  font-size: 11px; color: #666;
+  line-height: 1.4; margin-bottom: 16px;
+}
+
 /* ── CAROUSEL ── */
 .carousel-wrap {
-  overflow: hidden;
-  background: #f0f0f0;
-  cursor: grab;
-  margin-bottom: 6px;
+  overflow: hidden; background: #f2f2f2;
+  cursor: grab; margin-bottom: 6px;
 }
 .carousel-wrap:active { cursor: grabbing; }
 
@@ -195,27 +162,19 @@ body {
   will-change: transform;
 }
 .carousel-track img {
-  min-width: 100%;
-  width: 100%;
+  min-width: 100%; width: 100%;
   max-height: 78vh;
-  object-fit: contain;
-  object-position: center;
+  object-fit: contain; object-position: center;
   display: block;
-  user-select: none;
-  -webkit-user-drag: none;
+  user-select: none; -webkit-user-drag: none;
   cursor: zoom-in;
 }
 
 .carousel-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 14px;
 }
-.carousel-counter {
-  font-size: 10px;
-  color: #bbb;
-}
+.carousel-counter { font-size: 10px; color: #bbb; }
 .carousel-btns { display: flex; gap: 10px; }
 .c-btn {
   background: none; border: none;
@@ -224,8 +183,15 @@ body {
 }
 .c-btn:hover { text-decoration: underline; }
 
-/* loading state for images */
-.carousel-track.loading { opacity: 0.4; }
+/* ── AUDIO ── */
+.audio-block {
+  margin-bottom: 14px;
+  padding: 6px 0 4px;
+  border-top: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+}
+.audio-label { font-size: 10px; color: #bbb; margin-bottom: 4px; }
+.audio-block audio { width: 100%; height: 26px; display: block; }
 
 /* ── TEXT BUTTON ── */
 .text-btn {
@@ -234,17 +200,14 @@ body {
   font-size: 11px; color: #000;
   cursor: pointer; background: none; border: none; padding: 0;
   margin-bottom: 14px;
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  text-decoration: underline; text-underline-offset: 2px;
 }
 
 /* ── TEXT MODAL ── */
 .text-modal-overlay {
-  display: none;
-  position: fixed; inset: 0;
+  display: none; position: fixed; inset: 0;
   background: rgba(255,255,255,0.97);
-  z-index: 200;
-  overflow-y: auto;
+  z-index: 200; overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding: 32px 28px 70px;
 }
@@ -252,128 +215,114 @@ body {
 .text-modal-inner {
   max-width: 560px; margin: 0 auto;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 11px; line-height: 1.7;
-  white-space: pre-wrap;
+  font-size: 11px; line-height: 1.7; white-space: pre-wrap;
 }
 .text-modal-close {
-  display: block;
-  font-family: 'Courier New', Courier, monospace;
+  display: block; font-family: 'Courier New', Courier, monospace;
   font-size: 11px; cursor: pointer;
-  background: none; border: none; padding: 0;
-  margin-bottom: 24px;
+  background: none; border: none; padding: 0; margin-bottom: 24px;
 }
 .text-modal-close:hover { text-decoration: underline; }
-
-/* ── AUDIO ── */
-.audio-block {
-  margin-bottom: 14px;
-  padding: 6px 0 4px;
-  border-top: 1px solid #e8e8e8;
-  border-bottom: 1px solid #e8e8e8;
-}
-.audio-label {
-  font-size: 10px; color: #bbb; margin-bottom: 4px;
-}
-.audio-block audio { width: 100%; height: 26px; display: block; }
 
 /* ── LIGHTBOX ── */
 .lightbox {
   display: none; position: fixed; inset: 0;
   background: #000; z-index: 300;
-  align-items: center; justify-content: center;
-  cursor: zoom-out;
+  align-items: center; justify-content: center; cursor: zoom-out;
 }
 .lightbox.open { display: flex; }
 .lightbox img {
   max-width: 100%; max-height: 100%;
-  object-fit: contain; display: block;
-  pointer-events: none;
+  object-fit: contain; display: block; pointer-events: none;
 }
 .lightbox-close {
   position: fixed; top: 14px; right: 18px;
   font-family: 'Courier New', Courier, monospace;
   font-size: 11px; color: #fff; cursor: pointer;
-  background: none; border: none; z-index: 301; opacity: 0.55;
+  background: none; border: none; z-index: 301; opacity: 0.5;
 }
 .lightbox-close:hover { opacity: 1; }
 
-/* ── CONTACT VIEW ── */
-.contact-info {
-  font-size: 11px; line-height: 1.7; color: #666;
+/* ── CONTACT ── */
+.contact-info { font-size: 11px; line-height: 1.7; color: #666; }
+#view-contact { padding: 26px 26px 80px 0; }
+
+/* ══════════════════════════════════════
+   MOBILE (≤680px)
+   Sidebar stacks on top, accordion panels
+   open inline under each exhibition entry
+══════════════════════════════════════ */
+
+/* Mobile accordion panels hidden by default */
+.exh-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+.exh-panel.open {
+  max-height: 9000px;
+  transition: max-height 0.7s ease;
 }
 
-/* ════════════════════════════════════
-   MOBILE (≤680px)
-   Sidebar becomes top nav,
-   exhibitions open as inline accordions
-   directly under their title in the list
-════════════════════════════════════ */
+/* Desktop: don't show accordion panels in sidebar */
+@media (min-width: 681px) {
+  .exh-panel { display: none !important; }
+  /* clickable only for desktop nav */
+  .entry.solo { cursor: pointer; }
+  .entry.solo:hover em { text-decoration: underline; text-underline-offset: 2px; }
+}
+
 @media (max-width: 680px) {
 
   .wrapper { flex-direction: column; }
 
   .sidebar {
-    position: relative;
-    width: 100%; height: auto;
-    padding: 14px 14px 10px 14px;
+    position: relative; width: 100%; height: auto;
+    padding: 14px 14px 8px 14px;
     overflow: visible;
-    border-bottom: 1px solid #ebebeb;
+    border-bottom: 1px solid #eee;
   }
 
-  /* Hide desktop main-column views on mobile */
+  /* on mobile, main column is hidden — everything lives in sidebar accordion */
   .main { display: none !important; }
 
-  /* Accordion panel: the exhibition content lives IN the sidebar list */
-  .exh-panel {
-    display: block !important; /* override desktop hide */
-  }
+  /* accordion panels visible on mobile */
+  .exh-panel { display: block !important; }
 
-  /* Panel content padding */
-  .exh-panel-inner {
-    padding: 10px 0 16px 0;
-  }
+  .exh-panel-inner { padding: 8px 0 16px; }
 
-  /* Carousel full bleed on mobile */
+  /* carousel full bleed on mobile */
   .exh-panel .carousel-wrap {
     margin-left: -14px;
     margin-right: -14px;
-    border-radius: 0;
     margin-bottom: 4px;
   }
   .exh-panel .carousel-track img {
-    max-height: 70vw;
-    min-height: 48vw;
+    max-height: 70vw; min-height: 48vw;
   }
-  .exh-panel .carousel-controls {
-    padding: 6px 0;
-    margin-bottom: 8px;
-  }
+  .exh-panel .carousel-controls { padding: 6px 0; margin-bottom: 8px; }
   .exh-panel .audio-block { margin: 0 0 12px; }
   .exh-panel .text-btn { margin-bottom: 10px; }
 
-  /* Contact on mobile */
+  /* home images on mobile: full width, spaced */
+  #mobile-home { padding: 16px 0 40px; }
+  #mobile-home img {
+    display: block; width: 100%;
+    margin-bottom: 48px;
+    pointer-events: none; user-select: none; opacity: 0.92;
+  }
+  #mobile-home img:last-child { margin-bottom: 0; }
+  #mobile-home.hidden { display: none; }
+
   #mobile-contact { padding: 14px 0 6px; }
   #mobile-contact.hidden { display: none; }
 
-  /* Home images: non-interactive, slight fade */
-  #mobile-home { padding-top: 8px; }
-  #mobile-home img {
-    width: 100%;
-    display: block;
-    margin-bottom: 5px;
-    pointer-events: none;
-    user-select: none;
-    opacity: 0.88;
-  }
+  .text-modal-overlay { padding: 18px 14px 60px; }
 
   .site-name { margin-bottom: 8px; }
-  .nav-links { margin-bottom: 10px; }
-
-  /* Tighten year labels */
-  .exh-item-year { margin-top: 6px; }
-
-  /* Text modal full screen */
-  .text-modal-overlay { padding: 18px 14px 60px; }
+  .nav-links  { margin-bottom: 10px; }
+  .yr         { margin-top: 6px; }
+  .entry      { margin-bottom: 4px; }
 }
 
 </style>
@@ -394,9 +343,9 @@ body {
 
 <div class="wrapper">
 
-<!-- ════════════════════════════════════
-     SIDEBAR / MOBILE NAV
-════════════════════════════════════ -->
+<!-- ══════════════════════════════════════
+     SIDEBAR
+══════════════════════════════════════ -->
 <div class="sidebar">
 
   <div class="site-name">
@@ -408,220 +357,139 @@ body {
     <a onclick="showContact()">Contact</a>
   </div>
 
-  <!-- ════════════════════════════════
-       EXHIBITION LIST
-       Chronological, solo + group mixed
-       Each solo has an .exh-panel that
-       opens inline on mobile
-  ════════════════════════════════════ -->
-  <div class="exh-list" id="exh-list">
+  <div class="exh-list">
 
-    <!-- 2025 GROUP: Should be allowed -->
-    <div class="exh-item exh-item-group" id="item-rinomina">
-      <div class="exh-item-year">2025</div>
-      <div class="exh-item-head">
-        <span class="exh-item-title">
-          <a href="https://rinomina.com/exhibition/should-be-allowed-could-be-forbidden-must-be-wanted-can-be-done-can-be-but-does-not-have-to/" target="_blank"><em>Should be allowed, could be forbidden...</em></a>
-        </span>
-        <span class="exh-item-venue">Rinomina, Paris<br>Oct 14 – Dec 18, 2025</span>
-      </div>
+    <!-- ── SOLO ── -->
+    <span class="exh-section-label">Solo exhibitions</span>
+
+    <span class="yr">2024</span>
+    <span class="entry solo" id="entry-sweetie" onclick="toggleExh('sweetie')">
+      <em>Sweetie (Relationships Play Out)</em>
+      <span class="venue">Unit 17, Vancouver</span>
+    </span>
+    <div class="exh-panel" id="panel-sweetie">
+      <div class="exh-panel-inner" id="panel-inner-sweetie"></div>
     </div>
 
-    <!-- 2025 GROUP: The 12th House -->
-    <div class="exh-item exh-item-group" id="item-12house">
-      <div class="exh-item-head">
-        <span class="exh-item-title">
-          <em>The 12th House</em>, <a href="https://www.instagram.com/thewhiteermine/" target="_blank">The White Ermine</a>
-        </span>
-        <span class="exh-item-venue">Düsseldorf<br>Mar 22 – Jun 2025</span>
-      </div>
+    <span class="yr">2020</span>
+    <span class="entry solo" id="entry-maximumyearn" onclick="toggleExh('maximumyearn')">
+      <em>Maximum Yearn</em>
+      <span class="venue">Unit 17, Vancouver</span>
+    </span>
+    <div class="exh-panel" id="panel-maximumyearn">
+      <div class="exh-panel-inner" id="panel-inner-maximumyearn"></div>
     </div>
 
-    <!-- 2025 GROUP: Hisssss -->
-    <div class="exh-item exh-item-group" id="item-hisssss">
-      <div class="exh-item-head">
-        <span class="exh-item-title">
-          <a href="https://www.instagram.com/hisssss________/" target="_blank"><em>Hisssss</em></a>
-        </span>
-        <span class="exh-item-venue">Los Angeles, May 27, 2025</span>
-      </div>
+    <span class="yr">2018</span>
+    <span class="entry solo" id="entry-joechgod" onclick="toggleExh('joechgod')">
+      <em>Joech God</em>
+      <span class="venue">Emalin, London</span>
+    </span>
+    <div class="exh-panel" id="panel-joechgod">
+      <div class="exh-panel-inner" id="panel-inner-joechgod"></div>
     </div>
 
-    <!-- 2024 SOLO: Sweetie -->
-    <div class="exh-item exh-item-solo" id="item-sweetie">
-      <div class="exh-item-year">2024</div>
-      <div class="exh-item-head" onclick="toggleExh('sweetie')">
-        <span class="exh-item-title"><em>Sweetie (Relationships Play Out)</em></span>
-        <span class="exh-item-venue">Solo exhibition<br>Unit 17, Vancouver</span>
-      </div>
-      <div class="exh-panel" id="panel-sweetie">
-        <div class="exh-panel-inner" id="panel-inner-sweetie">
-          <!-- populated by JS -->
-        </div>
-      </div>
+    <span class="yr">2017</span>
+    <span class="entry solo" id="entry-brownspace" onclick="toggleExh('brownspace')">
+      <em>Brown Space</em>
+      <span class="venue">Almanac Inn, Turin</span>
+    </span>
+    <div class="exh-panel" id="panel-brownspace">
+      <div class="exh-panel-inner" id="panel-inner-brownspace"></div>
     </div>
 
-    <!-- 2024 GROUP: Brains -->
-    <div class="exh-item exh-item-group" id="item-brains">
-      <div class="exh-item-head">
-        <span class="exh-item-title">
-          <a href="https://mediump.com/Sofia-Duchovny-Ezra-Grey-brains-2024" target="_blank"><em>Brains</em></a> w/ Sophia Duchovny, <a href="https://www.instagram.com/_mediump_/" target="_blank">Medium P</a>
-        </span>
-        <span class="exh-item-venue">Berlin<br>Dec 13, 2024 – Mar 31, 2025</span>
-      </div>
+    <span class="entry solo" id="entry-infinitive" onclick="toggleExh('infinitive')">
+      <em>Infinitive</em>
+      <span class="venue">Jeffrey Stark, New York City</span>
+    </span>
+    <div class="exh-panel" id="panel-infinitive">
+      <div class="exh-panel-inner" id="panel-inner-infinitive"></div>
     </div>
 
-    <!-- 2021 GROUP: Nothing but Murmurs -->
-    <div class="exh-item exh-item-group" id="item-murmurs">
-      <div class="exh-item-year">2021</div>
-      <div class="exh-item-head">
-        <span class="exh-item-title">
-          <a href="https://imlabor.org/twobytwobytwo/011/" target="_blank"><em>Nothing but Murmurs</em></a>
-        </span>
-        <span class="exh-item-venue">2x2x2 by im labor, Tokyo<br>Sep 19 – Oct 23, 2021</span>
-      </div>
+    <span class="yr">2016</span>
+    <span class="entry solo" id="entry-honolulu" onclick="toggleExh('honolulu')">
+      <em>Honolulu</em>
+      <span class="venue">with Sean Nicholas Savage<br>Gallery Honolulu, Zurich</span>
+    </span>
+    <div class="exh-panel" id="panel-honolulu">
+      <div class="exh-panel-inner" id="panel-inner-honolulu"></div>
     </div>
 
-    <!-- 2020 SOLO: Maximum Yearn -->
-    <div class="exh-item exh-item-solo" id="item-maximumyearn">
-      <div class="exh-item-year">2020</div>
-      <div class="exh-item-head" onclick="toggleExh('maximumyearn')">
-        <span class="exh-item-title"><em>Maximum Yearn</em></span>
-        <span class="exh-item-venue">Solo exhibition<br>Unit 17, Vancouver</span>
-      </div>
-      <div class="exh-panel" id="panel-maximumyearn">
-        <div class="exh-panel-inner" id="panel-inner-maximumyearn">
-          <!-- populated by JS -->
-        </div>
-      </div>
-    </div>
+    <!-- ── GROUP ── -->
+    <span class="grp-section">Group exhibitions</span>
 
-    <!-- 2019 GROUP: SUPER NATURAL -->
-    <div class="exh-item exh-item-group" id="item-supernatural">
-      <div class="exh-item-year">2019</div>
-      <div class="exh-item-head">
-        <span class="exh-item-title">
-          <a href="https://www.unit17.org/super-natural" target="_blank"><em>SUPER NATURAL</em></a>
-        </span>
-        <span class="exh-item-venue">Unit 17, Vancouver<br>Jan 26 – Mar 17, 2019</span>
-      </div>
-    </div>
+    <span class="yr">2025</span>
+    <span class="entry">
+      <a href="https://rinomina.com/exhibition/should-be-allowed-could-be-forbidden-must-be-wanted-can-be-done-can-be-but-does-not-have-to/" target="_blank"><em>Should be allowed, could be forbidden...</em></a>
+      <span class="venue">Rinomina, Paris<br>Oct 14 – Dec 18, 2025</span>
+    </span>
 
-    <!-- 2018 SOLO: Joech God -->
-    <div class="exh-item exh-item-solo" id="item-joechgod">
-      <div class="exh-item-year">2018</div>
-      <div class="exh-item-head" onclick="toggleExh('joechgod')">
-        <span class="exh-item-title"><em>Joech God</em></span>
-        <span class="exh-item-venue">Solo exhibition<br>Emalin, London</span>
-      </div>
-      <div class="exh-panel" id="panel-joechgod">
-        <div class="exh-panel-inner" id="panel-inner-joechgod">
-          <!-- populated by JS -->
-        </div>
-      </div>
-    </div>
+    <span class="entry">
+      <em>The 12th House</em>, <a href="https://www.instagram.com/thewhiteermine/" target="_blank">The White Ermine</a>
+      <span class="venue">Düsseldorf<br>Mar 22 – Jun 2025</span>
+    </span>
 
-    <!-- 2017 SOLO: Brown Space -->
-    <div class="exh-item exh-item-solo" id="item-brownspace">
-      <div class="exh-item-year">2017</div>
-      <div class="exh-item-head" onclick="toggleExh('brownspace')">
-        <span class="exh-item-title"><em>Brown Space</em></span>
-        <span class="exh-item-venue">Solo exhibition<br>Almanac Inn, Turin</span>
-      </div>
-      <div class="exh-panel" id="panel-brownspace">
-        <div class="exh-panel-inner" id="panel-inner-brownspace">
-          <!-- populated by JS -->
-        </div>
-      </div>
-    </div>
+    <span class="entry">
+      <a href="https://www.instagram.com/hisssss________/" target="_blank"><em>Hisssss</em></a>
+      <span class="venue">Los Angeles, May 27, 2025</span>
+    </span>
 
-    <!-- 2017 SOLO: Infinitive -->
-    <div class="exh-item exh-item-solo" id="item-infinitive">
-      <div class="exh-item-head" onclick="toggleExh('infinitive')">
-        <span class="exh-item-title"><em>Infinitive</em></span>
-        <span class="exh-item-venue">Solo exhibition<br>Jeffrey Stark, New York City</span>
-      </div>
-      <div class="exh-panel" id="panel-infinitive">
-        <div class="exh-panel-inner" id="panel-inner-infinitive">
-          <!-- populated by JS -->
-        </div>
-      </div>
-    </div>
+    <span class="yr">2024</span>
+    <span class="entry">
+      <a href="https://mediump.com/Sofia-Duchovny-Ezra-Grey-brains-2024" target="_blank"><em>Brains</em></a> w/ Sophia Duchovny,
+      <a href="https://www.instagram.com/_mediump_/" target="_blank">Medium P</a>
+      <span class="venue">Berlin<br>Dec 13, 2024 – Mar 31, 2025</span>
+    </span>
 
-    <!-- 2017 GROUP: Samstag -->
-    <div class="exh-item exh-item-group" id="item-samstag">
-      <div class="exh-item-head">
-        <span class="exh-item-title">
-          <a href="http://maxruf.com/Samstag_05.08..pdf" target="_blank"><em>Samstag</em></a>
-        </span>
-        <span class="exh-item-venue">Keifholzstrasse 401, Berlin<br>Aug 5, 2017</span>
-      </div>
-    </div>
+    <span class="yr">2021</span>
+    <span class="entry">
+      <a href="https://imlabor.org/twobytwobytwo/011/" target="_blank"><em>Nothing but Murmurs</em></a>
+      <span class="venue">2x2x2 by im labor, Tokyo<br>Sep 19 – Oct 23, 2021</span>
+    </span>
 
-    <!-- 2016 SOLO: Honolulu -->
-    <div class="exh-item exh-item-solo" id="item-honolulu">
-      <div class="exh-item-year">2016</div>
-      <div class="exh-item-head" onclick="toggleExh('honolulu')">
-        <span class="exh-item-title"><em>Honolulu</em></span>
-        <span class="exh-item-venue">with Sean Nicholas Savage<br>Gallery Honolulu, Zurich</span>
-      </div>
-      <div class="exh-panel" id="panel-honolulu">
-        <div class="exh-panel-inner" id="panel-inner-honolulu">
-          <!-- populated by JS -->
-        </div>
-      </div>
-    </div>
+    <span class="yr">2019</span>
+    <span class="entry">
+      <a href="https://www.unit17.org/super-natural" target="_blank"><em>SUPER NATURAL</em></a>
+      <span class="venue">Unit 17, Vancouver<br>Jan 26 – Mar 17, 2019</span>
+    </span>
 
-    <!-- 2016 GROUP: With Institutions Like These -->
-    <div class="exh-item exh-item-group" id="item-institutions">
-      <div class="exh-item-head">
-        <span class="exh-item-title">
-          <a href="https://viktorwang.com/With-Institutions-Like-These" target="_blank"><em>With Institutions Like These…</em></a>
-        </span>
-        <span class="exh-item-venue">Lancaster Gate, London<br>Mar 19 – Apr 10, 2016</span>
-      </div>
-    </div>
+    <span class="yr">2017</span>
+    <span class="entry">
+      <a href="http://maxruf.com/Samstag_05.08..pdf" target="_blank"><em>Samstag</em></a>
+      <span class="venue">Keifholzstrasse 401, Berlin<br>Aug 5, 2017</span>
+    </span>
 
-    <!-- 2016 GROUP: Folly -->
-    <div class="exh-item exh-item-group" id="item-folly">
-      <div class="exh-item-head">
-        <span class="exh-item-title">
-          <a href="https://emalin.co.uk/exhibitions/folly" target="_blank"><em>Folly</em></a>
-        </span>
-        <span class="exh-item-venue">Emalin Projects, Scotland<br>Mar 26 – 28, 2016</span>
-      </div>
-    </div>
+    <span class="yr">2016</span>
+    <span class="entry">
+      <a href="https://viktorwang.com/With-Institutions-Like-These" target="_blank"><em>With Institutions Like These…</em></a>
+      <span class="venue">Lancaster Gate, London<br>Mar 19 – Apr 10, 2016</span>
+    </span>
+    <span class="entry">
+      <a href="https://emalin.co.uk/exhibitions/folly" target="_blank"><em>Folly</em></a>
+      <span class="venue">Emalin Projects, Scotland<br>Mar 26 – 28, 2016</span>
+    </span>
 
-    <!-- 2014 GROUP: Rundgang -->
-    <div class="exh-item exh-item-group" id="item-rundgang">
-      <div class="exh-item-year">2014</div>
-      <div class="exh-item-head">
-        <span class="exh-item-title"><em>Rundgang</em></span>
-        <span class="exh-item-venue">Kunstakademie Düsseldorf<br>Feb 2014</span>
-      </div>
-    </div>
+    <span class="yr">2014</span>
+    <span class="entry">
+      <em>Rundgang</em>
+      <span class="venue">Kunstakademie Düsseldorf, Feb 2014</span>
+    </span>
 
-    <!-- 2013 GROUP -->
-    <div class="exh-item exh-item-group" id="item-recognition">
-      <div class="exh-item-year">2013</div>
-      <div class="exh-item-head">
-        <span class="exh-item-title"><em>A process of recognition</em></span>
-        <span class="exh-item-venue">Battat Contemporary, Montréal<br>Feb 28 – Apr 13, 2013</span>
-      </div>
-    </div>
+    <span class="yr">2013</span>
+    <span class="entry">
+      <em>A process of recognition</em>
+      <span class="venue">Battat Contemporary, Montréal<br>Feb 28 – Apr 13, 2013</span>
+    </span>
 
-    <!-- 2012 GROUP -->
-    <div class="exh-item exh-item-group" id="item-6position">
-      <div class="exh-item-year">2012</div>
-      <div class="exh-item-head">
-        <span class="exh-item-title"><em>6 POSITION</em></span>
-        <span class="exh-item-venue">WWTWO, Montréal, Nov 2012</span>
-      </div>
-    </div>
+    <span class="yr">2012</span>
+    <span class="entry">
+      <em>6 POSITION</em>
+      <span class="venue">WWTWO, Montréal, Nov 2012</span>
+    </span>
 
   </div><!-- /exh-list -->
 
-  <!-- Mobile-only: home images + contact rendered here -->
+  <!-- Mobile-only home + contact -->
   <div id="mobile-home"></div>
   <div id="mobile-contact" class="hidden">
     <div class="contact-info">
@@ -632,111 +500,197 @@ body {
 
 </div><!-- /sidebar -->
 
-<!-- ════════════════════════════════════
+<!-- ══════════════════════════════════════
      MAIN (desktop only)
-════════════════════════════════════ -->
+══════════════════════════════════════ -->
 <div class="main">
 
   <!-- HOME -->
   <div id="view-home" class="view active">
-    <div class="img-stream" id="desktop-home-stream">
+    <div class="home-stream" id="home-stream">
       <!-- populated by JS from Homescreen/ folder -->
     </div>
   </div>
 
-  <!-- SWEETIE -->
-  <div id="view-sweetie" class="view">
+  <!-- ── SWEETIE ── -->
+  <div id="view-sweetie" class="view exh-view">
     <button class="back-btn" onclick="showHome()">← back</button>
-    <div class="exh-detail-header">
-      <div class="exh-detail-title">Sweetie (Relationships Play Out)</div>
-      <div class="exh-detail-meta">Solo exhibition · 7 March – 11 May 2024 · Unit 17, Vancouver</div>
-    </div>
+    <div class="exh-title">Sweetie (Relationships Play Out)</div>
+    <div class="exh-meta">Solo exhibition · 7 March – 11 May 2024 · Unit 17, Vancouver</div>
     <div class="carousel-wrap" id="car-sweetie">
-      <div class="carousel-track" id="track-sweetie"></div>
+      <div class="carousel-track" id="track-sweetie">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/EzraGray-Sweetie-RelationshipsPlayOut.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6830.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6832.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6835.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6837.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6842.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6853.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6855.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6856.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6857.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6861.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6868.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6869.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6876.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6879.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6883.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6886.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6889.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6894.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6900.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6901.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6909.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6915.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6917.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6921.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6922-2.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6928.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6933.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6934.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6936.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6950.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6952.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6953.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6961.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6962.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6965.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6971.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/_DSC6974.jpg" alt="" onclick="openLightbox(this)">
+      </div>
     </div>
     <div class="carousel-controls">
-      <span class="carousel-counter" id="cnt-sweetie">– / –</span>
+      <span class="carousel-counter" id="cnt-sweetie">1 / 38</span>
       <div class="carousel-btns">
         <button class="c-btn" onclick="cMove('sweetie',-1)">← prev</button>
         <button class="c-btn" onclick="cMove('sweetie',1)">next →</button>
       </div>
     </div>
-    <div class="audio-block">
-      <div class="audio-label">Hey Can You Hear Me? — audio</div>
-      <audio controls><source src="maxmium yearn/maximumyearn-sm.mp3" type="audio/mpeg"></audio>
-    </div>
-    <button class="text-btn" onclick="openTextModal('sweetie')">Text</button>
+    <button class="text-btn" onclick="openTextModal('Sweetie (Relationships Play Out) @ Unit 17, Vancouver')">Text</button>
   </div>
 
-  <!-- MAXIMUM YEARN -->
-  <div id="view-maximumyearn" class="view">
+  <!-- ── MAXIMUM YEARN ── -->
+  <div id="view-maximumyearn" class="view exh-view">
     <button class="back-btn" onclick="showHome()">← back</button>
-    <div class="exh-detail-header">
-      <div class="exh-detail-title">Maximum Yearn</div>
-      <div class="exh-detail-meta">Solo exhibition · August 2020 · Unit 17, Vancouver</div>
-    </div>
+    <div class="exh-title">Maximum Yearn</div>
+    <div class="exh-meta">Solo exhibition · August 2020 · Unit 17, Vancouver</div>
     <div class="carousel-wrap" id="car-maximumyearn">
-      <div class="carousel-track" id="track-maximumyearn"></div>
+      <div class="carousel-track" id="track-maximumyearn">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn2.webp" alt="" onclick="openLightbox(this)">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn4.webp" alt="" onclick="openLightbox(this)">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn5.webp" alt="" onclick="openLightbox(this)">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-ComeonWilly (1).webp" alt="" onclick="openLightbox(this)">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Guido.webp" alt="" onclick="openLightbox(this)">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync2_j.webp" alt="" onclick="openLightbox(this)">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync3_j.webp" alt="" onclick="openLightbox(this)">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-OldBatch_jp.webp" alt="" onclick="openLightbox(this)">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled2_j.webp" alt="" onclick="openLightbox(this)">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled_jp.webp" alt="" onclick="openLightbox(this)">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn13.webp" alt="" onclick="openLightbox(this)">
+        <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn6 (1).webp" alt="" onclick="openLightbox(this)">
+      </div>
     </div>
     <div class="carousel-controls">
-      <span class="carousel-counter" id="cnt-maximumyearn">– / –</span>
+      <span class="carousel-counter" id="cnt-maximumyearn">1 / 12</span>
       <div class="carousel-btns">
         <button class="c-btn" onclick="cMove('maximumyearn',-1)">← prev</button>
         <button class="c-btn" onclick="cMove('maximumyearn',1)">next →</button>
       </div>
     </div>
+    <div class="audio-block">
+      <div class="audio-label">Hey Can You Hear Me? — audio</div>
+      <audio controls>
+        <source src="maxmium yearn/maximumyearn-sm.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+    <button class="text-btn" onclick="openTextModal('maxmium yearn')">Text</button>
   </div>
 
-  <!-- JOECH GOD -->
-  <div id="view-joechgod" class="view">
+  <!-- ── JOECH GOD ── -->
+  <div id="view-joechgod" class="view exh-view">
     <button class="back-btn" onclick="showHome()">← back</button>
-    <div class="exh-detail-header">
-      <div class="exh-detail-title">Joech God</div>
-      <div class="exh-detail-meta">Solo exhibition · July 2018 · Emalin, London</div>
-    </div>
+    <div class="exh-title">Joech God</div>
+    <div class="exh-meta">Solo exhibition · July 2018 · Emalin, London</div>
     <div class="carousel-wrap" id="car-joechgod">
-      <div class="carousel-track" id="track-joechgod"></div>
+      <div class="carousel-track" id="track-joechgod">
+        <img src="joech god/180703-Emalin-1-_MGL2562.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-2-_MGL2564.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-3-_MGL2566.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-4-_MGL2569.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-5-_MGL2571.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-6-_MGL2572.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-7-_MGL2576.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-8-_MGL2577.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-9-_MGL2581.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-10-_MGL2582.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-11-_MGL2583.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-12-_MGL2585.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-13-_MGL2587.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-14-_MGL2588.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-15-_MGL2589.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-16-_MGL2590.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-17-_MGL2591.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-18-_MGL2592.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-19-_MGL2593.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-20-_MGL2594.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-21-_MGL2600.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-22-_MGL2601.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-23-_MGL2602.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-24-_MGL2603.jpg" alt="" onclick="openLightbox(this)">
+        <img src="joech god/180703-Emalin-25-_MGL2604.jpg" alt="" onclick="openLightbox(this)">
+      </div>
     </div>
     <div class="carousel-controls">
-      <span class="carousel-counter" id="cnt-joechgod">– / –</span>
+      <span class="carousel-counter" id="cnt-joechgod">1 / 25</span>
       <div class="carousel-btns">
         <button class="c-btn" onclick="cMove('joechgod',-1)">← prev</button>
         <button class="c-btn" onclick="cMove('joechgod',1)">next →</button>
       </div>
     </div>
+    <button class="text-btn" onclick="openTextModal('joech god')">Text</button>
   </div>
 
-  <!-- BROWN SPACE -->
-  <div id="view-brownspace" class="view">
+  <!-- ── BROWN SPACE ── -->
+  <div id="view-brownspace" class="view exh-view">
     <button class="back-btn" onclick="showHome()">← back</button>
-    <div class="exh-detail-header">
-      <div class="exh-detail-title">Brown Space</div>
-      <div class="exh-detail-meta">Solo exhibition · February 2017 · Almanac Inn, Turin</div>
-    </div>
+    <div class="exh-title">Brown Space</div>
+    <div class="exh-meta">Solo exhibition · February 2017 · Almanac Inn, Turin</div>
     <div class="carousel-wrap" id="car-brownspace">
-      <div class="carousel-track" id="track-brownspace"></div>
+      <div class="carousel-track" id="track-brownspace">
+        <img src="Brown Space/IMG_8200.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Brown Space/IMG_8208.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Brown Space/IMG_8216.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Brown Space/IMG_8223.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Brown Space/IMG_8229 (1).jpg" alt="" onclick="openLightbox(this)">
+        <img src="Brown Space/IMG_8244 (1).jpg" alt="" onclick="openLightbox(this)">
+        <img src="Brown Space/IMG_8254.jpg" alt="" onclick="openLightbox(this)">
+      </div>
     </div>
     <div class="carousel-controls">
-      <span class="carousel-counter" id="cnt-brownspace">– / –</span>
+      <span class="carousel-counter" id="cnt-brownspace">1 / 7</span>
       <div class="carousel-btns">
         <button class="c-btn" onclick="cMove('brownspace',-1)">← prev</button>
         <button class="c-btn" onclick="cMove('brownspace',1)">next →</button>
       </div>
     </div>
+    <button class="text-btn" onclick="openTextModal('Brown Space')">Text</button>
   </div>
 
-  <!-- INFINITIVE -->
-  <div id="view-infinitive" class="view">
+  <!-- ── INFINITIVE ── -->
+  <div id="view-infinitive" class="view exh-view">
     <button class="back-btn" onclick="showHome()">← back</button>
-    <div class="exh-detail-header">
-      <div class="exh-detail-title">Infinitive</div>
-      <div class="exh-detail-meta">Solo exhibition · February 2017 · Jeffrey Stark, New York City</div>
-    </div>
+    <div class="exh-title">Infinitive</div>
+    <div class="exh-meta">Solo exhibition · February 2017 · Jeffrey Stark, New York City</div>
     <div class="carousel-wrap" id="car-infinitive">
-      <div class="carousel-track" id="track-infinitive"></div>
+      <div class="carousel-track" id="track-infinitive">
+        <img src="Infinitive/Copy of JS.Inst_04.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Infinitive/Copy of JS.Inst_05.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Infinitive/Copy of JS.Inst_06.jpg" alt="" onclick="openLightbox(this)">
+        <img src="Infinitive/JS.Inst_07.jpg" alt="" onclick="openLightbox(this)">
+      </div>
     </div>
     <div class="carousel-controls">
-      <span class="carousel-counter" id="cnt-infinitive">– / –</span>
+      <span class="carousel-counter" id="cnt-infinitive">1 / 4</span>
       <div class="carousel-btns">
         <button class="c-btn" onclick="cMove('infinitive',-1)">← prev</button>
         <button class="c-btn" onclick="cMove('infinitive',1)">next →</button>
@@ -744,30 +698,37 @@ body {
     </div>
     <div class="audio-block">
       <div class="audio-label">Infinitive ft. Sean Nicholas Savage — audio</div>
-      <audio controls><source src="Infinitive/Infinitive_ft_Sean_Nicholas_Savage.mp3" type="audio/mpeg"></audio>
+      <audio controls>
+        <source src="Infinitive/Infinitive_ft_Sean_Nicholas_Savage.mp3" type="audio/mpeg">
+      </audio>
     </div>
+    <button class="text-btn" onclick="openTextModal('Infinitive')">Text</button>
   </div>
 
-  <!-- HONOLULU -->
-  <div id="view-honolulu" class="view">
+  <!-- ── HONOLULU ── -->
+  <div id="view-honolulu" class="view exh-view">
     <button class="back-btn" onclick="showHome()">← back</button>
-    <div class="exh-detail-header">
-      <div class="exh-detail-title">Honolulu</div>
-      <div class="exh-detail-meta">September 2016 · Gallery Honolulu, Zurich · with Sean Nicholas Savage</div>
-    </div>
+    <div class="exh-title">Honolulu</div>
+    <div class="exh-meta">September 2016 · Gallery Honolulu, Zurich · with Sean Nicholas Savage</div>
     <div class="carousel-wrap" id="car-honolulu">
-      <div class="carousel-track" id="track-honolulu"></div>
+      <div class="carousel-track" id="track-honolulu">
+        <img src="honolulu/Installation_1.jpg" alt="" onclick="openLightbox(this)">
+        <img src="honolulu/Installation_2.jpg" alt="" onclick="openLightbox(this)">
+        <img src="honolulu/Installation_3.jpg" alt="" onclick="openLightbox(this)">
+        <img src="honolulu/Installation_4 (1).jpg" alt="" onclick="openLightbox(this)">
+      </div>
     </div>
     <div class="carousel-controls">
-      <span class="carousel-counter" id="cnt-honolulu">– / –</span>
+      <span class="carousel-counter" id="cnt-honolulu">1 / 4</span>
       <div class="carousel-btns">
         <button class="c-btn" onclick="cMove('honolulu',-1)">← prev</button>
         <button class="c-btn" onclick="cMove('honolulu',1)">next →</button>
       </div>
     </div>
+    <button class="text-btn" onclick="openTextModal('honolulu')">Text</button>
   </div>
 
-  <!-- CONTACT -->
+  <!-- ── CONTACT ── -->
   <div id="view-contact" class="view">
     <div class="contact-info">
       Paris, France<br><br>
@@ -779,41 +740,46 @@ body {
 </div><!-- /wrapper -->
 
 <script>
-/* ════════════════════════════════════════════════════
-   EXHIBITION CONFIG
-   Each solo exhibition declares:
-   - folder:  path to image folder
-   - images:  filenames in alphabetical order
-              (add/remove/rename here to manage gallery)
-   - audio:   optional audio file path
-   - hasText: whether to show a Text button
-              (loads from folder/text.txt)
-════════════════════════════════════════════════════ */
-var EXH = {
+/* ══════════════════════════════════════════════
+   HOMESCREEN IMAGES
+   Edit this list to add / remove / reorder.
+   All files live in the Homescreen/ folder.
+   List them here in the order you want them shown.
+══════════════════════════════════════════════ */
+var HOMESCREEN = [
+  /* add filenames here, e.g.: */
+  /* 'image01.jpg', */
+  /* 'image02.jpg', */
+];
 
+/* ══════════════════════════════════════════════
+   MOBILE ACCORDION CONFIG
+   Each solo exhibition's folder path for text.txt
+══════════════════════════════════════════════ */
+var EXH_MOBILE = {
   sweetie: {
+    title: 'Sweetie (Relationships Play Out)',
+    meta:  '7 March – 11 May 2024 · Unit 17, Vancouver',
     folder: 'Sweetie (Relationships Play Out) @ Unit 17, Vancouver',
     images: [
       'EzraGray-Sweetie-RelationshipsPlayOut.jpg',
-      '_DSC6830.jpg','_DSC6832.jpg','_DSC6835.jpg',
-      '_DSC6837.jpg','_DSC6842.jpg','_DSC6853.jpg',
-      '_DSC6855.jpg','_DSC6856.jpg','_DSC6857.jpg',
-      '_DSC6861.jpg','_DSC6868.jpg','_DSC6869.jpg',
-      '_DSC6876.jpg','_DSC6879.jpg','_DSC6883.jpg',
-      '_DSC6886.jpg','_DSC6889.jpg','_DSC6894.jpg',
-      '_DSC6900.jpg','_DSC6901.jpg','_DSC6909.jpg',
-      '_DSC6915.jpg','_DSC6917.jpg','_DSC6921.jpg',
-      '_DSC6922-2.jpg','_DSC6928.jpg','_DSC6933.jpg',
-      '_DSC6934.jpg','_DSC6936.jpg','_DSC6950.jpg',
-      '_DSC6952.jpg','_DSC6953.jpg','_DSC6961.jpg',
-      '_DSC6962.jpg','_DSC6965.jpg','_DSC6971.jpg',
+      '_DSC6830.jpg','_DSC6832.jpg','_DSC6835.jpg','_DSC6837.jpg',
+      '_DSC6842.jpg','_DSC6853.jpg','_DSC6855.jpg','_DSC6856.jpg',
+      '_DSC6857.jpg','_DSC6861.jpg','_DSC6868.jpg','_DSC6869.jpg',
+      '_DSC6876.jpg','_DSC6879.jpg','_DSC6883.jpg','_DSC6886.jpg',
+      '_DSC6889.jpg','_DSC6894.jpg','_DSC6900.jpg','_DSC6901.jpg',
+      '_DSC6909.jpg','_DSC6915.jpg','_DSC6917.jpg','_DSC6921.jpg',
+      '_DSC6922-2.jpg','_DSC6928.jpg','_DSC6933.jpg','_DSC6934.jpg',
+      '_DSC6936.jpg','_DSC6950.jpg','_DSC6952.jpg','_DSC6953.jpg',
+      '_DSC6961.jpg','_DSC6962.jpg','_DSC6965.jpg','_DSC6971.jpg',
       '_DSC6974.jpg'
     ],
-    audio: { src: 'maxmium yearn/maximumyearn-sm.mp3', label: 'Hey Can You Hear Me? — audio' },
+    audio: null,
     hasText: true
   },
-
   maximumyearn: {
+    title: 'Maximum Yearn',
+    meta:  'August 2020 · Unit 17, Vancouver',
     folder: 'maxmium yearn',
     images: [
       'Unit17-EzraGray-MaximumYearn2.webp',
@@ -829,10 +795,12 @@ var EXH = {
       'Unit17-EzraGray-MaximumYearn13.webp',
       'Unit17-EzraGray-MaximumYearn6 (1).webp'
     ],
-    hasText: false
+    audio: { src: 'maxmium yearn/maximumyearn-sm.mp3', label: 'Hey Can You Hear Me? — audio' },
+    hasText: true
   },
-
   joechgod: {
+    title: 'Joech God',
+    meta:  'July 2018 · Emalin, London',
     folder: 'joech god',
     images: [
       '180703-Emalin-1-_MGL2562.jpg','180703-Emalin-2-_MGL2564.jpg',
@@ -849,132 +817,126 @@ var EXH = {
       '180703-Emalin-23-_MGL2602.jpg','180703-Emalin-24-_MGL2603.jpg',
       '180703-Emalin-25-_MGL2604.jpg'
     ],
-    hasText: false
+    audio: null,
+    hasText: true
   },
-
   brownspace: {
+    title: 'Brown Space',
+    meta:  'February 2017 · Almanac Inn, Turin',
     folder: 'Brown Space',
     images: [
       'IMG_8200.jpg','IMG_8208.jpg','IMG_8216.jpg','IMG_8223.jpg',
       'IMG_8229 (1).jpg','IMG_8244 (1).jpg','IMG_8254.jpg'
     ],
-    hasText: false
+    audio: null,
+    hasText: true
   },
-
   infinitive: {
+    title: 'Infinitive',
+    meta:  'February 2017 · Jeffrey Stark, New York City',
     folder: 'Infinitive',
     images: [
       'Copy of JS.Inst_04.jpg','Copy of JS.Inst_05.jpg',
       'Copy of JS.Inst_06.jpg','JS.Inst_07.jpg'
     ],
     audio: { src: 'Infinitive/Infinitive_ft_Sean_Nicholas_Savage.mp3', label: 'Infinitive ft. Sean Nicholas Savage — audio' },
-    hasText: false
+    hasText: true
   },
-
   honolulu: {
+    title: 'Honolulu',
+    meta:  'September 2016 · Gallery Honolulu, Zurich · with Sean Nicholas Savage',
     folder: 'honolulu',
     images: [
       'Installation_1.jpg','Installation_2.jpg',
       'Installation_3.jpg','Installation_4 (1).jpg'
     ],
-    hasText: false
+    audio: null,
+    hasText: true
   }
-
 };
 
-/* ════════════════════════════════════════════════════
-   HOMESCREEN IMAGES
-   Add/remove filenames here in the order you want them.
-   All sourced from the Homescreen/ folder.
-════════════════════════════════════════════════════ */
-var HOMESCREEN_IMAGES = [
-  'image_01.jpg',
-  'image_02.jpg',
-  'image_03.jpg',
-  'image_04.jpg',
-  'image_05.jpg',
-  'image_06.jpg',
-  'image_07.jpg',
-  'image_08.jpg',
-  'image_09.jpg',
-  'image_10.jpg'
-];
-
-/* ════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════
    STATE
-════════════════════════════════════════════════════ */
-var carState = {};         // current slide index per exhibition
-var builtDesktop = {};     // track which desktop carousels are built
-var builtPanel = {};       // track which mobile panels are built
-var openPanel = null;      // currently open mobile panel key
-var isMobile = window.innerWidth <= 680;
-window._wasDragging = false;
+══════════════════════════════════════════════ */
+var carState  = {};
+var builtPanel = {};
+var openPanel  = null;
+var _wasDragging = false;
 
-/* ════════════════════════════════════════════════════
-   RESPONSIVE CHECK
-════════════════════════════════════════════════════ */
-window.addEventListener('resize', function() {
-  isMobile = window.innerWidth <= 680;
-});
+function isMobile() { return window.innerWidth <= 680; }
 
-/* ════════════════════════════════════════════════════
-   BUILD CAROUSEL IMAGES
-   Returns a <div class="carousel-track"> element
-   populated with imgs from the exhibition config
-════════════════════════════════════════════════════ */
-function buildTrack(key) {
-  var cfg = EXH[key];
-  var track = document.createElement('div');
-  track.className = 'carousel-track';
-  track.id = 'track-' + key;
-  cfg.images.forEach(function(filename) {
+/* ══════════════════════════════════════════════
+   HOME STREAM — desktop
+══════════════════════════════════════════════ */
+(function buildDesktopHome() {
+  var stream = document.getElementById('home-stream');
+  if (!stream) return;
+  HOMESCREEN.forEach(function(fn) {
     var img = document.createElement('img');
-    img.src = cfg.folder + '/' + filename;
+    img.src = 'Homescreen/' + fn;
     img.alt = '';
-    img.onclick = function() { openLightbox(this); };
-    track.appendChild(img);
+    stream.appendChild(img);
   });
-  return track;
+})();
+
+/* ══════════════════════════════════════════════
+   HOME STREAM — mobile
+══════════════════════════════════════════════ */
+function buildMobileHome() {
+  var el = document.getElementById('mobile-home');
+  if (!el || el.dataset.built) return;
+  el.dataset.built = '1';
+  HOMESCREEN.forEach(function(fn) {
+    var img = document.createElement('img');
+    img.src = 'Homescreen/' + fn;
+    img.alt = '';
+    el.appendChild(img);
+  });
 }
 
-/* ════════════════════════════════════════════════════
-   BUILD PANEL CONTENT (mobile accordion)
-════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   MOBILE ACCORDION — build panel content
+══════════════════════════════════════════════ */
 function buildPanel(key) {
   if (builtPanel[key]) return;
   builtPanel[key] = true;
 
-  var cfg = EXH[key];
+  var cfg = EXH_MOBILE[key];
   var inner = document.getElementById('panel-inner-' + key);
   inner.innerHTML = '';
 
-  // Carousel wrap
+  /* carousel */
   var wrap = document.createElement('div');
   wrap.className = 'carousel-wrap';
   wrap.id = 'mob-car-' + key;
 
-  var track = buildTrack(key);
+  var track = document.createElement('div');
+  track.className = 'carousel-track';
   track.id = 'mob-track-' + key;
-  // reset img ids so mobile and desktop don't conflict
-  Array.from(track.querySelectorAll('img')).forEach(function(img) {
+
+  cfg.images.forEach(function(fn) {
+    var img = document.createElement('img');
+    img.src = cfg.folder + '/' + fn;
+    img.alt = '';
     img.onclick = function() { openLightbox(this); };
+    track.appendChild(img);
   });
   wrap.appendChild(track);
   inner.appendChild(wrap);
 
-  // Controls
-  var controls = document.createElement('div');
-  controls.className = 'carousel-controls';
+  /* controls */
   var n = cfg.images.length;
-  controls.innerHTML =
+  var ctrl = document.createElement('div');
+  ctrl.className = 'carousel-controls';
+  ctrl.innerHTML =
     '<span class="carousel-counter" id="mob-cnt-' + key + '">1 / ' + n + '</span>' +
     '<div class="carousel-btns">' +
-      '<button class="c-btn" onclick="mobCMove(\'' + key + '\',-1)">← prev</button>' +
-      '<button class="c-btn" onclick="mobCMove(\'' + key + '\',1)">next →</button>' +
+      '<button class="c-btn" onclick="mobMove(\'' + key + '\',-1)">← prev</button>' +
+      '<button class="c-btn" onclick="mobMove(\'' + key + '\',1)">next →</button>' +
     '</div>';
-  inner.appendChild(controls);
+  inner.appendChild(ctrl);
 
-  // Audio
+  /* audio */
   if (cfg.audio) {
     var ab = document.createElement('div');
     ab.className = 'audio-block';
@@ -983,57 +945,111 @@ function buildPanel(key) {
     inner.appendChild(ab);
   }
 
-  // Text button
+  /* text button */
   if (cfg.hasText) {
     var tb = document.createElement('button');
     tb.className = 'text-btn';
     tb.textContent = 'Text';
-    tb.onclick = function() { openTextModal(key); };
+    tb.onclick = function() { openTextModal(cfg.folder); };
     inner.appendChild(tb);
   }
 
-  // Swipe
-  initSwipe('mob-car-' + key, 'mob-track-' + key, 'mob-cnt-' + key, key, true);
+  /* swipe */
   carState['mob-' + key] = 0;
+  initSwipe(wrap, track, 'mob-cnt-' + key, 'mob-' + key);
 }
 
-/* ════════════════════════════════════════════════════
-   BUILD DESKTOP CAROUSEL
-════════════════════════════════════════════════════ */
-function buildDesktopCarousel(key) {
-  if (builtDesktop[key]) return;
-  builtDesktop[key] = true;
+/* ══════════════════════════════════════════════
+   ACCORDION TOGGLE
+══════════════════════════════════════════════ */
+function toggleExh(key) {
+  if (!isMobile()) {
+    showExh(key);
+    return;
+  }
 
-  var cfg = EXH[key];
-  var wrap = document.getElementById('car-' + key);
-  // Clear and insert track
-  var existing = document.getElementById('track-' + key);
-  if (existing) existing.remove();
+  /* close previously open panel */
+  if (openPanel && openPanel !== key) {
+    document.getElementById('panel-' + openPanel).classList.remove('open');
+    openPanel = null;
+  }
 
-  var track = buildTrack(key);
-  wrap.appendChild(track);
-
-  var n = cfg.images.length;
-  var cnt = document.getElementById('cnt-' + key);
-  if (cnt) cnt.textContent = '1 / ' + n;
-
-  carState[key] = 0;
-  initSwipe('car-' + key, 'track-' + key, 'cnt-' + key, key, false);
+  var panel = document.getElementById('panel-' + key);
+  if (panel.classList.contains('open')) {
+    panel.classList.remove('open');
+    openPanel = null;
+  } else {
+    buildPanel(key);
+    panel.classList.add('open');
+    openPanel = key;
+    setTimeout(function() {
+      document.getElementById('entry-' + key)
+        .scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  }
 }
 
-/* ════════════════════════════════════════════════════
-   CAROUSEL MOVEMENT
-════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   CAROUSEL — desktop
+══════════════════════════════════════════════ */
 function cMove(key, dir) {
-  _cMove(key, 'track-' + key, 'cnt-' + key, dir);
-}
-function mobCMove(key, dir) {
-  _cMove('mob-' + key, 'mob-track-' + key, 'mob-cnt-' + key, dir);
-}
-function _cMove(stateKey, trackId, cntId, dir) {
-  if (carState[stateKey] === undefined) carState[stateKey] = 0;
-  var track = document.getElementById(trackId);
+  var track = document.getElementById('track-' + key);
   if (!track) return;
+  if (carState[key] === undefined) carState[key] = 0;
+  var n = track.children.length;
+  carState[key] = (carState[key] + dir + n) % n;
+  track.style.transform = 'translateX(-' + (carState[key] * 100) + '%)';
+  document.getElementById('cnt-' + key).textContent = (carState[key] + 1) + ' / ' + n;
+}
+
+/* CAROUSEL — mobile accordion */
+function mobMove(key, dir) {
+  var sk = 'mob-' + key;
+  var track = document.getElementById('mob-track-' + key);
+  if (!track) return;
+  if (carState[sk] === undefined) carState[sk] = 0;
+  var n = track.children.length;
+  carState[sk] = (carState[sk] + dir + n) % n;
+  track.style.transform = 'translateX(-' + (carState[sk] * 100) + '%)';
+  document.getElementById('mob-cnt-' + key).textContent = (carState[sk] + 1) + ' / ' + n;
+}
+
+/* ══════════════════════════════════════════════
+   SWIPE / DRAG
+══════════════════════════════════════════════ */
+function initSwipe(wrap, track, cntId, stateKey) {
+  var sx = 0, sy = 0, dragging = false;
+
+  wrap.addEventListener('touchstart', function(e) {
+    sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
+    _wasDragging = false;
+  }, {passive: true});
+
+  wrap.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - sx;
+    var dy = e.changedTouches[0].clientY - sy;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 36) {
+      _wasDragging = true;
+      _slideBy(track, cntId, stateKey, dx < 0 ? 1 : -1);
+    }
+  }, {passive: true});
+
+  wrap.addEventListener('mousedown', function(e) {
+    sx = e.clientX; dragging = true; _wasDragging = false;
+  });
+  wrap.addEventListener('mouseup', function(e) {
+    if (!dragging) return;
+    var dx = e.clientX - sx;
+    _wasDragging = Math.abs(dx) > 36;
+    if (_wasDragging) _slideBy(track, cntId, stateKey, dx < 0 ? 1 : -1);
+    dragging = false;
+  });
+  wrap.addEventListener('mouseleave', function() { dragging = false; });
+}
+
+function _slideBy(track, cntId, stateKey, dir) {
+  if (carState[stateKey] === undefined) carState[stateKey] = 0;
   var n = track.children.length;
   carState[stateKey] = (carState[stateKey] + dir + n) % n;
   track.style.transform = 'translateX(-' + (carState[stateKey] * 100) + '%)';
@@ -1041,84 +1057,19 @@ function _cMove(stateKey, trackId, cntId, dir) {
   if (cnt) cnt.textContent = (carState[stateKey] + 1) + ' / ' + n;
 }
 
-/* ════════════════════════════════════════════════════
-   SWIPE / DRAG
-════════════════════════════════════════════════════ */
-function initSwipe(wrapId, trackId, cntId, key, isMobPanel) {
-  var el = document.getElementById(wrapId);
-  if (!el) return;
-  var sx = 0, sy = 0, dragging = false;
-  var stateKey = isMobPanel ? 'mob-' + key : key;
-
-  el.addEventListener('touchstart', function(e) {
-    sx = e.touches[0].clientX;
-    sy = e.touches[0].clientY;
-    window._wasDragging = false;
-  }, {passive: true});
-
-  el.addEventListener('touchend', function(e) {
-    var dx = e.changedTouches[0].clientX - sx;
-    var dy = e.changedTouches[0].clientY - sy;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 36) {
-      window._wasDragging = true;
-      _cMove(stateKey, trackId, cntId, dx < 0 ? 1 : -1);
-    }
-  }, {passive: true});
-
-  el.addEventListener('mousedown', function(e) {
-    sx = e.clientX; dragging = true; window._wasDragging = false;
-  });
-  el.addEventListener('mouseup', function(e) {
-    if (!dragging) return;
-    var dx = e.clientX - sx;
-    window._wasDragging = Math.abs(dx) > 36;
-    if (window._wasDragging) _cMove(stateKey, trackId, cntId, dx < 0 ? 1 : -1);
-    dragging = false;
-  });
-  el.addEventListener('mouseleave', function() { dragging = false; });
-}
-
-/* ════════════════════════════════════════════════════
-   MOBILE ACCORDION TOGGLE
-════════════════════════════════════════════════════ */
-function toggleExh(key) {
-  if (!isMobile) {
-    // Desktop: open in main column
-    showExh(key);
-    return;
+/* Init desktop carousel swipe */
+['sweetie','maximumyearn','joechgod','brownspace','infinitive','honolulu'].forEach(function(key) {
+  var wrap  = document.getElementById('car-' + key);
+  var track = document.getElementById('track-' + key);
+  if (wrap && track) {
+    carState[key] = 0;
+    initSwipe(wrap, track, 'cnt-' + key, key);
   }
+});
 
-  var panel = document.getElementById('panel-' + key);
-  if (!panel) return;
-
-  // Close currently open panel
-  if (openPanel && openPanel !== key) {
-    var prev = document.getElementById('panel-' + openPanel);
-    if (prev) prev.classList.remove('open');
-    openPanel = null;
-  }
-
-  if (panel.classList.contains('open')) {
-    // Collapse
-    panel.classList.remove('open');
-    openPanel = null;
-  } else {
-    // Build content if first open
-    buildPanel(key);
-    // Expand
-    panel.classList.add('open');
-    openPanel = key;
-    // Scroll the title into view
-    setTimeout(function() {
-      var head = document.getElementById('item-' + key);
-      if (head) head.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 60);
-  }
-}
-
-/* ════════════════════════════════════════════════════
-   DESKTOP NAVIGATION
-════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════
+   NAVIGATION — desktop
+══════════════════════════════════════════════ */
 function hideAll() {
   document.querySelectorAll('.view').forEach(function(v) {
     v.classList.remove('active');
@@ -1126,16 +1077,14 @@ function hideAll() {
 }
 
 function showHome() {
-  if (isMobile) {
-    // Mobile: close any open panel, show home images
+  if (isMobile()) {
     if (openPanel) {
-      var prev = document.getElementById('panel-' + openPanel);
-      if (prev) prev.classList.remove('open');
+      document.getElementById('panel-' + openPanel).classList.remove('open');
       openPanel = null;
     }
+    buildMobileHome();
     document.getElementById('mobile-home').classList.remove('hidden');
     document.getElementById('mobile-contact').classList.add('hidden');
-    buildMobileHome();
     return;
   }
   hideAll();
@@ -1144,15 +1093,18 @@ function showHome() {
 }
 
 function showExh(key) {
-  if (isMobile) { toggleExh(key); return; }
   hideAll();
-  buildDesktopCarousel(key);
+  carState[key] = 0;
+  var track = document.getElementById('track-' + key);
+  if (track) track.style.transform = 'translateX(0)';
+  var cnt = document.getElementById('cnt-' + key);
+  if (cnt && track) cnt.textContent = '1 / ' + track.children.length;
   document.getElementById('view-' + key).classList.add('active');
   window.scrollTo(0, 0);
 }
 
 function showContact() {
-  if (isMobile) {
+  if (isMobile()) {
     document.getElementById('mobile-home').classList.add('hidden');
     document.getElementById('mobile-contact').classList.remove('hidden');
     return;
@@ -1162,53 +1114,23 @@ function showContact() {
   window.scrollTo(0, 0);
 }
 
-/* ════════════════════════════════════════════════════
-   HOMESCREEN IMAGES
-════════════════════════════════════════════════════ */
-function buildDesktopHome() {
-  var stream = document.getElementById('desktop-home-stream');
-  if (stream.children.length > 0) return;
-  HOMESCREEN_IMAGES.forEach(function(filename) {
-    var img = document.createElement('img');
-    img.src = 'Homescreen/' + filename;
-    img.alt = '';
-    stream.appendChild(img);
-  });
-}
-
-function buildMobileHome() {
-  var el = document.getElementById('mobile-home');
-  if (el.children.length > 0) return;
-  HOMESCREEN_IMAGES.forEach(function(filename) {
-    var img = document.createElement('img');
-    img.src = 'Homescreen/' + filename;
-    img.alt = '';
-    el.appendChild(img);
-  });
-}
-
-/* ════════════════════════════════════════════════════
-   TEXT MODAL (loads from folder/text.txt)
-════════════════════════════════════════════════════ */
-function openTextModal(key) {
-  var cfg = EXH[key];
-  var modal = document.getElementById('text-modal');
+/* ══════════════════════════════════════════════
+   TEXT MODAL — loads folder/text.txt
+══════════════════════════════════════════════ */
+function openTextModal(folder) {
+  var modal   = document.getElementById('text-modal');
   var content = document.getElementById('text-modal-content');
   content.textContent = 'Loading…';
   modal.classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  fetch(cfg.folder + '/text.txt')
+  fetch(folder + '/text.txt')
     .then(function(r) {
-      if (!r.ok) throw new Error('not found');
+      if (!r.ok) throw new Error('missing');
       return r.text();
     })
-    .then(function(txt) {
-      content.textContent = txt;
-    })
-    .catch(function() {
-      content.textContent = '(Text not yet available.)';
-    });
+    .then(function(txt) { content.textContent = txt; })
+    .catch(function()   { content.textContent = '(Text not yet available.)'; });
 }
 
 function closeTextModal() {
@@ -1216,11 +1138,11 @@ function closeTextModal() {
   document.body.style.overflow = '';
 }
 
-/* ════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════
    LIGHTBOX
-════════════════════════════════════════════════════ */
+══════════════════════════════════════════════ */
 function openLightbox(img) {
-  if (window._wasDragging) return;
+  if (_wasDragging) return;
   document.getElementById('lightbox-img').src = img.src;
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1229,23 +1151,9 @@ function closeLightbox() {
   document.getElementById('lightbox').classList.remove('open');
   document.body.style.overflow = '';
 }
-
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') { closeLightbox(); closeTextModal(); }
 });
-
-/* ════════════════════════════════════════════════════
-   INIT
-════════════════════════════════════════════════════ */
-(function init() {
-  if (isMobile) {
-    // Mobile: hide main column, build home images inline
-    buildMobileHome();
-  } else {
-    // Desktop: build home image stream
-    buildDesktopHome();
-  }
-})();
 </script>
 
 </body>
