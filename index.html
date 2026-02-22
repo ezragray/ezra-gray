@@ -15,7 +15,6 @@ body {
   line-height: 1.3;
   color: #000;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 /* ══════════════════════════════════════
@@ -86,28 +85,26 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
 
 /* ══════════════════════════════════════
    HOME VIEW — desktop
-   Images start at 50vw (screen centre),
-   extend rightward. Non-interactive.
-   Sidebar sits on top via z-index.
+   Images left-edge starts at screen midpoint (50vw).
+   Sidebar (215px wide, fixed) sits on top via z-index.
+   Images extend to the right edge with a small margin.
 ══════════════════════════════════════ */
 #view-home {
   min-height: 100vh;
-  padding: 36px 0 100px 0;
+  padding: 36px 24px 100px 0;
 }
 
 .home-stream {
   display: flex;
   flex-direction: column;
   gap: 64px;
-  /* start at screen centre */
-  margin-left: 50vw;
-  /* extend to right edge minus small margin */
-  width: calc(50vw - 24px);
+  padding-left: 50vw;   /* left edge of each image = screen midpoint */
 }
 
 .home-stream img {
   display: block;
-  width: 100%;
+  width: 100%;           /* fills from 50vw to right edge */
+  max-width: 100%;
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
@@ -282,20 +279,20 @@ a:hover { text-decoration: underline; text-underline-offset: 2px; }
   .exh-panel .text-btn    { margin-bottom: 10px; }
 
   /* mobile homescreen images:
-     right-justified, width ~50vw, spaced generously */
+     right-justified, ~54vw so left edge sits just past midpoint */
   #mobile-home {
-    padding: 20px 14px 40px 0;
+    padding: 20px 0 40px 0;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;   /* right-justify */
+    align-items: flex-end;
     gap: 48px;
   }
   #mobile-home img {
     display: block;
-    width: 52vw;             /* just past midpoint */
+    width: 54vw;
     pointer-events: none; user-select: none; opacity: 0.93;
   }
-  #mobile-home.hidden    { display: none !important; }
+  #mobile-home.hidden { display: none !important; }
 
   #mobile-contact { padding: 14px 0 6px; }
   #mobile-contact.hidden { display: none; }
@@ -674,19 +671,17 @@ var EXH = {
   sweetie: {
     folder: 'Sweetie (Relationships Play Out) @ Unit 17, Vancouver',
     images: [
-      /* All images from this folder, alphabetical order.
-         Update this list if you rename or add files. */
-      'EzraGray-Sweetie-RelationshipsPlayOut.jpg',
-      '_DSC6830.jpg', '_DSC6832.jpg', '_DSC6835.jpg', '_DSC6837.jpg',
-      '_DSC6842.jpg', '_DSC6853.jpg', '_DSC6855.jpg', '_DSC6856.jpg',
-      '_DSC6857.jpg', '_DSC6861.jpg', '_DSC6868.jpg', '_DSC6869.jpg',
-      '_DSC6876.jpg', '_DSC6879.jpg', '_DSC6883.jpg', '_DSC6886.jpg',
-      '_DSC6889.jpg', '_DSC6894.jpg', '_DSC6900.jpg', '_DSC6901.jpg',
-      '_DSC6909.jpg', '_DSC6915.jpg', '_DSC6917.jpg', '_DSC6921.jpg',
-      '_DSC6922-2.jpg', '_DSC6928.jpg', '_DSC6933.jpg', '_DSC6934.jpg',
-      '_DSC6936.jpg', '_DSC6950.jpg', '_DSC6952.jpg', '_DSC6953.jpg',
-      '_DSC6961.jpg', '_DSC6962.jpg', '_DSC6965.jpg', '_DSC6971.jpg',
-      '_DSC6974.jpg'
+      /* Actual filenames on disk, alphabetical string order */
+      '10Sweetie.jpg', '11Sweetie.jpg', '12Sweetie.jpg', '13Sweetie.jpg',
+      '14Sweetie.jpg', '15Sweetie.jpg', '16Sweetie.jpg', '17Sweetie.jpg',
+      '18Sweetie.jpg', '19Sweetie.jpg', '1Sweetie.jpg',
+      '20Sweetie.jpg', '21Sweetie.jpg', '22Sweetie.jpg', '23Sweetie.jpg',
+      '24Sweetie.jpg', '25Sweetie.jpg', '26Sweetie.jpg', '27Sweetie.jpg',
+      '28Sweetie.jpg', '29Sweetie.jpg', '2Sweetie.jpg',
+      '30Sweetie.jpg', '31Sweetie.jpg', '32Sweetie.jpg', '33Sweetie.jpg',
+      '34Sweetie.jpg', '35Sweetie.jpg', '36Sweetie.jpg', '37Sweetie.jpg',
+      '38Sweetie.jpg', '3Sweetie.jpg', '4Sweetie.jpg', '5Sweetie.jpg',
+      '6Sweetie.jpg', '7Sweetie.jpg', '8Sweetie.jpg', '9Sweetie.jpg'
     ],
     audio: null,
     hasText: true
@@ -774,8 +769,10 @@ var EXH = {
    Mobile: images are ~52vw wide, right-justified.
 ══════════════════════════════════════════════════════ */
 var HOMESCREEN = [
-  /* 'image01.jpg', */
-  /* 'image02.jpg', */
+  /* Files from the Homescreen/ folder, in the order you want them shown.
+     Currently on disk: */
+  '180703-Emalin-23-_MGL2602.jpg',
+  /* Add more filenames here as you populate the Homescreen/ folder */
 ];
 
 /* ══════════════════════════════════════════════════════
