@@ -15,9 +15,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ══════════════════════════════════
-   SIDEBAR
-══════════════════════════════════ */
 .sidebar {
   position: fixed;
   top: 0; left: 0;
@@ -31,7 +28,6 @@ body {
 }
 .sidebar::-webkit-scrollbar { display: none; }
 
-/* Hover: underline + 1pt larger */
 a, .lnk, .c-btn, .back-btn, .text-btn, .text-modal-close {
   font-family: 'Courier New', Courier, monospace;
   font-size: 11px;
@@ -46,8 +42,6 @@ a { color: #000; text-decoration: none; cursor: pointer; }
 .sidebar a, .sidebar .lnk { display: inline; line-height: 1.3; }
 
 .site-name { display: block; margin-bottom: 10px; }
-.nav-links { margin-bottom: 16px; }
-.nav-links a { display: block; line-height: 1.8; }
 
 .exh-list { font-size: 11px; }
 .exh-section-label { display: block; margin-bottom: 4px; }
@@ -56,54 +50,13 @@ a { color: #000; text-decoration: none; cursor: pointer; }
 .entry .venue { display: block; color: #666; font-size: 11px; line-height: 1.3; }
 .grp-section { display: block; margin-top: 20px; margin-bottom: 4px; }
 
-/* Mobile homescreen image — fixed, right half of screen,
-   sits behind scrolling text (z-index 1) */
-#mobile-homescreen {
-  display: none;
-}
-@media (max-width: 680px) {
-  #mobile-homescreen {
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 50vw;
-    width: 50vw;
-    height: 100vh;
-    z-index: 2;
-    pointer-events: none;
-  }
-  #mobile-homescreen img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: left top;
-  }
-}
+/* Accordion panels */
+.exh-panel { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+.exh-panel.open { max-height: 9000px; transition: max-height 0.7s ease; }
+
+/* Exhibition detail views */
 .view { display: none; }
 .view.active { display: block; }
-#view-home.active { display: flex; }
-
-/* Desktop home — single image, right side, full viewport height */
-#view-home {
-  margin-left: 215px;
-  min-height: 100vh;
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-end;
-}
-#view-home .home-stream img {
-  display: block;
-  height: 100vh;
-  width: auto;
-  max-width: calc(100vw - 215px);
-  object-fit: contain;
-  object-position: right top;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
-}
-
-/* Exhibition detail */
 .exh-view { margin-left: 215px; padding: 26px 26px 80px 0; }
 .back-btn {
   display: inline-block; color: #000; cursor: pointer;
@@ -165,11 +118,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   align-items: center; justify-content: center;
 }
 .lightbox.open { display: flex; }
-.lightbox img {
-  max-width: 100%; max-height: 100%;
-  object-fit: contain; display: block;
-  pointer-events: none; user-select: none;
-}
+.lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; pointer-events: none; user-select: none; }
 .lightbox-close {
   position: fixed; top: 14px; right: 18px;
   font-family: 'Courier New', Courier, monospace;
@@ -192,35 +141,22 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   font-size: 10px; color: #fff; opacity: 0.5; z-index: 301;
 }
 
-/* Contact */
-.contact-info { font-size: 11px; line-height: 1.7; color: #666; }
-#view-contact { margin-left: 215px; padding: 26px 26px 80px 0; }
-
-/* ══════════════════════════════════
-   ACCORDION PANELS (both solo + group)
-══════════════════════════════════ */
-.exh-panel { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
-.exh-panel.open { max-height: 9000px; transition: max-height 0.7s ease; }
-
+/* Desktop: panels are hidden except contact which stays inline */
 @media (min-width: 681px) {
   .exh-panel { display: none !important; }
-  .entry.solo, .entry.grp-accordion { cursor: pointer; }
-  .entry.solo:hover em, .entry.grp-accordion:hover em {
-    text-decoration: underline; text-underline-offset: 2px;
-  }
-  #mobile-home { display: none !important; }
+  #panel-contact { display: block !important; }
+  .entry.clickable { cursor: pointer; }
+  .entry.clickable:hover em { text-decoration: underline; text-underline-offset: 2px; }
+  .entry.contact-entry { cursor: pointer; }
+  .entry.contact-entry:hover { text-decoration: underline; text-underline-offset: 2px; font-size: 12px; }
 }
 
-/* ══════════════════════════════════
-   MOBILE
-══════════════════════════════════ */
+/* Mobile */
 @media (max-width: 680px) {
   .sidebar {
     position: relative; width: 100%; height: auto;
     padding: 14px 14px 0 14px; overflow: visible;
   }
-  
-
   .view { display: none !important; }
   .exh-panel { display: block !important; }
   .exh-panel-inner { padding: 8px 0 16px; }
@@ -229,9 +165,6 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   .exh-panel .carousel-controls { padding: 6px 0; margin-bottom: 8px; }
   .exh-panel .audio-block { margin: 0 0 12px; }
   .exh-panel .text-btn { margin-bottom: 10px; }
-
-  #mobile-contact { padding: 14px 0 6px; }
-  #mobile-contact.hidden { display: none; }
   .text-modal-overlay { padding: 18px 14px 60px; }
   .site-name { margin-bottom: 8px; }
   .yr { margin-top: 6px; }
@@ -254,73 +187,65 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <div class="text-modal-inner" id="text-modal-content"></div>
 </div>
 
-<!-- Mobile homescreen image: fixed, right half, behind text -->
-<div id="mobile-homescreen">
-  <img src="Homescreen/180703-Emalin-23-_MGL2602.jpg" alt="">
-</div>
-
-<!-- ══════════════════════════════════
-     SIDEBAR
-══════════════════════════════════ -->
 <div class="sidebar">
+  <span class="site-name">Ezra Gray</span>
 
-  <span class="site-name"><span class="lnk" onclick="showHome()">Ezra Gray</span></span>
-  <div class="nav-links">
-    <a onclick="showHome()">Home</a>
-    <a onclick="showContact()">Contact</a>
+  <!-- Contact accordion — works on both desktop and mobile -->
+  <span class="entry contact-entry" onclick="toggleContact()">Contact</span>
+  <div class="exh-panel" id="panel-contact">
+    <div class="exh-panel-inner">
+      <div style="padding: 4px 0 14px; color: #666;">ezragray&#64;gmail&#46;com</div>
+    </div>
   </div>
 
   <div class="exh-list">
-    <span class="exh-section-label">Solo exhibitions</span>
+    <span class="exh-section-label" style="margin-top:14px;">Solo exhibitions</span>
 
     <span class="yr">2024</span>
-    <span class="entry solo" id="entry-sweetie" onclick="toggleExh('sweetie')">
+    <span class="entry clickable" id="entry-sweetie" onclick="toggleExh('sweetie')">
       <em>Sweetie (Relationships Play Out)</em>
       <span class="venue">Unit 17, Vancouver</span>
     </span>
     <div class="exh-panel" id="panel-sweetie"><div class="exh-panel-inner" id="panel-inner-sweetie"></div></div>
 
     <span class="yr">2020</span>
-    <span class="entry solo" id="entry-maximumyearn" onclick="toggleExh('maximumyearn')">
+    <span class="entry clickable" id="entry-maximumyearn" onclick="toggleExh('maximumyearn')">
       <em>Maximum Yearn</em>
       <span class="venue">Unit 17, Vancouver</span>
     </span>
     <div class="exh-panel" id="panel-maximumyearn"><div class="exh-panel-inner" id="panel-inner-maximumyearn"></div></div>
 
     <span class="yr">2018</span>
-    <span class="entry solo" id="entry-joechgod" onclick="toggleExh('joechgod')">
+    <span class="entry clickable" id="entry-joechgod" onclick="toggleExh('joechgod')">
       <em>Joech God</em>
       <span class="venue">Emalin, London</span>
     </span>
     <div class="exh-panel" id="panel-joechgod"><div class="exh-panel-inner" id="panel-inner-joechgod"></div></div>
 
     <span class="yr">2017</span>
-    <span class="entry solo" id="entry-brownspace" onclick="toggleExh('brownspace')">
+    <span class="entry clickable" id="entry-brownspace" onclick="toggleExh('brownspace')">
       <em>Brown Space</em>
       <span class="venue">Almanac Inn, Turin</span>
     </span>
     <div class="exh-panel" id="panel-brownspace"><div class="exh-panel-inner" id="panel-inner-brownspace"></div></div>
 
-    <span class="entry solo" id="entry-infinitive" onclick="toggleExh('infinitive')">
+    <span class="entry clickable" id="entry-infinitive" onclick="toggleExh('infinitive')">
       <em>Infinitive</em>
       <span class="venue">Jeffrey Stark, New York City</span>
     </span>
     <div class="exh-panel" id="panel-infinitive"><div class="exh-panel-inner" id="panel-inner-infinitive"></div></div>
 
     <span class="yr">2016</span>
-    <span class="entry solo" id="entry-honolulu" onclick="toggleExh('honolulu')">
+    <span class="entry clickable" id="entry-honolulu" onclick="toggleExh('honolulu')">
       <em>Honolulu</em>
       <span class="venue">with Sean Nicholas Savage<br>Gallery Honolulu, Zurich</span>
     </span>
     <div class="exh-panel" id="panel-honolulu"><div class="exh-panel-inner" id="panel-inner-honolulu"></div></div>
 
-    <!-- ── GROUP EXHIBITIONS ── -->
     <span class="grp-section">Group exhibitions</span>
 
     <span class="yr">2025</span>
-
-    <!-- Artissima — accordion in group section -->
-    <span class="entry grp-accordion" id="entry-artissima" onclick="toggleExh('artissima')">
+    <span class="entry clickable" id="entry-artissima" onclick="toggleExh('artissima')">
       <em>Artissima</em>
       <span class="venue">Artissima, Turin</span>
     </span>
@@ -355,25 +280,10 @@ a { color: #000; text-decoration: none; cursor: pointer; }
     <span class="yr">2012</span>
     <span class="entry"><em>6 POSITION</em><span class="venue">WWTWO, Montréal</span></span>
   </div>
-
-  <div id="mobile-contact" class="hidden">
-    <div class="contact-info" style="padding:14px 0 6px;">
-      Paris, France<br><br>ezragray&#64;gmail&#46;com
-    </div>
-  </div>
 </div>
 
-<!-- ══════════════════════════════════
-     PAGE CONTENT (desktop)
-══════════════════════════════════ -->
+<!-- EXHIBITION VIEWS (desktop) -->
 
-<div id="view-home" class="view active">
-  <div class="home-stream">
-    <img src="Homescreen/180703-Emalin-23-_MGL2602.jpg" alt="">
-  </div>
-</div>
-
-<!-- SWEETIE -->
 <div id="view-sweetie" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Sweetie (Relationships Play Out)</div>
@@ -414,7 +324,6 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('Sweetie (Relationships Play Out) @ Unit 17, Vancouver')">Text</button>
 </div>
 
-<!-- MAXIMUM YEARN -->
 <div id="view-maximumyearn" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Maximum Yearn</div>
@@ -449,7 +358,6 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('maxmium yearn')">Text</button>
 </div>
 
-<!-- JOECH GOD -->
 <div id="view-joechgod" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Joech God</div>
@@ -493,7 +401,6 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('joech god')">Text</button>
 </div>
 
-<!-- BROWN SPACE -->
 <div id="view-brownspace" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Brown Space</div>
@@ -519,7 +426,6 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('Brown Space')">Text</button>
 </div>
 
-<!-- INFINITIVE -->
 <div id="view-infinitive" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Infinitive</div>
@@ -546,7 +452,6 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('Infinitive')">Text</button>
 </div>
 
-<!-- HONOLULU -->
 <div id="view-honolulu" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Honolulu</div>
@@ -569,7 +474,6 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('honolulu')">Text</button>
 </div>
 
-<!-- ARTISSIMA desktop view -->
 <div id="view-artissima" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Artissima</div>
@@ -588,14 +492,6 @@ a { color: #000; text-decoration: none; cursor: pointer; }
       <button class="c-btn" onclick="cMove('artissima',-1)">← prev</button>
       <button class="c-btn" onclick="cMove('artissima',1)">next →</button>
     </div>
-  </div>
-  <button class="text-btn" onclick="openTextModal('Artissima2025')">Text</button>
-</div>
-
-<!-- CONTACT -->
-<div id="view-contact" class="view">
-  <div class="contact-info" style="margin-left:215px;padding:26px 26px 80px 0;">
-    Paris, France<br><br>ezragray&#64;gmail&#46;com
   </div>
 </div>
 
@@ -680,10 +576,7 @@ var EXH = {
     audio: null, hasText: true, folder: 'honolulu'
   },
   artissima: {
-    srcs: [
-      'Artissima2025/1.jpg','Artissima2025/2.jpg',
-      'Artissima2025/3.jpg','Artissima2025/4.jpeg'
-    ],
+    srcs: ['Artissima2025/1.jpg','Artissima2025/2.jpg','Artissima2025/3.jpg','Artissima2025/4.jpeg'],
     audio: null, hasText: false, folder: 'Artissima2025'
   }
 };
@@ -741,6 +634,14 @@ function lightboxMove(dir){
 })();
 function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow=''; }
 
+/* Contact — always a panel toggle, works on desktop and mobile */
+function toggleContact(){
+  document.getElementById('panel-contact').classList.toggle('open');
+}
+
+/* Exhibition panels — mobile accordion, desktop nav to view */
+function isMobile(){ return window.innerWidth<=680; }
+
 function buildPanel(key){
   if(builtPanel[key]) return; builtPanel[key]=true;
   var cfg=EXH[key];
@@ -775,6 +676,7 @@ function buildPanel(key){
   carState['mob-'+key]=0;
   initSwipe(wrap,track,'mob-cnt-'+key,'mob-'+key);
 }
+
 function openLightboxMob(src,key){
   if(_drag) return;
   lbSrcs=EXH[key].srcs.map(toAbs);
@@ -784,6 +686,7 @@ function openLightboxMob(src,key){
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow='hidden';
 }
+
 function mobMove(key,dir){
   var sk='mob-'+key;
   var track=document.getElementById('mob-track-'+key); if(!track) return;
@@ -814,7 +717,6 @@ function doSlide(track,cntId,sk,dir){
   var el=document.getElementById(cntId); if(el) el.textContent=(carState[sk]+1)+' / '+n;
 }
 
-function isMobile(){ return window.innerWidth<=680; }
 function toggleExh(key){
   if(!isMobile()){ showExh(key); return; }
   if(openPanel&&openPanel!==key){
@@ -830,16 +732,13 @@ function toggleExh(key){
     },50);
   }
 }
+
 function hideAll(){ document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); }); }
+
 function showHome(){
-  if(isMobile()){
-    if(openPanel){ document.getElementById('panel-'+openPanel).classList.remove('open'); openPanel=null; }
-    var mc=document.getElementById('mobile-contact');
-    if(mc) mc.classList.add('hidden');
-    return;
-  }
-  hideAll(); document.getElementById('view-home').classList.add('active'); window.scrollTo(0,0);
+  hideAll();
 }
+
 function showExh(key){
   hideAll(); carState[key]=0;
   var track=document.getElementById('track-'+key);
@@ -847,13 +746,6 @@ function showExh(key){
     var cnt=document.getElementById('cnt-'+key);
     if(cnt) cnt.textContent='1 / '+track.children.length; }
   document.getElementById('view-'+key).classList.add('active'); window.scrollTo(0,0);
-}
-function showContact(){
-  if(isMobile()){
-    var mc=document.getElementById('mobile-contact');
-    if(mc) mc.classList.remove('hidden'); return;
-  }
-  hideAll(); document.getElementById('view-contact').classList.add('active'); window.scrollTo(0,0);
 }
 
 function openTextModal(folder){
