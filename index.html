@@ -15,9 +15,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ══════════════════════════════════
-   SIDEBAR — fixed left on desktop
-══════════════════════════════════ */
 .sidebar {
   position: fixed;
   top: 0; left: 0;
@@ -31,10 +28,7 @@ body {
 }
 .sidebar::-webkit-scrollbar { display: none; }
 
-/* ══════════════════════════════════
-   HOVER — underline + 1pt larger
-   No font change, clean and simple.
-══════════════════════════════════ */
+/* Hover: underline + 1pt larger, no font change */
 a, .lnk, .c-btn, .back-btn, .text-btn, .text-modal-close {
   font-family: 'Courier New', Courier, monospace;
   font-size: 11px;
@@ -59,18 +53,10 @@ a { color: #000; text-decoration: none; cursor: pointer; }
 .entry .venue { display: block; color: #666; font-size: 11px; line-height: 1.3; }
 .grp-section { display: block; margin-top: 20px; margin-bottom: 4px; }
 
-/* ══════════════════════════════════
-   VIEWS
-══════════════════════════════════ */
 .view { display: none; }
 .view.active { display: block; }
 
-/* ══════════════════════════════════
-   HOME — desktop
-   Image sits right of sidebar, large.
-   No padding-left needed; .exh-view
-   handles the margin.
-══════════════════════════════════ */
+/* Desktop home: large image right of sidebar */
 #view-home {
   margin-left: 215px;
   min-height: 100vh;
@@ -90,9 +76,6 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   -webkit-user-drag: none;
 }
 
-/* ══════════════════════════════════
-   EXHIBITION DETAIL
-══════════════════════════════════ */
 .exh-view { margin-left: 215px; padding: 26px 26px 80px 0; }
 .back-btn {
   display: inline-block; color: #000; cursor: pointer;
@@ -101,7 +84,6 @@ a { color: #000; text-decoration: none; cursor: pointer; }
 .exh-title { font-size: 11px; font-weight: normal; line-height: 1.3; }
 .exh-meta  { font-size: 11px; color: #666; line-height: 1.4; margin-bottom: 16px; }
 
-/* carousel */
 .carousel-wrap { overflow: hidden; background: #f2f2f2; cursor: grab; margin-bottom: 6px; }
 .carousel-wrap:active { cursor: grabbing; }
 .carousel-track { display: flex; transition: transform 0.3s ease; will-change: transform; }
@@ -121,19 +103,16 @@ a { color: #000; text-decoration: none; cursor: pointer; }
 .carousel-btns { display: flex; gap: 10px; }
 .c-btn { background: none; border: none; color: #000; cursor: pointer; padding: 0; }
 
-/* audio */
 .audio-block { margin-bottom: 14px; padding: 6px 0 4px; border-top: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; }
 .audio-label { font-size: 10px; color: #bbb; margin-bottom: 4px; }
 .audio-block audio { width: 100%; height: 26px; display: block; }
 
-/* text button */
 .text-btn {
   display: inline-block; color: #000; cursor: pointer;
   background: none; border: none; padding: 0; margin-bottom: 14px;
   text-decoration: underline; text-underline-offset: 2px;
 }
 
-/* text modal */
 .text-modal-overlay {
   display: none; position: fixed; inset: 0;
   background: rgba(255,255,255,0.97);
@@ -150,9 +129,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   background: none; border: none; padding: 0; margin-bottom: 24px;
 }
 
-/* ══════════════════════════════════
-   LIGHTBOX — with prev/next swipe
-══════════════════════════════════ */
+/* Lightbox with prev/next */
 .lightbox {
   display: none; position: fixed; inset: 0;
   background: #000; z-index: 300;
@@ -162,8 +139,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
 .lightbox img {
   max-width: 100%; max-height: 100%;
   object-fit: contain; display: block;
-  pointer-events: none;
-  user-select: none;
+  pointer-events: none; user-select: none;
 }
 .lightbox-close {
   position: fixed; top: 14px; right: 18px;
@@ -176,8 +152,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   position: fixed; top: 50%; transform: translateY(-50%);
   font-family: 'Courier New', Courier, monospace;
   font-size: 11px; color: #fff; cursor: pointer;
-  background: none; border: none; z-index: 301; opacity: 0.6;
-  padding: 20px;
+  background: none; border: none; z-index: 301; opacity: 0.6; padding: 20px;
 }
 .lightbox-prev:hover, .lightbox-next:hover { opacity: 1; }
 .lightbox-prev { left: 8px; }
@@ -188,13 +163,10 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   font-size: 10px; color: #fff; opacity: 0.5; z-index: 301;
 }
 
-/* contact */
 .contact-info { font-size: 11px; line-height: 1.7; color: #666; }
 #view-contact { margin-left: 215px; padding: 26px 26px 80px 0; }
 
-/* ══════════════════════════════════
-   MOBILE ACCORDION PANELS
-══════════════════════════════════ */
+/* Mobile accordion */
 .exh-panel { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
 .exh-panel.open { max-height: 9000px; transition: max-height 0.7s ease; }
 
@@ -205,9 +177,6 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   #mobile-home { display: none !important; }
 }
 
-/* ══════════════════════════════════
-   MOBILE ≤680px
-══════════════════════════════════ */
 @media (max-width: 680px) {
   .sidebar {
     position: relative; width: 100%; height: auto;
@@ -223,9 +192,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   .exh-panel .audio-block { margin: 0 0 12px; }
   .exh-panel .text-btn { margin-bottom: 10px; }
 
-  /* Mobile homescreen image:
-     centered, between nav links and Solo exhibitions label.
-     Full width of sidebar padding area. */
+  /* Mobile homescreen: centered, between nav and Solo exhibitions */
   #mobile-home {
     display: block;
     padding: 16px 0 16px 0;
@@ -233,8 +200,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
     margin-bottom: 4px;
   }
   #mobile-home img {
-    display: block;
-    width: 100%;
+    display: block; width: 100%;
     pointer-events: none; user-select: none;
   }
   #mobile-home.hidden { display: none !important; }
@@ -251,7 +217,6 @@ a { color: #000; text-decoration: none; cursor: pointer; }
 </head>
 <body>
 
-<!-- LIGHTBOX with swipeable images -->
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" onclick="closeLightbox()">✕ close</button>
   <button class="lightbox-prev" onclick="lightboxMove(-1)">← prev</button>
@@ -260,15 +225,12 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <div class="lightbox-counter" id="lightbox-counter"></div>
 </div>
 
-<!-- TEXT MODAL -->
 <div class="text-modal-overlay" id="text-modal">
   <button class="text-modal-close" onclick="closeTextModal()">✕ close</button>
   <div class="text-modal-inner" id="text-modal-content"></div>
 </div>
 
-<!-- ══════════════════════════════════
-     SIDEBAR
-══════════════════════════════════ -->
+<!-- SIDEBAR -->
 <div class="sidebar">
   <div class="site-name"><span class="lnk" onclick="showHome()">Ezra Gray</span></div>
 
@@ -277,7 +239,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
     <a onclick="showContact()">Contact</a>
   </div>
 
-  <!-- Mobile homescreen image — sits between nav and Solo exhibitions -->
+  <!-- Mobile homescreen image — between nav and Solo exhibitions -->
   <div id="mobile-home">
     <img src="Homescreen/180703-Emalin-23-_MGL2602.jpg" alt="">
   </div>
@@ -367,18 +329,15 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   </div>
 </div>
 
-<!-- ══════════════════════════════════
-     PAGE CONTENT (desktop only)
-══════════════════════════════════ -->
+<!-- PAGE CONTENT -->
 
-<!-- HOME -->
 <div id="view-home" class="view active">
   <div class="home-stream">
     <img src="Homescreen/180703-Emalin-23-_MGL2602.jpg" alt="">
   </div>
 </div>
 
-<!-- SWEETIE -->
+<!-- SWEETIE — 22 images, same filenames as before -->
 <div id="view-sweetie" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Sweetie (Relationships Play Out)</div>
@@ -419,25 +378,25 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('Sweetie (Relationships Play Out) @ Unit 17, Vancouver')">Text</button>
 </div>
 
-<!-- MAXIMUM YEARN -->
+<!-- MAXIMUM YEARN — renamed to 1.webp–13.webp (no 5) -->
 <div id="view-maximumyearn" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Maximum Yearn</div>
   <div class="exh-meta">Solo exhibition · August 2020 · Unit 17, Vancouver</div>
   <div class="carousel-wrap" id="car-maximumyearn">
     <div class="carousel-track" id="track-maximumyearn">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-ComeonWilly (1).webp" alt="" onclick="openLightbox(this,'maximumyearn')">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Guido.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync2_j.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync3_j.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-OldBatch_jp.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled2_j.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled_jp.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn13.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn2.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn4.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn5.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn6 (1).webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/1.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/2.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/3.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/4.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/6.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/7.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/8.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/9.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/10.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/11.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/12.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/13.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
     </div>
   </div>
   <div class="carousel-controls">
@@ -454,7 +413,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('maxmium yearn')">Text</button>
 </div>
 
-<!-- JOECH GOD -->
+<!-- JOECH GOD — unchanged -->
 <div id="view-joechgod" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Joech God</div>
@@ -498,7 +457,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('joech god')">Text</button>
 </div>
 
-<!-- BROWN SPACE -->
+<!-- BROWN SPACE — unchanged -->
 <div id="view-brownspace" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Brown Space</div>
@@ -524,7 +483,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('Brown Space')">Text</button>
 </div>
 
-<!-- INFINITIVE -->
+<!-- INFINITIVE — unchanged -->
 <div id="view-infinitive" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Infinitive</div>
@@ -551,7 +510,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('Infinitive')">Text</button>
 </div>
 
-<!-- HONOLULU -->
+<!-- HONOLULU — unchanged -->
 <div id="view-honolulu" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Honolulu</div>
@@ -582,98 +541,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
 </div>
 
 <script>
-/* ══════════════════════════════════════════════
-   IMAGE REGISTRY — maps exhibition key to its
-   track element so the lightbox can navigate.
-══════════════════════════════════════════════ */
-var lbSrcs  = [];   /* all srcs for current lightbox exhibition */
-var lbIndex = 0;    /* current position */
-var _drag   = false;
-var carState = {};
-var builtPanel = {};
-var openPanel  = null;
-
-/* Collect srcs from a desktop track or mobile track */
-function getSrcs(key) {
-  /* prefer desktop track; fall back to mobile */
-  var track = document.getElementById('track-' + key)
-           || document.getElementById('mob-track-' + key);
-  if (!track) return [];
-  return Array.from(track.children).map(function(img){ return img.src; });
-}
-
-/* ── DESKTOP CAROUSEL INIT ── */
-['sweetie','maximumyearn','joechgod','brownspace','infinitive','honolulu'].forEach(function(k){
-  carState[k] = 0;
-  var wrap  = document.getElementById('car-' + k);
-  var track = document.getElementById('track-' + k);
-  if (wrap && track) initSwipe(wrap, track, 'cnt-' + k, k);
-});
-
-function cMove(key, dir) {
-  var track = document.getElementById('track-' + key);
-  if (!track) return;
-  var n = track.children.length;
-  carState[key] = ((carState[key]||0) + dir + n) % n;
-  track.style.transform = 'translateX(-' + (carState[key]*100) + '%)';
-  document.getElementById('cnt-' + key).textContent = (carState[key]+1) + ' / ' + n;
-}
-
-/* ══════════════════════════════════════════════
-   LIGHTBOX — navigable
-══════════════════════════════════════════════ */
-function openLightbox(imgEl, key) {
-  if (_drag) return;
-  lbSrcs  = getSrcs(key);
-  lbIndex = lbSrcs.indexOf(imgEl.src);
-  if (lbIndex < 0) lbIndex = 0;
-  renderLightbox();
-  document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function renderLightbox() {
-  document.getElementById('lightbox-img').src = lbSrcs[lbIndex];
-  var ctr = document.getElementById('lightbox-counter');
-  if (lbSrcs.length > 1) {
-    ctr.textContent = (lbIndex + 1) + ' / ' + lbSrcs.length;
-    ctr.style.display = '';
-  } else {
-    ctr.style.display = 'none';
-  }
-  /* show/hide prev/next */
-  document.querySelector('.lightbox-prev').style.opacity = lbSrcs.length > 1 ? '0.6' : '0';
-  document.querySelector('.lightbox-next').style.opacity = lbSrcs.length > 1 ? '0.6' : '0';
-}
-
-function lightboxMove(dir) {
-  if (!lbSrcs.length) return;
-  lbIndex = (lbIndex + dir + lbSrcs.length) % lbSrcs.length;
-  renderLightbox();
-}
-
-/* Lightbox touch swipe */
-(function(){
-  var lb = document.getElementById('lightbox');
-  var sx = 0;
-  lb.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
-  lb.addEventListener('touchend', function(e){
-    var dx = e.changedTouches[0].clientX - sx;
-    if (Math.abs(dx) > 40) lightboxMove(dx < 0 ? 1 : -1);
-  }, {passive:true});
-  lb.addEventListener('click', function(e){
-    if (e.target === lb || e.target === document.getElementById('lightbox-img')) closeLightbox();
-  });
-})();
-
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-/* ══════════════════════════════════════════════
-   MOBILE ACCORDION
-══════════════════════════════════════════════ */
+/* Image source lists per exhibition — used by lightbox to navigate */
 var EXH = {
   sweetie: {
     srcs: [
@@ -704,18 +572,10 @@ var EXH = {
   },
   maximumyearn: {
     srcs: [
-      'maxmium yearn/Unit17-EzraGray-MaximumYearn-ComeonWilly (1).webp',
-      'maxmium yearn/Unit17-EzraGray-MaximumYearn-Guido.webp',
-      'maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync2_j.webp',
-      'maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync3_j.webp',
-      'maxmium yearn/Unit17-EzraGray-MaximumYearn-OldBatch_jp.webp',
-      'maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled2_j.webp',
-      'maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled_jp.webp',
-      'maxmium yearn/Unit17-EzraGray-MaximumYearn13.webp',
-      'maxmium yearn/Unit17-EzraGray-MaximumYearn2.webp',
-      'maxmium yearn/Unit17-EzraGray-MaximumYearn4.webp',
-      'maxmium yearn/Unit17-EzraGray-MaximumYearn5.webp',
-      'maxmium yearn/Unit17-EzraGray-MaximumYearn6 (1).webp'
+      'maxmium yearn/1.webp','maxmium yearn/2.webp','maxmium yearn/3.webp',
+      'maxmium yearn/4.webp','maxmium yearn/6.webp','maxmium yearn/7.webp',
+      'maxmium yearn/8.webp','maxmium yearn/9.webp','maxmium yearn/10.webp',
+      'maxmium yearn/11.webp','maxmium yearn/12.webp','maxmium yearn/13.webp'
     ],
     audio: {src:'maxmium yearn/maximumyearn-sm.mp3', label:'Hey Can You Hear Me? — audio'},
     hasText: true, folder: 'maxmium yearn'
@@ -763,15 +623,84 @@ var EXH = {
   }
 };
 
+/* State */
+var carState   = {};
+var builtPanel = {};
+var openPanel  = null;
+var lbSrcs     = [];
+var lbIndex    = 0;
+var _drag      = false;
+
+/* Init desktop carousels */
+Object.keys(EXH).forEach(function(k) {
+  carState[k] = 0;
+  var wrap  = document.getElementById('car-' + k);
+  var track = document.getElementById('track-' + k);
+  if (wrap && track) initSwipe(wrap, track, 'cnt-' + k, k);
+});
+
+function cMove(key, dir) {
+  var track = document.getElementById('track-' + key); if (!track) return;
+  var n = track.children.length;
+  carState[key] = ((carState[key]||0) + dir + n) % n;
+  track.style.transform = 'translateX(-' + (carState[key]*100) + '%)';
+  document.getElementById('cnt-' + key).textContent = (carState[key]+1) + ' / ' + n;
+}
+
+/* ── LIGHTBOX ── */
+function toAbs(src) { var a=document.createElement('a'); a.href=src; return a.href; }
+
+function openLightbox(imgEl, key) {
+  if (_drag) return;
+  lbSrcs  = EXH[key].srcs.map(toAbs);
+  lbIndex = lbSrcs.indexOf(toAbs(imgEl.src));
+  if (lbIndex < 0) lbIndex = 0;
+  renderLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderLightbox() {
+  document.getElementById('lightbox-img').src = lbSrcs[lbIndex];
+  var ctr = document.getElementById('lightbox-counter');
+  ctr.textContent = lbSrcs.length > 1 ? (lbIndex+1) + ' / ' + lbSrcs.length : '';
+  var show = lbSrcs.length > 1 ? '0.6' : '0';
+  document.querySelector('.lightbox-prev').style.opacity = show;
+  document.querySelector('.lightbox-next').style.opacity = show;
+}
+
+function lightboxMove(dir) {
+  if (!lbSrcs.length) return;
+  lbIndex = (lbIndex + dir + lbSrcs.length) % lbSrcs.length;
+  renderLightbox();
+}
+
+/* Lightbox touch swipe */
+(function(){
+  var lb = document.getElementById('lightbox'), sx = 0;
+  lb.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
+  lb.addEventListener('touchend', function(e){
+    var dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 40) lightboxMove(dx < 0 ? 1 : -1);
+  }, {passive:true});
+  lb.addEventListener('click', function(e){
+    if (e.target === lb || e.target === document.getElementById('lightbox-img')) closeLightbox();
+  });
+})();
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ── MOBILE ACCORDION ── */
 function buildPanel(key) {
-  if (builtPanel[key]) return;
-  builtPanel[key] = true;
+  if (builtPanel[key]) return; builtPanel[key] = true;
   var cfg = EXH[key];
-  var inner = document.getElementById('panel-inner-' + key);
-  inner.innerHTML = '';
-  var wrap  = document.createElement('div'); wrap.className='carousel-wrap'; wrap.id='mob-car-'+key;
+  var inner = document.getElementById('panel-inner-' + key); inner.innerHTML = '';
+  var wrap = document.createElement('div'); wrap.className='carousel-wrap'; wrap.id='mob-car-'+key;
   var track = document.createElement('div'); track.className='carousel-track'; track.id='mob-track-'+key;
-  cfg.srcs.forEach(function(src){
+  cfg.srcs.forEach(function(src) {
     var img = document.createElement('img'); img.src=src; img.alt='';
     img.onclick = (function(s,k){ return function(){ openLightboxMob(s,k); }; })(src,key);
     track.appendChild(img);
@@ -802,12 +731,8 @@ function buildPanel(key) {
 
 function openLightboxMob(src, key) {
   if (_drag) return;
-  lbSrcs  = EXH[key].srcs.map(function(s){
-    /* make absolute so indexOf comparison works */
-    var a=document.createElement('a'); a.href=s; return a.href;
-  });
-  var abs = (function(s){ var a=document.createElement('a'); a.href=s; return a.href; })(src);
-  lbIndex = lbSrcs.indexOf(abs);
+  lbSrcs  = EXH[key].srcs.map(toAbs);
+  lbIndex = lbSrcs.indexOf(toAbs(src));
   if (lbIndex<0) lbIndex=0;
   renderLightbox();
   document.getElementById('lightbox').classList.add('open');
@@ -816,8 +741,7 @@ function openLightboxMob(src, key) {
 
 function mobMove(key, dir) {
   var sk='mob-'+key;
-  var track=document.getElementById('mob-track-'+key);
-  if (!track) return;
+  var track=document.getElementById('mob-track-'+key); if (!track) return;
   var n=track.children.length;
   carState[sk]=((carState[sk]||0)+dir+n)%n;
   track.style.transform='translateX(-'+(carState[sk]*100)+'%)';
