@@ -15,6 +15,9 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ══════════════════════════════════
+   SIDEBAR
+══════════════════════════════════ */
 .sidebar {
   position: fixed;
   top: 0; left: 0;
@@ -28,7 +31,7 @@ body {
 }
 .sidebar::-webkit-scrollbar { display: none; }
 
-/* Hover: underline + 1pt larger, no font change */
+/* Hover: underline + 1pt larger */
 a, .lnk, .c-btn, .back-btn, .text-btn, .text-modal-close {
   font-family: 'Courier New', Courier, monospace;
   font-size: 11px;
@@ -42,9 +45,31 @@ a:hover, .lnk:hover, .c-btn:hover, .back-btn:hover,
 a { color: #000; text-decoration: none; cursor: pointer; }
 .sidebar a, .sidebar .lnk { display: inline; line-height: 1.3; }
 
-.site-name { margin-bottom: 12px; display: block; }
-.nav-links  { margin-bottom: 16px; }
+/* ── Top of sidebar: name + nav + thumbnail side by side ── */
+.sidebar-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.sidebar-top-left {
+  flex: 1;
+  min-width: 0;
+}
+.site-name { display: block; margin-bottom: 10px; }
 .nav-links a { display: block; line-height: 1.8; }
+
+/* Homescreen thumbnail — desktop only, quarter-ish size */
+.home-thumb {
+  width: 64px;
+  flex-shrink: 0;
+}
+.home-thumb img {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  pointer-events: auto;
+}
 
 .exh-list { font-size: 11px; }
 .exh-section-label { display: block; margin-bottom: 4px; }
@@ -53,29 +78,25 @@ a { color: #000; text-decoration: none; cursor: pointer; }
 .entry .venue { display: block; color: #666; font-size: 11px; line-height: 1.3; }
 .grp-section { display: block; margin-top: 20px; margin-bottom: 4px; }
 
+/* ══════════════════════════════════
+   VIEWS
+══════════════════════════════════ */
 .view { display: none; }
 .view.active { display: block; }
 
-/* Desktop home: large image right of sidebar */
+/* Desktop home */
 #view-home {
   margin-left: 215px;
   min-height: 100vh;
   padding: 26px 24px 100px 24px;
 }
-#view-home .home-stream {
-  display: flex;
-  flex-direction: column;
-  gap: 64px;
-}
+#view-home .home-stream { display: flex; flex-direction: column; gap: 64px; }
 #view-home .home-stream img {
-  display: block;
-  width: 100%;
-  max-width: 900px;
-  pointer-events: none;
-  user-select: none;
-  -webkit-user-drag: none;
+  display: block; width: 100%; max-width: 900px;
+  pointer-events: none; user-select: none; -webkit-user-drag: none;
 }
 
+/* Exhibition detail */
 .exh-view { margin-left: 215px; padding: 26px 26px 80px 0; }
 .back-btn {
   display: inline-block; color: #000; cursor: pointer;
@@ -84,16 +105,14 @@ a { color: #000; text-decoration: none; cursor: pointer; }
 .exh-title { font-size: 11px; font-weight: normal; line-height: 1.3; }
 .exh-meta  { font-size: 11px; color: #666; line-height: 1.4; margin-bottom: 16px; }
 
+/* Carousel */
 .carousel-wrap { overflow: hidden; background: #f2f2f2; cursor: grab; margin-bottom: 6px; }
 .carousel-wrap:active { cursor: grabbing; }
 .carousel-track { display: flex; transition: transform 0.3s ease; will-change: transform; }
 .carousel-track img {
-  min-width: 100%; width: 100%;
-  max-height: 78vh;
-  object-fit: contain; object-position: center;
-  display: block;
-  user-select: none; -webkit-user-drag: none;
-  cursor: zoom-in;
+  min-width: 100%; width: 100%; max-height: 78vh;
+  object-fit: contain; object-position: center; display: block;
+  user-select: none; -webkit-user-drag: none; cursor: zoom-in;
 }
 .carousel-controls {
   display: flex; justify-content: space-between; align-items: center;
@@ -103,16 +122,19 @@ a { color: #000; text-decoration: none; cursor: pointer; }
 .carousel-btns { display: flex; gap: 10px; }
 .c-btn { background: none; border: none; color: #000; cursor: pointer; padding: 0; }
 
+/* Audio */
 .audio-block { margin-bottom: 14px; padding: 6px 0 4px; border-top: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; }
 .audio-label { font-size: 10px; color: #bbb; margin-bottom: 4px; }
 .audio-block audio { width: 100%; height: 26px; display: block; }
 
+/* Text button */
 .text-btn {
   display: inline-block; color: #000; cursor: pointer;
   background: none; border: none; padding: 0; margin-bottom: 14px;
   text-decoration: underline; text-underline-offset: 2px;
 }
 
+/* Text modal */
 .text-modal-overlay {
   display: none; position: fixed; inset: 0;
   background: rgba(255,255,255,0.97);
@@ -129,7 +151,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   background: none; border: none; padding: 0; margin-bottom: 24px;
 }
 
-/* Lightbox with prev/next */
+/* Lightbox */
 .lightbox {
   display: none; position: fixed; inset: 0;
   background: #000; z-index: 300;
@@ -163,26 +185,36 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   font-size: 10px; color: #fff; opacity: 0.5; z-index: 301;
 }
 
+/* Contact */
 .contact-info { font-size: 11px; line-height: 1.7; color: #666; }
 #view-contact { margin-left: 215px; padding: 26px 26px 80px 0; }
 
-/* Mobile accordion */
+/* ══════════════════════════════════
+   ACCORDION PANELS (both solo + group)
+══════════════════════════════════ */
 .exh-panel { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
 .exh-panel.open { max-height: 9000px; transition: max-height 0.7s ease; }
 
 @media (min-width: 681px) {
   .exh-panel { display: none !important; }
-  .entry.solo { cursor: pointer; }
-  .entry.solo:hover em { text-decoration: underline; text-underline-offset: 2px; }
+  .entry.solo, .entry.grp-accordion { cursor: pointer; }
+  .entry.solo:hover em, .entry.grp-accordion:hover em {
+    text-decoration: underline; text-underline-offset: 2px;
+  }
   #mobile-home { display: none !important; }
 }
 
+/* ══════════════════════════════════
+   MOBILE
+══════════════════════════════════ */
 @media (max-width: 680px) {
   .sidebar {
     position: relative; width: 100%; height: auto;
-    padding: 14px 14px 0 14px;
-    overflow: visible;
+    padding: 14px 14px 0 14px; overflow: visible;
   }
+  /* On mobile, sidebar-top stacks: nav left, thumb right */
+  .home-thumb { width: 54px; }
+
   .view { display: none !important; }
   .exh-panel { display: block !important; }
   .exh-panel-inner { padding: 8px 0 16px; }
@@ -192,24 +224,10 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   .exh-panel .audio-block { margin: 0 0 12px; }
   .exh-panel .text-btn { margin-bottom: 10px; }
 
-  /* Mobile homescreen: centered, between nav and Solo exhibitions */
-  #mobile-home {
-    display: block;
-    padding: 16px 0 16px 0;
-    border-bottom: 1px solid #eee;
-    margin-bottom: 4px;
-  }
-  #mobile-home img {
-    display: block; width: 100%;
-    pointer-events: none; user-select: none;
-  }
-  #mobile-home.hidden { display: none !important; }
-
   #mobile-contact { padding: 14px 0 6px; }
   #mobile-contact.hidden { display: none; }
   .text-modal-overlay { padding: 18px 14px 60px; }
   .site-name { margin-bottom: 8px; }
-  .nav-links  { margin-bottom: 0; }
   .yr { margin-top: 6px; }
   .entry { margin-bottom: 4px; }
 }
@@ -230,18 +248,23 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <div class="text-modal-inner" id="text-modal-content"></div>
 </div>
 
-<!-- SIDEBAR -->
+<!-- ══════════════════════════════════
+     SIDEBAR
+══════════════════════════════════ -->
 <div class="sidebar">
-  <div class="site-name"><span class="lnk" onclick="showHome()">Ezra Gray</span></div>
 
-  <div class="nav-links">
-    <a onclick="showHome()">Home</a>
-    <a onclick="showContact()">Contact</a>
-  </div>
-
-  <!-- Mobile homescreen image — between nav and Solo exhibitions -->
-  <div id="mobile-home">
-    <img src="Homescreen/180703-Emalin-23-_MGL2602.jpg" alt="">
+  <!-- Name, nav links, and thumbnail side by side -->
+  <div class="sidebar-top">
+    <div class="sidebar-top-left">
+      <span class="site-name"><span class="lnk" onclick="showHome()">Ezra Gray</span></span>
+      <div class="nav-links">
+        <a onclick="showHome()">Home</a>
+        <a onclick="showContact()">Contact</a>
+      </div>
+    </div>
+    <div class="home-thumb">
+      <img src="Homescreen/180703-Emalin-23-_MGL2602.jpg" alt="" onclick="showHome()">
+    </div>
   </div>
 
   <div class="exh-list">
@@ -288,10 +311,18 @@ a { color: #000; text-decoration: none; cursor: pointer; }
     </span>
     <div class="exh-panel" id="panel-honolulu"><div class="exh-panel-inner" id="panel-inner-honolulu"></div></div>
 
+    <!-- ── GROUP EXHIBITIONS ── -->
     <span class="grp-section">Group exhibitions</span>
 
     <span class="yr">2025</span>
-    <span class="entry"><em>Artissima</em><span class="venue">Artissima, Turin</span></span>
+
+    <!-- Artissima — accordion in group section -->
+    <span class="entry grp-accordion" id="entry-artissima" onclick="toggleExh('artissima')">
+      <em>Artissima</em>
+      <span class="venue">Artissima, Turin</span>
+    </span>
+    <div class="exh-panel" id="panel-artissima"><div class="exh-panel-inner" id="panel-inner-artissima"></div></div>
+
     <span class="entry"><a href="https://rinomina.com/exhibition/should-be-allowed-could-be-forbidden-must-be-wanted-can-be-done-can-be-but-does-not-have-to/" target="_blank"><em>Should be allowed, could be forbidden...</em></a><span class="venue">Rinomina, Paris</span></span>
     <span class="entry"><em>The 12th House</em>, <a href="https://www.instagram.com/thewhiteermine/" target="_blank">The White Ermine</a><span class="venue">Düsseldorf</span></span>
     <span class="entry"><a href="https://www.instagram.com/hisssss________/" target="_blank"><em>Hisssss</em></a><span class="venue">Los Angeles</span></span>
@@ -329,7 +360,9 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   </div>
 </div>
 
-<!-- PAGE CONTENT -->
+<!-- ══════════════════════════════════
+     PAGE CONTENT (desktop)
+══════════════════════════════════ -->
 
 <div id="view-home" class="view active">
   <div class="home-stream">
@@ -337,7 +370,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   </div>
 </div>
 
-<!-- SWEETIE — 22 images, same filenames as before -->
+<!-- SWEETIE -->
 <div id="view-sweetie" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Sweetie (Relationships Play Out)</div>
@@ -378,7 +411,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('Sweetie (Relationships Play Out) @ Unit 17, Vancouver')">Text</button>
 </div>
 
-<!-- MAXIMUM YEARN — renamed to 1.webp–13.webp (no 5) -->
+<!-- MAXIMUM YEARN -->
 <div id="view-maximumyearn" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Maximum Yearn</div>
@@ -413,7 +446,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('maxmium yearn')">Text</button>
 </div>
 
-<!-- JOECH GOD — unchanged -->
+<!-- JOECH GOD -->
 <div id="view-joechgod" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Joech God</div>
@@ -457,7 +490,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('joech god')">Text</button>
 </div>
 
-<!-- BROWN SPACE — unchanged -->
+<!-- BROWN SPACE -->
 <div id="view-brownspace" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Brown Space</div>
@@ -483,7 +516,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('Brown Space')">Text</button>
 </div>
 
-<!-- INFINITIVE — unchanged -->
+<!-- INFINITIVE -->
 <div id="view-infinitive" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Infinitive</div>
@@ -510,7 +543,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('Infinitive')">Text</button>
 </div>
 
-<!-- HONOLULU — unchanged -->
+<!-- HONOLULU -->
 <div id="view-honolulu" class="view exh-view">
   <button class="back-btn" onclick="showHome()">← back</button>
   <div class="exh-title">Honolulu</div>
@@ -533,6 +566,29 @@ a { color: #000; text-decoration: none; cursor: pointer; }
   <button class="text-btn" onclick="openTextModal('honolulu')">Text</button>
 </div>
 
+<!-- ARTISSIMA desktop view -->
+<div id="view-artissima" class="view exh-view">
+  <button class="back-btn" onclick="showHome()">← back</button>
+  <div class="exh-title">Artissima</div>
+  <div class="exh-meta">2025 · Artissima, Turin</div>
+  <div class="carousel-wrap" id="car-artissima">
+    <div class="carousel-track" id="track-artissima">
+      <img src="Artissima2025/1.jpg" alt="" onclick="openLightbox(this,'artissima')">
+      <img src="Artissima2025/2.jpg" alt="" onclick="openLightbox(this,'artissima')">
+      <img src="Artissima2025/3.jpg" alt="" onclick="openLightbox(this,'artissima')">
+      <img src="Artissima2025/4.jpeg" alt="" onclick="openLightbox(this,'artissima')">
+    </div>
+  </div>
+  <div class="carousel-controls">
+    <span class="carousel-counter" id="cnt-artissima">1 / 4</span>
+    <div class="carousel-btns">
+      <button class="c-btn" onclick="cMove('artissima',-1)">← prev</button>
+      <button class="c-btn" onclick="cMove('artissima',1)">next →</button>
+    </div>
+  </div>
+  <button class="text-btn" onclick="openTextModal('Artissima2025')">Text</button>
+</div>
+
 <!-- CONTACT -->
 <div id="view-contact" class="view">
   <div class="contact-info" style="margin-left:215px;padding:26px 26px 80px 0;">
@@ -541,7 +597,6 @@ a { color: #000; text-decoration: none; cursor: pointer; }
 </div>
 
 <script>
-/* Image source lists per exhibition — used by lightbox to navigate */
 var EXH = {
   sweetie: {
     srcs: [
@@ -620,137 +675,123 @@ var EXH = {
       'honolulu/Installation_3.jpg','honolulu/Installation_4 (1).jpg'
     ],
     audio: null, hasText: true, folder: 'honolulu'
+  },
+  artissima: {
+    srcs: [
+      'Artissima2025/1.jpg','Artissima2025/2.jpg',
+      'Artissima2025/3.jpg','Artissima2025/4.jpeg'
+    ],
+    audio: null, hasText: false, folder: 'Artissima2025'
   }
 };
 
-/* State */
-var carState   = {};
-var builtPanel = {};
-var openPanel  = null;
-var lbSrcs     = [];
-var lbIndex    = 0;
-var _drag      = false;
+var carState={}, builtPanel={}, openPanel=null, lbSrcs=[], lbIndex=0, _drag=false;
 
-/* Init desktop carousels */
-Object.keys(EXH).forEach(function(k) {
-  carState[k] = 0;
-  var wrap  = document.getElementById('car-' + k);
-  var track = document.getElementById('track-' + k);
-  if (wrap && track) initSwipe(wrap, track, 'cnt-' + k, k);
+Object.keys(EXH).forEach(function(k){
+  carState[k]=0;
+  var wrap=document.getElementById('car-'+k);
+  var track=document.getElementById('track-'+k);
+  if(wrap&&track) initSwipe(wrap,track,'cnt-'+k,k);
 });
 
-function cMove(key, dir) {
-  var track = document.getElementById('track-' + key); if (!track) return;
-  var n = track.children.length;
-  carState[key] = ((carState[key]||0) + dir + n) % n;
-  track.style.transform = 'translateX(-' + (carState[key]*100) + '%)';
-  document.getElementById('cnt-' + key).textContent = (carState[key]+1) + ' / ' + n;
+function cMove(key,dir){
+  var track=document.getElementById('track-'+key); if(!track) return;
+  var n=track.children.length;
+  carState[key]=((carState[key]||0)+dir+n)%n;
+  track.style.transform='translateX(-'+(carState[key]*100)+'%)';
+  document.getElementById('cnt-'+key).textContent=(carState[key]+1)+' / '+n;
 }
 
-/* ── LIGHTBOX ── */
-function toAbs(src) { var a=document.createElement('a'); a.href=src; return a.href; }
+function toAbs(src){ var a=document.createElement('a'); a.href=src; return a.href; }
 
-function openLightbox(imgEl, key) {
-  if (_drag) return;
-  lbSrcs  = EXH[key].srcs.map(toAbs);
-  lbIndex = lbSrcs.indexOf(toAbs(imgEl.src));
-  if (lbIndex < 0) lbIndex = 0;
+function openLightbox(imgEl,key){
+  if(_drag) return;
+  lbSrcs=EXH[key].srcs.map(toAbs);
+  lbIndex=lbSrcs.indexOf(toAbs(imgEl.src));
+  if(lbIndex<0) lbIndex=0;
   renderLightbox();
   document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
-
-function renderLightbox() {
-  document.getElementById('lightbox-img').src = lbSrcs[lbIndex];
-  var ctr = document.getElementById('lightbox-counter');
-  ctr.textContent = lbSrcs.length > 1 ? (lbIndex+1) + ' / ' + lbSrcs.length : '';
-  var show = lbSrcs.length > 1 ? '0.6' : '0';
-  document.querySelector('.lightbox-prev').style.opacity = show;
-  document.querySelector('.lightbox-next').style.opacity = show;
+function renderLightbox(){
+  document.getElementById('lightbox-img').src=lbSrcs[lbIndex];
+  document.getElementById('lightbox-counter').textContent=lbSrcs.length>1?(lbIndex+1)+' / '+lbSrcs.length:'';
+  var show=lbSrcs.length>1?'0.6':'0';
+  document.querySelector('.lightbox-prev').style.opacity=show;
+  document.querySelector('.lightbox-next').style.opacity=show;
 }
-
-function lightboxMove(dir) {
-  if (!lbSrcs.length) return;
-  lbIndex = (lbIndex + dir + lbSrcs.length) % lbSrcs.length;
+function lightboxMove(dir){
+  if(!lbSrcs.length) return;
+  lbIndex=(lbIndex+dir+lbSrcs.length)%lbSrcs.length;
   renderLightbox();
 }
-
-/* Lightbox touch swipe */
 (function(){
-  var lb = document.getElementById('lightbox'), sx = 0;
-  lb.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
-  lb.addEventListener('touchend', function(e){
-    var dx = e.changedTouches[0].clientX - sx;
-    if (Math.abs(dx) > 40) lightboxMove(dx < 0 ? 1 : -1);
-  }, {passive:true});
-  lb.addEventListener('click', function(e){
-    if (e.target === lb || e.target === document.getElementById('lightbox-img')) closeLightbox();
+  var lb=document.getElementById('lightbox'),sx=0;
+  lb.addEventListener('touchstart',function(e){ sx=e.touches[0].clientX; },{passive:true});
+  lb.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)>40) lightboxMove(dx<0?1:-1);
+  },{passive:true});
+  lb.addEventListener('click',function(e){
+    if(e.target===lb||e.target===document.getElementById('lightbox-img')) closeLightbox();
   });
 })();
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow=''; }
 
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-/* ── MOBILE ACCORDION ── */
-function buildPanel(key) {
-  if (builtPanel[key]) return; builtPanel[key] = true;
-  var cfg = EXH[key];
-  var inner = document.getElementById('panel-inner-' + key); inner.innerHTML = '';
-  var wrap = document.createElement('div'); wrap.className='carousel-wrap'; wrap.id='mob-car-'+key;
-  var track = document.createElement('div'); track.className='carousel-track'; track.id='mob-track-'+key;
-  cfg.srcs.forEach(function(src) {
-    var img = document.createElement('img'); img.src=src; img.alt='';
-    img.onclick = (function(s,k){ return function(){ openLightboxMob(s,k); }; })(src,key);
+function buildPanel(key){
+  if(builtPanel[key]) return; builtPanel[key]=true;
+  var cfg=EXH[key];
+  var inner=document.getElementById('panel-inner-'+key); inner.innerHTML='';
+  var wrap=document.createElement('div'); wrap.className='carousel-wrap'; wrap.id='mob-car-'+key;
+  var track=document.createElement('div'); track.className='carousel-track'; track.id='mob-track-'+key;
+  cfg.srcs.forEach(function(src){
+    var img=document.createElement('img'); img.src=src; img.alt='';
+    img.onclick=(function(s,k){ return function(){ openLightboxMob(s,k); }; })(src,key);
     track.appendChild(img);
   });
   wrap.appendChild(track); inner.appendChild(wrap);
-  var n = cfg.srcs.length;
-  var ctrl = document.createElement('div'); ctrl.className='carousel-controls';
-  ctrl.innerHTML = '<span class="carousel-counter" id="mob-cnt-'+key+'">1 / '+n+'</span>'+
+  var n=cfg.srcs.length;
+  var ctrl=document.createElement('div'); ctrl.className='carousel-controls';
+  ctrl.innerHTML='<span class="carousel-counter" id="mob-cnt-'+key+'">1 / '+n+'</span>'+
     '<div class="carousel-btns">'+
     '<button class="c-btn" onclick="mobMove(\''+key+'\',-1)">← prev</button>'+
     '<button class="c-btn" onclick="mobMove(\''+key+'\',1)">next →</button>'+
     '</div>';
   inner.appendChild(ctrl);
-  if (cfg.audio) {
+  if(cfg.audio){
     var ab=document.createElement('div'); ab.className='audio-block';
     ab.innerHTML='<div class="audio-label">'+cfg.audio.label+'</div>'+
       '<audio controls><source src="'+cfg.audio.src+'" type="audio/mpeg"></audio>';
     inner.appendChild(ab);
   }
-  if (cfg.hasText) {
+  if(cfg.hasText){
     var tb=document.createElement('button'); tb.className='text-btn'; tb.textContent='Text';
     tb.onclick=(function(f){ return function(){ openTextModal(f); }; })(cfg.folder);
     inner.appendChild(tb);
   }
   carState['mob-'+key]=0;
-  initSwipe(wrap, track, 'mob-cnt-'+key, 'mob-'+key);
+  initSwipe(wrap,track,'mob-cnt-'+key,'mob-'+key);
 }
-
-function openLightboxMob(src, key) {
-  if (_drag) return;
-  lbSrcs  = EXH[key].srcs.map(toAbs);
-  lbIndex = lbSrcs.indexOf(toAbs(src));
-  if (lbIndex<0) lbIndex=0;
+function openLightboxMob(src,key){
+  if(_drag) return;
+  lbSrcs=EXH[key].srcs.map(toAbs);
+  lbIndex=lbSrcs.indexOf(toAbs(src));
+  if(lbIndex<0) lbIndex=0;
   renderLightbox();
   document.getElementById('lightbox').classList.add('open');
   document.body.style.overflow='hidden';
 }
-
-function mobMove(key, dir) {
+function mobMove(key,dir){
   var sk='mob-'+key;
-  var track=document.getElementById('mob-track-'+key); if (!track) return;
+  var track=document.getElementById('mob-track-'+key); if(!track) return;
   var n=track.children.length;
   carState[sk]=((carState[sk]||0)+dir+n)%n;
   track.style.transform='translateX(-'+(carState[sk]*100)+'%)';
   document.getElementById('mob-cnt-'+key).textContent=(carState[sk]+1)+' / '+n;
 }
 
-/* ── SWIPE ── */
-function initSwipe(wrap, track, cntId, sk) {
-  var sx=0, dn=false;
+function initSwipe(wrap,track,cntId,sk){
+  var sx=0,dn=false;
   wrap.addEventListener('touchstart',function(e){ sx=e.touches[0].clientX; _drag=false; },{passive:true});
   wrap.addEventListener('touchend',function(e){
     var dx=e.changedTouches[0].clientX-sx;
@@ -770,7 +811,6 @@ function doSlide(track,cntId,sk,dir){
   var el=document.getElementById(cntId); if(el) el.textContent=(carState[sk]+1)+' / '+n;
 }
 
-/* ── NAVIGATION ── */
 function isMobile(){ return window.innerWidth<=680; }
 function toggleExh(key){
   if(!isMobile()){ showExh(key); return; }
@@ -779,7 +819,7 @@ function toggleExh(key){
   }
   var panel=document.getElementById('panel-'+key);
   if(panel.classList.contains('open')){ panel.classList.remove('open'); openPanel=null; }
-  else {
+  else{
     buildPanel(key); panel.classList.add('open'); openPanel=key;
     setTimeout(function(){
       var el=document.getElementById('entry-'+key);
@@ -791,8 +831,8 @@ function hideAll(){ document.querySelectorAll('.view').forEach(function(v){ v.cl
 function showHome(){
   if(isMobile()){
     if(openPanel){ document.getElementById('panel-'+openPanel).classList.remove('open'); openPanel=null; }
-    document.getElementById('mobile-home').classList.remove('hidden');
-    document.getElementById('mobile-contact').classList.add('hidden');
+    var mc=document.getElementById('mobile-contact');
+    if(mc) mc.classList.add('hidden');
     return;
   }
   hideAll(); document.getElementById('view-home').classList.add('active'); window.scrollTo(0,0);
@@ -807,13 +847,12 @@ function showExh(key){
 }
 function showContact(){
   if(isMobile()){
-    document.getElementById('mobile-home').classList.add('hidden');
-    document.getElementById('mobile-contact').classList.remove('hidden'); return;
+    var mc=document.getElementById('mobile-contact');
+    if(mc) mc.classList.remove('hidden'); return;
   }
   hideAll(); document.getElementById('view-contact').classList.add('active'); window.scrollTo(0,0);
 }
 
-/* ── TEXT MODAL ── */
 function openTextModal(folder){
   var modal=document.getElementById('text-modal');
   var content=document.getElementById('text-modal-content');
@@ -823,16 +862,13 @@ function openTextModal(folder){
     .then(function(t){ content.textContent=t; })
     .catch(function(){ content.textContent='(Text not yet available.)'; });
 }
-function closeTextModal(){
-  document.getElementById('text-modal').classList.remove('open'); document.body.style.overflow='';
-}
+function closeTextModal(){ document.getElementById('text-modal').classList.remove('open'); document.body.style.overflow=''; }
 
-/* ── KEYBOARD ── */
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape'){ closeLightbox(); closeTextModal(); }
   if(document.getElementById('lightbox').classList.contains('open')){
     if(e.key==='ArrowRight') lightboxMove(1);
-    if(e.key==='ArrowLeft')  lightboxMove(-1);
+    if(e.key==='ArrowLeft') lightboxMove(-1);
   }
 });
 </script>
