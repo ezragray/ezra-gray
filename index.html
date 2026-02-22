@@ -69,7 +69,7 @@ a { color: #000; text-decoration: none; cursor: pointer; }
     left: 50vw;
     width: 50vw;
     height: 100vh;
-    z-index: 1;
+    z-index: 2;
     pointer-events: none;
   }
   #mobile-homescreen img {
@@ -78,11 +78,10 @@ a { color: #000; text-decoration: none; cursor: pointer; }
     object-fit: cover;
     object-position: left top;
   }
-  /* All sidebar text above the image */
-  .sidebar { z-index: 2; position: relative; }
 }
 .view { display: none; }
 .view.active { display: block; }
+#view-home.active { display: flex; }
 
 /* Desktop home — single image, right side, full viewport height */
 #view-home {
