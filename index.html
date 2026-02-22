@@ -4,12 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ezra Gray</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 body {
   background: #fff;
   font-family: 'Courier New', Courier, monospace;
@@ -20,7 +16,7 @@ body {
 }
 
 /* ══════════════════════════════════
-   SIDEBAR — fixed left
+   SIDEBAR — fixed left on desktop
 ══════════════════════════════════ */
 .sidebar {
   position: fixed;
@@ -36,32 +32,21 @@ body {
 .sidebar::-webkit-scrollbar { display: none; }
 
 /* ══════════════════════════════════
-   HOVER EFFECT
-   Slight size bump + shift to DM Mono
-   (warmer, less mechanical than Courier)
+   HOVER — underline + 1pt larger
+   No font change, clean and simple.
 ══════════════════════════════════ */
 a, .lnk, .c-btn, .back-btn, .text-btn, .text-modal-close {
   font-family: 'Courier New', Courier, monospace;
   font-size: 11px;
-  transition: font-size 0.12s ease, font-family 0.12s ease;
 }
 a:hover, .lnk:hover, .c-btn:hover, .back-btn:hover,
 .text-btn:hover, .text-modal-close:hover {
-  font-size: 12.5px;
-  font-family: 'DM Mono', 'Courier New', monospace;
+  font-size: 12px;
   text-decoration: underline;
   text-underline-offset: 2px;
 }
-
-.sidebar a, .sidebar .lnk {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-  display: inline;
-  line-height: 1.3;
-}
-
-a { color: #000; text-decoration: none; }
+a { color: #000; text-decoration: none; cursor: pointer; }
+.sidebar a, .sidebar .lnk { display: inline; line-height: 1.3; }
 
 .site-name { margin-bottom: 12px; display: block; }
 .nav-links  { margin-bottom: 16px; }
@@ -69,7 +54,7 @@ a { color: #000; text-decoration: none; }
 
 .exh-list { font-size: 11px; }
 .exh-section-label { display: block; margin-bottom: 4px; }
-.yr  { display: block; margin-top: 9px; margin-bottom: 2px; color: #999; }
+.yr { display: block; margin-top: 9px; margin-bottom: 2px; color: #999; }
 .entry { display: block; margin-bottom: 6px; line-height: 1.35; font-size: 11px; }
 .entry .venue { display: block; color: #666; font-size: 11px; line-height: 1.3; }
 .grp-section { display: block; margin-top: 20px; margin-bottom: 4px; }
@@ -81,24 +66,25 @@ a { color: #000; text-decoration: none; }
 .view.active { display: block; }
 
 /* ══════════════════════════════════
-   HOME — hardcoded <img> tags, no JS
-   padding-left: 50vw pushes images to
-   start exactly at screen midpoint.
-   Sidebar (z-index 20) sits on top.
+   HOME — desktop
+   Image sits right of sidebar, large.
+   No padding-left needed; .exh-view
+   handles the margin.
 ══════════════════════════════════ */
 #view-home {
+  margin-left: 215px;
   min-height: 100vh;
-  padding: 36px 24px 100px 0;
+  padding: 26px 24px 100px 24px;
 }
-.home-stream {
-  padding-left: 50vw;
+#view-home .home-stream {
   display: flex;
   flex-direction: column;
   gap: 64px;
 }
-.home-stream img {
+#view-home .home-stream img {
   display: block;
   width: 100%;
+  max-width: 900px;
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
@@ -108,10 +94,8 @@ a { color: #000; text-decoration: none; }
    EXHIBITION DETAIL
 ══════════════════════════════════ */
 .exh-view { margin-left: 215px; padding: 26px 26px 80px 0; }
-
 .back-btn {
-  display: inline-block;
-  color: #000; cursor: pointer;
+  display: inline-block; color: #000; cursor: pointer;
   background: none; border: none; padding: 0; margin-bottom: 14px;
 }
 .exh-title { font-size: 11px; font-weight: normal; line-height: 1.3; }
@@ -166,21 +150,43 @@ a { color: #000; text-decoration: none; }
   background: none; border: none; padding: 0; margin-bottom: 24px;
 }
 
-/* lightbox */
+/* ══════════════════════════════════
+   LIGHTBOX — with prev/next swipe
+══════════════════════════════════ */
 .lightbox {
   display: none; position: fixed; inset: 0;
   background: #000; z-index: 300;
-  align-items: center; justify-content: center; cursor: zoom-out;
+  align-items: center; justify-content: center;
 }
 .lightbox.open { display: flex; }
-.lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none; }
+.lightbox img {
+  max-width: 100%; max-height: 100%;
+  object-fit: contain; display: block;
+  pointer-events: none;
+  user-select: none;
+}
 .lightbox-close {
   position: fixed; top: 14px; right: 18px;
   font-family: 'Courier New', Courier, monospace;
   font-size: 11px; color: #fff; cursor: pointer;
-  background: none; border: none; z-index: 301; opacity: 0.5;
+  background: none; border: none; z-index: 301; opacity: 0.6;
 }
 .lightbox-close:hover { opacity: 1; }
+.lightbox-prev, .lightbox-next {
+  position: fixed; top: 50%; transform: translateY(-50%);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px; color: #fff; cursor: pointer;
+  background: none; border: none; z-index: 301; opacity: 0.6;
+  padding: 20px;
+}
+.lightbox-prev:hover, .lightbox-next:hover { opacity: 1; }
+.lightbox-prev { left: 8px; }
+.lightbox-next { right: 8px; }
+.lightbox-counter {
+  position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 10px; color: #fff; opacity: 0.5; z-index: 301;
+}
 
 /* contact */
 .contact-info { font-size: 11px; line-height: 1.7; color: #666; }
@@ -196,6 +202,7 @@ a { color: #000; text-decoration: none; }
   .exh-panel { display: none !important; }
   .entry.solo { cursor: pointer; }
   .entry.solo:hover em { text-decoration: underline; text-underline-offset: 2px; }
+  #mobile-home { display: none !important; }
 }
 
 /* ══════════════════════════════════
@@ -204,8 +211,8 @@ a { color: #000; text-decoration: none; }
 @media (max-width: 680px) {
   .sidebar {
     position: relative; width: 100%; height: auto;
-    padding: 14px 14px 8px 14px;
-    overflow: visible; border-bottom: 1px solid #eee;
+    padding: 14px 14px 0 14px;
+    overflow: visible;
   }
   .view { display: none !important; }
   .exh-panel { display: block !important; }
@@ -216,15 +223,18 @@ a { color: #000; text-decoration: none; }
   .exh-panel .audio-block { margin: 0 0 12px; }
   .exh-panel .text-btn { margin-bottom: 10px; }
 
-  /* Mobile home: right-justified, ~54vw wide,
-     left edge just past screen midpoint */
+  /* Mobile homescreen image:
+     centered, between nav links and Solo exhibitions label.
+     Full width of sidebar padding area. */
   #mobile-home {
-    padding: 20px 0 40px 0;
-    display: flex; flex-direction: column;
-    align-items: flex-end; gap: 52px;
+    display: block;
+    padding: 16px 0 16px 0;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 4px;
   }
   #mobile-home img {
-    display: block; width: 54vw;
+    display: block;
+    width: 100%;
     pointer-events: none; user-select: none;
   }
   #mobile-home.hidden { display: none !important; }
@@ -233,20 +243,24 @@ a { color: #000; text-decoration: none; }
   #mobile-contact.hidden { display: none; }
   .text-modal-overlay { padding: 18px 14px 60px; }
   .site-name { margin-bottom: 8px; }
-  .nav-links  { margin-bottom: 10px; }
+  .nav-links  { margin-bottom: 0; }
   .yr { margin-top: 6px; }
   .entry { margin-bottom: 4px; }
 }
-
 </style>
 </head>
 <body>
 
-<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+<!-- LIGHTBOX with swipeable images -->
+<div class="lightbox" id="lightbox">
   <button class="lightbox-close" onclick="closeLightbox()">✕ close</button>
+  <button class="lightbox-prev" onclick="lightboxMove(-1)">← prev</button>
   <img id="lightbox-img" src="" alt="">
+  <button class="lightbox-next" onclick="lightboxMove(1)">next →</button>
+  <div class="lightbox-counter" id="lightbox-counter"></div>
 </div>
 
+<!-- TEXT MODAL -->
 <div class="text-modal-overlay" id="text-modal">
   <button class="text-modal-close" onclick="closeTextModal()">✕ close</button>
   <div class="text-modal-inner" id="text-modal-content"></div>
@@ -263,15 +277,13 @@ a { color: #000; text-decoration: none; }
     <a onclick="showContact()">Contact</a>
   </div>
 
+  <!-- Mobile homescreen image — sits between nav and Solo exhibitions -->
+  <div id="mobile-home">
+    <img src="Homescreen/180703-Emalin-23-_MGL2602.jpg" alt="">
+  </div>
+
   <div class="exh-list">
     <span class="exh-section-label">Solo exhibitions</span>
-
-    <span class="yr">2025</span>
-    <span class="entry solo" id="entry-artissima" onclick="toggleExh('artissima')">
-      <em>Artissima</em>
-      <span class="venue">Artissima, Turin</span>
-    </span>
-    <div class="exh-panel" id="panel-artissima"><div class="exh-panel-inner" id="panel-inner-artissima"></div></div>
 
     <span class="yr">2024</span>
     <span class="entry solo" id="entry-sweetie" onclick="toggleExh('sweetie')">
@@ -317,6 +329,7 @@ a { color: #000; text-decoration: none; }
     <span class="grp-section">Group exhibitions</span>
 
     <span class="yr">2025</span>
+    <span class="entry"><em>Artissima</em><span class="venue">Artissima, Turin</span></span>
     <span class="entry"><a href="https://rinomina.com/exhibition/should-be-allowed-could-be-forbidden-must-be-wanted-can-be-done-can-be-but-does-not-have-to/" target="_blank"><em>Should be allowed, could be forbidden...</em></a><span class="venue">Rinomina, Paris</span></span>
     <span class="entry"><em>The 12th House</em>, <a href="https://www.instagram.com/thewhiteermine/" target="_blank">The White Ermine</a><span class="venue">Düsseldorf</span></span>
     <span class="entry"><a href="https://www.instagram.com/hisssss________/" target="_blank"><em>Hisssss</em></a><span class="venue">Los Angeles</span></span>
@@ -347,10 +360,6 @@ a { color: #000; text-decoration: none; }
     <span class="entry"><em>6 POSITION</em><span class="venue">WWTWO, Montréal</span></span>
   </div>
 
-  <!-- Mobile-only home images and contact -->
-  <div id="mobile-home">
-    <img src="Homescreen/180703-Emalin-23-_MGL2602.jpg" alt="">
-  </div>
   <div id="mobile-contact" class="hidden">
     <div class="contact-info" style="padding:14px 0 6px;">
       Paris, France<br><br>ezragray&#64;gmail&#46;com
@@ -359,37 +368,14 @@ a { color: #000; text-decoration: none; }
 </div>
 
 <!-- ══════════════════════════════════
-     PAGE CONTENT
+     PAGE CONTENT (desktop only)
 ══════════════════════════════════ -->
 
-<!-- HOME — image tag hardcoded, will always load -->
+<!-- HOME -->
 <div id="view-home" class="view active">
   <div class="home-stream">
     <img src="Homescreen/180703-Emalin-23-_MGL2602.jpg" alt="">
   </div>
-</div>
-
-<!-- ARTISSIMA 2025 -->
-<div id="view-artissima" class="view exh-view">
-  <button class="back-btn" onclick="showHome()">← back</button>
-  <div class="exh-title">Artissima</div>
-  <div class="exh-meta">2025 · Artissima, Turin</div>
-  <div class="carousel-wrap" id="car-artissima">
-    <div class="carousel-track" id="track-artissima">
-      <img src="Artissima2025/2007 (small) (1).jpeg" alt="" onclick="openLightbox(this)">
-      <img src="Artissima2025/Untitled-1.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Artissima2025/wall copy.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Artissima2025/wall copy2.jpg" alt="" onclick="openLightbox(this)">
-    </div>
-  </div>
-  <div class="carousel-controls">
-    <span class="carousel-counter" id="cnt-artissima">1 / 4</span>
-    <div class="carousel-btns">
-      <button class="c-btn" onclick="cMove('artissima',-1)">← prev</button>
-      <button class="c-btn" onclick="cMove('artissima',1)">next →</button>
-    </div>
-  </div>
-  <button class="text-btn" onclick="openTextModal('Artissima2025')">Text</button>
 </div>
 
 <!-- SWEETIE -->
@@ -399,28 +385,28 @@ a { color: #000; text-decoration: none; }
   <div class="exh-meta">Solo exhibition · 2024 · Unit 17, Vancouver</div>
   <div class="carousel-wrap" id="car-sweetie">
     <div class="carousel-track" id="track-sweetie">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/1Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/2Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/5Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/6Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/7Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/8Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/10Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/14Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/15Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/16Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/17Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/22Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/23Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/24Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/25Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/26Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/27Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/28Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/29Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/31Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/36Sweetie.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/38Sweetie.jpg" alt="" onclick="openLightbox(this)">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/1Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/2Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/5Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/6Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/7Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/8Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/10Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/14Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/15Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/16Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/17Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/22Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/23Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/24Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/25Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/26Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/27Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/28Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/29Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/31Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/36Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
+      <img src="Sweetie (Relationships Play Out) @ Unit 17, Vancouver/38Sweetie.jpg" alt="" onclick="openLightbox(this,'sweetie')">
     </div>
   </div>
   <div class="carousel-controls">
@@ -440,18 +426,18 @@ a { color: #000; text-decoration: none; }
   <div class="exh-meta">Solo exhibition · August 2020 · Unit 17, Vancouver</div>
   <div class="carousel-wrap" id="car-maximumyearn">
     <div class="carousel-track" id="track-maximumyearn">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-ComeonWilly (1).webp" alt="" onclick="openLightbox(this)">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Guido.webp" alt="" onclick="openLightbox(this)">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync2_j.webp" alt="" onclick="openLightbox(this)">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync3_j.webp" alt="" onclick="openLightbox(this)">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-OldBatch_jp.webp" alt="" onclick="openLightbox(this)">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled2_j.webp" alt="" onclick="openLightbox(this)">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled_jp.webp" alt="" onclick="openLightbox(this)">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn13.webp" alt="" onclick="openLightbox(this)">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn2.webp" alt="" onclick="openLightbox(this)">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn4.webp" alt="" onclick="openLightbox(this)">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn5.webp" alt="" onclick="openLightbox(this)">
-      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn6 (1).webp" alt="" onclick="openLightbox(this)">
+      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-ComeonWilly (1).webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Guido.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync2_j.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-LipsSync3_j.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-OldBatch_jp.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled2_j.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn-Untitled_jp.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn13.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn2.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn4.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn5.webp" alt="" onclick="openLightbox(this,'maximumyearn')">
+      <img src="maxmium yearn/Unit17-EzraGray-MaximumYearn6 (1).webp" alt="" onclick="openLightbox(this,'maximumyearn')">
     </div>
   </div>
   <div class="carousel-controls">
@@ -475,31 +461,31 @@ a { color: #000; text-decoration: none; }
   <div class="exh-meta">Solo exhibition · July 2018 · Emalin, London</div>
   <div class="carousel-wrap" id="car-joechgod">
     <div class="carousel-track" id="track-joechgod">
-      <img src="joech god/180703-Emalin-1-_MGL2562.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-2-_MGL2564.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-3-_MGL2566.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-4-_MGL2569.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-5-_MGL2571.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-6-_MGL2572.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-7-_MGL2576.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-8-_MGL2577.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-9-_MGL2581.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-10-_MGL2582.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-11-_MGL2583.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-12-_MGL2585.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-13-_MGL2587.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-14-_MGL2588.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-15-_MGL2589.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-16-_MGL2590.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-17-_MGL2591.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-18-_MGL2592.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-19-_MGL2593.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-20-_MGL2594.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-21-_MGL2600.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-22-_MGL2601.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-23-_MGL2602.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-24-_MGL2603.jpg" alt="" onclick="openLightbox(this)">
-      <img src="joech god/180703-Emalin-25-_MGL2604.jpg" alt="" onclick="openLightbox(this)">
+      <img src="joech god/180703-Emalin-1-_MGL2562.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-2-_MGL2564.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-3-_MGL2566.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-4-_MGL2569.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-5-_MGL2571.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-6-_MGL2572.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-7-_MGL2576.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-8-_MGL2577.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-9-_MGL2581.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-10-_MGL2582.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-11-_MGL2583.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-12-_MGL2585.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-13-_MGL2587.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-14-_MGL2588.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-15-_MGL2589.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-16-_MGL2590.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-17-_MGL2591.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-18-_MGL2592.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-19-_MGL2593.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-20-_MGL2594.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-21-_MGL2600.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-22-_MGL2601.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-23-_MGL2602.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-24-_MGL2603.jpg" alt="" onclick="openLightbox(this,'joechgod')">
+      <img src="joech god/180703-Emalin-25-_MGL2604.jpg" alt="" onclick="openLightbox(this,'joechgod')">
     </div>
   </div>
   <div class="carousel-controls">
@@ -519,13 +505,13 @@ a { color: #000; text-decoration: none; }
   <div class="exh-meta">Solo exhibition · February 2017 · Almanac Inn, Turin</div>
   <div class="carousel-wrap" id="car-brownspace">
     <div class="carousel-track" id="track-brownspace">
-      <img src="Brown Space/IMG_8200.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Brown Space/IMG_8208.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Brown Space/IMG_8216.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Brown Space/IMG_8223.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Brown Space/IMG_8229 (1).jpg" alt="" onclick="openLightbox(this)">
-      <img src="Brown Space/IMG_8244 (1).jpg" alt="" onclick="openLightbox(this)">
-      <img src="Brown Space/IMG_8254.jpg" alt="" onclick="openLightbox(this)">
+      <img src="Brown Space/IMG_8200.jpg" alt="" onclick="openLightbox(this,'brownspace')">
+      <img src="Brown Space/IMG_8208.jpg" alt="" onclick="openLightbox(this,'brownspace')">
+      <img src="Brown Space/IMG_8216.jpg" alt="" onclick="openLightbox(this,'brownspace')">
+      <img src="Brown Space/IMG_8223.jpg" alt="" onclick="openLightbox(this,'brownspace')">
+      <img src="Brown Space/IMG_8229 (1).jpg" alt="" onclick="openLightbox(this,'brownspace')">
+      <img src="Brown Space/IMG_8244 (1).jpg" alt="" onclick="openLightbox(this,'brownspace')">
+      <img src="Brown Space/IMG_8254.jpg" alt="" onclick="openLightbox(this,'brownspace')">
     </div>
   </div>
   <div class="carousel-controls">
@@ -545,10 +531,10 @@ a { color: #000; text-decoration: none; }
   <div class="exh-meta">Solo exhibition · February 2017 · Jeffrey Stark, New York City</div>
   <div class="carousel-wrap" id="car-infinitive">
     <div class="carousel-track" id="track-infinitive">
-      <img src="Infinitive/Copy of JS.Inst_04.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Infinitive/Copy of JS.Inst_05.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Infinitive/Copy of JS.Inst_06.jpg" alt="" onclick="openLightbox(this)">
-      <img src="Infinitive/JS.Inst_07.jpg" alt="" onclick="openLightbox(this)">
+      <img src="Infinitive/Copy of JS.Inst_04.jpg" alt="" onclick="openLightbox(this,'infinitive')">
+      <img src="Infinitive/Copy of JS.Inst_05.jpg" alt="" onclick="openLightbox(this,'infinitive')">
+      <img src="Infinitive/Copy of JS.Inst_06.jpg" alt="" onclick="openLightbox(this,'infinitive')">
+      <img src="Infinitive/JS.Inst_07.jpg" alt="" onclick="openLightbox(this,'infinitive')">
     </div>
   </div>
   <div class="carousel-controls">
@@ -572,10 +558,10 @@ a { color: #000; text-decoration: none; }
   <div class="exh-meta">September 2016 · Gallery Honolulu, Zurich · with Sean Nicholas Savage</div>
   <div class="carousel-wrap" id="car-honolulu">
     <div class="carousel-track" id="track-honolulu">
-      <img src="honolulu/Installation_1.jpg" alt="" onclick="openLightbox(this)">
-      <img src="honolulu/Installation_2.jpg" alt="" onclick="openLightbox(this)">
-      <img src="honolulu/Installation_3.jpg" alt="" onclick="openLightbox(this)">
-      <img src="honolulu/Installation_4 (1).jpg" alt="" onclick="openLightbox(this)">
+      <img src="honolulu/Installation_1.jpg" alt="" onclick="openLightbox(this,'honolulu')">
+      <img src="honolulu/Installation_2.jpg" alt="" onclick="openLightbox(this,'honolulu')">
+      <img src="honolulu/Installation_3.jpg" alt="" onclick="openLightbox(this,'honolulu')">
+      <img src="honolulu/Installation_4 (1).jpg" alt="" onclick="openLightbox(this,'honolulu')">
     </div>
   </div>
   <div class="carousel-controls">
@@ -596,15 +582,30 @@ a { color: #000; text-decoration: none; }
 </div>
 
 <script>
+/* ══════════════════════════════════════════════
+   IMAGE REGISTRY — maps exhibition key to its
+   track element so the lightbox can navigate.
+══════════════════════════════════════════════ */
+var lbSrcs  = [];   /* all srcs for current lightbox exhibition */
+var lbIndex = 0;    /* current position */
+var _drag   = false;
 var carState = {};
-var _drag = false;
 var builtPanel = {};
-var openPanel = null;
+var openPanel  = null;
+
+/* Collect srcs from a desktop track or mobile track */
+function getSrcs(key) {
+  /* prefer desktop track; fall back to mobile */
+  var track = document.getElementById('track-' + key)
+           || document.getElementById('mob-track-' + key);
+  if (!track) return [];
+  return Array.from(track.children).map(function(img){ return img.src; });
+}
 
 /* ── DESKTOP CAROUSEL INIT ── */
-['artissima','sweetie','maximumyearn','joechgod','brownspace','infinitive','honolulu'].forEach(function(k) {
+['sweetie','maximumyearn','joechgod','brownspace','infinitive','honolulu'].forEach(function(k){
   carState[k] = 0;
-  var wrap = document.getElementById('car-' + k);
+  var wrap  = document.getElementById('car-' + k);
   var track = document.getElementById('track-' + k);
   if (wrap && track) initSwipe(wrap, track, 'cnt-' + k, k);
 });
@@ -618,12 +619,62 @@ function cMove(key, dir) {
   document.getElementById('cnt-' + key).textContent = (carState[key]+1) + ' / ' + n;
 }
 
-/* ── MOBILE ACCORDION ── */
+/* ══════════════════════════════════════════════
+   LIGHTBOX — navigable
+══════════════════════════════════════════════ */
+function openLightbox(imgEl, key) {
+  if (_drag) return;
+  lbSrcs  = getSrcs(key);
+  lbIndex = lbSrcs.indexOf(imgEl.src);
+  if (lbIndex < 0) lbIndex = 0;
+  renderLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderLightbox() {
+  document.getElementById('lightbox-img').src = lbSrcs[lbIndex];
+  var ctr = document.getElementById('lightbox-counter');
+  if (lbSrcs.length > 1) {
+    ctr.textContent = (lbIndex + 1) + ' / ' + lbSrcs.length;
+    ctr.style.display = '';
+  } else {
+    ctr.style.display = 'none';
+  }
+  /* show/hide prev/next */
+  document.querySelector('.lightbox-prev').style.opacity = lbSrcs.length > 1 ? '0.6' : '0';
+  document.querySelector('.lightbox-next').style.opacity = lbSrcs.length > 1 ? '0.6' : '0';
+}
+
+function lightboxMove(dir) {
+  if (!lbSrcs.length) return;
+  lbIndex = (lbIndex + dir + lbSrcs.length) % lbSrcs.length;
+  renderLightbox();
+}
+
+/* Lightbox touch swipe */
+(function(){
+  var lb = document.getElementById('lightbox');
+  var sx = 0;
+  lb.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; }, {passive:true});
+  lb.addEventListener('touchend', function(e){
+    var dx = e.changedTouches[0].clientX - sx;
+    if (Math.abs(dx) > 40) lightboxMove(dx < 0 ? 1 : -1);
+  }, {passive:true});
+  lb.addEventListener('click', function(e){
+    if (e.target === lb || e.target === document.getElementById('lightbox-img')) closeLightbox();
+  });
+})();
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ══════════════════════════════════════════════
+   MOBILE ACCORDION
+══════════════════════════════════════════════ */
 var EXH = {
-  artissima: {
-    srcs: ['Artissima2025/2007 (small) (1).jpeg','Artissima2025/Untitled-1.jpg','Artissima2025/wall copy.jpg','Artissima2025/wall copy2.jpg'],
-    audio: null, hasText: true, folder: 'Artissima2025'
-  },
   sweetie: {
     srcs: [
       'Sweetie (Relationships Play Out) @ Unit 17, Vancouver/1Sweetie.jpg',
@@ -718,72 +769,77 @@ function buildPanel(key) {
   var cfg = EXH[key];
   var inner = document.getElementById('panel-inner-' + key);
   inner.innerHTML = '';
-
-  var wrap = document.createElement('div');
-  wrap.className = 'carousel-wrap'; wrap.id = 'mob-car-' + key;
-  var track = document.createElement('div');
-  track.className = 'carousel-track'; track.id = 'mob-track-' + key;
-  cfg.srcs.forEach(function(src) {
-    var img = document.createElement('img');
-    img.src = src; img.alt = '';
-    img.onclick = function(){ openLightbox(this); };
+  var wrap  = document.createElement('div'); wrap.className='carousel-wrap'; wrap.id='mob-car-'+key;
+  var track = document.createElement('div'); track.className='carousel-track'; track.id='mob-track-'+key;
+  cfg.srcs.forEach(function(src){
+    var img = document.createElement('img'); img.src=src; img.alt='';
+    img.onclick = (function(s,k){ return function(){ openLightboxMob(s,k); }; })(src,key);
     track.appendChild(img);
   });
-  wrap.appendChild(track);
-  inner.appendChild(wrap);
-
+  wrap.appendChild(track); inner.appendChild(wrap);
   var n = cfg.srcs.length;
-  var ctrl = document.createElement('div');
-  ctrl.className = 'carousel-controls';
-  ctrl.innerHTML = '<span class="carousel-counter" id="mob-cnt-'+key+'">1 / '+n+'</span>' +
-    '<div class="carousel-btns">' +
-    '<button class="c-btn" onclick="mobMove(\''+key+'\',-1)">← prev</button>' +
-    '<button class="c-btn" onclick="mobMove(\''+key+'\',1)">next →</button>' +
+  var ctrl = document.createElement('div'); ctrl.className='carousel-controls';
+  ctrl.innerHTML = '<span class="carousel-counter" id="mob-cnt-'+key+'">1 / '+n+'</span>'+
+    '<div class="carousel-btns">'+
+    '<button class="c-btn" onclick="mobMove(\''+key+'\',-1)">← prev</button>'+
+    '<button class="c-btn" onclick="mobMove(\''+key+'\',1)">next →</button>'+
     '</div>';
   inner.appendChild(ctrl);
-
   if (cfg.audio) {
-    var ab = document.createElement('div'); ab.className = 'audio-block';
-    ab.innerHTML = '<div class="audio-label">'+cfg.audio.label+'</div>' +
+    var ab=document.createElement('div'); ab.className='audio-block';
+    ab.innerHTML='<div class="audio-label">'+cfg.audio.label+'</div>'+
       '<audio controls><source src="'+cfg.audio.src+'" type="audio/mpeg"></audio>';
     inner.appendChild(ab);
   }
   if (cfg.hasText) {
-    var tb = document.createElement('button'); tb.className = 'text-btn';
-    tb.textContent = 'Text';
-    tb.onclick = (function(f){ return function(){ openTextModal(f); }; })(cfg.folder);
+    var tb=document.createElement('button'); tb.className='text-btn'; tb.textContent='Text';
+    tb.onclick=(function(f){ return function(){ openTextModal(f); }; })(cfg.folder);
     inner.appendChild(tb);
   }
-  carState['mob-'+key] = 0;
+  carState['mob-'+key]=0;
   initSwipe(wrap, track, 'mob-cnt-'+key, 'mob-'+key);
 }
 
+function openLightboxMob(src, key) {
+  if (_drag) return;
+  lbSrcs  = EXH[key].srcs.map(function(s){
+    /* make absolute so indexOf comparison works */
+    var a=document.createElement('a'); a.href=s; return a.href;
+  });
+  var abs = (function(s){ var a=document.createElement('a'); a.href=s; return a.href; })(src);
+  lbIndex = lbSrcs.indexOf(abs);
+  if (lbIndex<0) lbIndex=0;
+  renderLightbox();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
 function mobMove(key, dir) {
-  var sk = 'mob-' + key;
-  var track = document.getElementById('mob-track-' + key);
+  var sk='mob-'+key;
+  var track=document.getElementById('mob-track-'+key);
   if (!track) return;
-  var n = track.children.length;
-  carState[sk] = ((carState[sk]||0) + dir + n) % n;
-  track.style.transform = 'translateX(-' + (carState[sk]*100) + '%)';
-  document.getElementById('mob-cnt-' + key).textContent = (carState[sk]+1) + ' / ' + n;
+  var n=track.children.length;
+  carState[sk]=((carState[sk]||0)+dir+n)%n;
+  track.style.transform='translateX(-'+(carState[sk]*100)+'%)';
+  document.getElementById('mob-cnt-'+key).textContent=(carState[sk]+1)+' / '+n;
 }
 
 /* ── SWIPE ── */
 function initSwipe(wrap, track, cntId, sk) {
-  var sx=0, sy=0, dn=false;
-  wrap.addEventListener('touchstart', function(e){ sx=e.touches[0].clientX; sy=e.touches[0].clientY; _drag=false; },{passive:true});
-  wrap.addEventListener('touchend', function(e){
-    var dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
-    if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>36){ _drag=true; doSlide(track,cntId,sk,dx<0?1:-1); }
+  var sx=0, dn=false;
+  wrap.addEventListener('touchstart',function(e){ sx=e.touches[0].clientX; _drag=false; },{passive:true});
+  wrap.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)>36){ _drag=true; doSlide(track,cntId,sk,dx<0?1:-1); }
   },{passive:true});
-  wrap.addEventListener('mousedown', function(e){ sx=e.clientX; dn=true; _drag=false; });
-  wrap.addEventListener('mouseup', function(e){
+  wrap.addEventListener('mousedown',function(e){ sx=e.clientX; dn=true; _drag=false; });
+  wrap.addEventListener('mouseup',function(e){
     if(!dn) return; var dx=e.clientX-sx; _drag=Math.abs(dx)>36;
     if(_drag) doSlide(track,cntId,sk,dx<0?1:-1); dn=false;
   });
-  wrap.addEventListener('mouseleave', function(){ dn=false; });
+  wrap.addEventListener('mouseleave',function(){ dn=false; });
 }
-function doSlide(track, cntId, sk, dir) {
+function doSlide(track,cntId,sk,dir){
   var n=track.children.length; if(!n) return;
   carState[sk]=((carState[sk]||0)+dir+n)%n;
   track.style.transform='translateX(-'+(carState[sk]*100)+'%)';
@@ -792,16 +848,14 @@ function doSlide(track, cntId, sk, dir) {
 
 /* ── NAVIGATION ── */
 function isMobile(){ return window.innerWidth<=680; }
-
-function toggleExh(key) {
-  if (!isMobile()) { showExh(key); return; }
-  if (openPanel && openPanel!==key) {
+function toggleExh(key){
+  if(!isMobile()){ showExh(key); return; }
+  if(openPanel&&openPanel!==key){
     document.getElementById('panel-'+openPanel).classList.remove('open'); openPanel=null;
   }
-  var panel = document.getElementById('panel-'+key);
-  if (panel.classList.contains('open')) {
-    panel.classList.remove('open'); openPanel=null;
-  } else {
+  var panel=document.getElementById('panel-'+key);
+  if(panel.classList.contains('open')){ panel.classList.remove('open'); openPanel=null; }
+  else {
     buildPanel(key); panel.classList.add('open'); openPanel=key;
     setTimeout(function(){
       var el=document.getElementById('entry-'+key);
@@ -809,44 +863,34 @@ function toggleExh(key) {
     },50);
   }
 }
-
-function hideAll() {
-  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
-}
-function showHome() {
-  if (isMobile()) {
+function hideAll(){ document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); }); }
+function showHome(){
+  if(isMobile()){
     if(openPanel){ document.getElementById('panel-'+openPanel).classList.remove('open'); openPanel=null; }
     document.getElementById('mobile-home').classList.remove('hidden');
     document.getElementById('mobile-contact').classList.add('hidden');
     return;
   }
-  hideAll();
-  document.getElementById('view-home').classList.add('active');
-  window.scrollTo(0,0);
+  hideAll(); document.getElementById('view-home').classList.add('active'); window.scrollTo(0,0);
 }
-function showExh(key) {
-  hideAll();
-  carState[key]=0;
+function showExh(key){
+  hideAll(); carState[key]=0;
   var track=document.getElementById('track-'+key);
   if(track){ track.style.transform='translateX(0)';
     var cnt=document.getElementById('cnt-'+key);
     if(cnt) cnt.textContent='1 / '+track.children.length; }
-  document.getElementById('view-'+key).classList.add('active');
-  window.scrollTo(0,0);
+  document.getElementById('view-'+key).classList.add('active'); window.scrollTo(0,0);
 }
-function showContact() {
-  if (isMobile()) {
+function showContact(){
+  if(isMobile()){
     document.getElementById('mobile-home').classList.add('hidden');
-    document.getElementById('mobile-contact').classList.remove('hidden');
-    return;
+    document.getElementById('mobile-contact').classList.remove('hidden'); return;
   }
-  hideAll();
-  document.getElementById('view-contact').classList.add('active');
-  window.scrollTo(0,0);
+  hideAll(); document.getElementById('view-contact').classList.add('active'); window.scrollTo(0,0);
 }
 
 /* ── TEXT MODAL ── */
-function openTextModal(folder) {
+function openTextModal(folder){
   var modal=document.getElementById('text-modal');
   var content=document.getElementById('text-modal-content');
   content.textContent='Loading…'; modal.classList.add('open'); document.body.style.overflow='hidden';
@@ -855,22 +899,17 @@ function openTextModal(folder) {
     .then(function(t){ content.textContent=t; })
     .catch(function(){ content.textContent='(Text not yet available.)'; });
 }
-function closeTextModal() {
+function closeTextModal(){
   document.getElementById('text-modal').classList.remove('open'); document.body.style.overflow='';
 }
 
-/* ── LIGHTBOX ── */
-function openLightbox(img) {
-  if(_drag) return;
-  document.getElementById('lightbox-img').src=img.src;
-  document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow='';
-}
-document.addEventListener('keydown', function(e){
+/* ── KEYBOARD ── */
+document.addEventListener('keydown',function(e){
   if(e.key==='Escape'){ closeLightbox(); closeTextModal(); }
+  if(document.getElementById('lightbox').classList.contains('open')){
+    if(e.key==='ArrowRight') lightboxMove(1);
+    if(e.key==='ArrowLeft')  lightboxMove(-1);
+  }
 });
 </script>
 </body>
