@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ezra Gray — TXT</title>
+<link rel="stylesheet" href="assets/style.css" />
+<style>
+  #text-page {
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 12vh 24px 18vh;
+    font-size: 15px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+  #back {
+    display: inline-block;
+    margin-bottom: 6vh;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  #back:hover {
+    color: var(--ink);
+  }
+</style>
+</head>
+<body>
+
+  <div id="text-page">
+    <a id="back" href="index.html">&larr; BACK</a>
+    <div id="text-body">Loading…</div>
+  </div>
+
+  <div id="corner">
+    <span id="corner-name">Ezra Gray</span>
+  </div>
+
+  <script>
+    fetch("text/statement.txt", { cache: "no-store" })
+      .then((res) => {
+        if (!res.ok) throw new Error("text file missing");
+        return res.text();
+      })
+      .then((text) => {
+        document.getElementById("text-body").textContent = text;
+      })
+      .catch(() => {
+        document.getElementById("text-body").textContent =
+          "Could not load text/statement.txt.";
+      });
+  </script>
+
+</body>
+</html>

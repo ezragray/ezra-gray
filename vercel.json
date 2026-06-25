@@ -1,0 +1,4 @@
+{
+  "buildCommand": "node generate-manifest.js",
+  "outputDirectory": "."
+}
