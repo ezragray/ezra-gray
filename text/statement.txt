@@ -1,4 +1,1 @@
-Artist text goes here.
-
-Replace this with your statement, bio, or whatever you want the TXT link to lead to.
-You can use blank lines to separate paragraphs — they'll be preserved.
+...
