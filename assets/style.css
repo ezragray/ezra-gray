@@ -72,16 +72,18 @@ html, body {
   text-transform: none;
   color: var(--ink);
   white-space: nowrap;
+  text-decoration: none;
+}
+
+#corner-name:hover {
+  color: var(--muted);
 }
 
 #corner-txt {
-  font-size: 11px;
+  font-size: 16px;
   letter-spacing: 0.12em;
   color: var(--muted);
   text-decoration: none;
-  border-top: 1px solid #ddd;
-  padding-top: 5px;
-  width: 100%;
 }
 
 #corner-txt:hover {
