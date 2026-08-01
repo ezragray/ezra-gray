@@ -21,23 +21,5 @@
   </div>
 
   <script src="assets/script.js"></script>
-  <script>
-    const feed = document.getElementById("feed");
-
-    // Trackpad / mouse wheel → horizontal scroll
-    feed.addEventListener("wheel", e => {
-      if (e.deltaY !== 0) { e.preventDefault(); feed.scrollLeft -= e.deltaY; }
-    }, { passive: false });
-
-    // Click-drag
-    let down = false, startX, startScroll;
-    feed.addEventListener("mousedown", e => { down = true; startX = e.pageX; startScroll = feed.scrollLeft; });
-    window.addEventListener("mouseup", () => down = false);
-    window.addEventListener("mousemove", e => {
-      if (!down) return;
-      e.preventDefault();
-      feed.scrollLeft = startScroll - (e.pageX - startX);
-    });
-  </script>
 </body>
 </html>
