@@ -2,6 +2,7 @@
   --bg: #ffffff;
   --ink: #111111;
   --muted: #8a8a8a;
+  --gap: 4vw;
 }
 
 * {
@@ -18,38 +19,35 @@ html, body {
 }
 
 #feed {
-  position: relative;
-  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   height: 100vh;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* Each image sits absolutely on top of the feed like a photo on a wall */
+#feed::-webkit-scrollbar { display: none; }
+#feed { scrollbar-width: none; }
+
 .frame {
-  position: absolute;
-  inset: 0;
-  display: none;
+  flex: 0 0 auto;
+  height: 100vh;
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 0 6vw;
-  will-change: transform, opacity;
-}
-
-.frame.active {
-  display: flex;
 }
 
 .frame img {
-  max-width: 100%;
+  max-width: 92vw;
   max-height: 92vh;
   width: auto;
   height: auto;
   display: block;
-  /* Resting shadow — the "pinned to wall" feel */
-  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.09);
 }
 
-/* ── Empty state ──────────────────────────────────────────────── */
 #empty-state {
   text-align: center;
   padding-top: 30vh;
@@ -64,7 +62,6 @@ html, body {
   border-radius: 3px;
 }
 
-/* ── Corner tag ───────────────────────────────────────────────── */
 #corner {
   position: fixed;
   left: 24px;
