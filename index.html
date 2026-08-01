@@ -26,7 +26,7 @@
 
     // Trackpad / mouse wheel → horizontal scroll
     feed.addEventListener("wheel", e => {
-      if (e.deltaY !== 0) { e.preventDefault(); feed.scrollLeft += e.deltaY; }
+      if (e.deltaY !== 0) { e.preventDefault(); feed.scrollLeft -= e.deltaY; }
     }, { passive: false });
 
     // Click-drag
