@@ -15,25 +15,40 @@ html, body {
   background: var(--bg);
   color: var(--ink);
   font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  overflow: hidden;
 }
 
 #feed {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  padding: 8vh 0 18vh;
+  height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
 }
 
+#feed:active {
+  cursor: grabbing;
+}
+
+#feed::-webkit-scrollbar { display: none; }
+#feed { scrollbar-width: none; }
+
 .frame {
-  width: 100%;
+  flex: 0 0 auto;
+  height: 100vh;
+  scroll-snap-align: start;
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-bottom: var(--gap);
   padding: 0 6vw;
 }
 
 .frame img {
-  max-width: 100%;
+  max-width: 92vw;
   max-height: 92vh;
   width: auto;
   height: auto;
@@ -54,7 +69,6 @@ html, body {
   border-radius: 3px;
 }
 
-/* Corner branding: level, fixed near the bottom-left, never rotated */
 #corner {
   position: fixed;
   left: 24px;
@@ -69,15 +83,12 @@ html, body {
 #corner-name {
   font-size: 13px;
   letter-spacing: 0.06em;
-  text-transform: none;
   color: var(--ink);
   white-space: nowrap;
   text-decoration: none;
 }
 
-#corner-name:hover {
-  color: var(--muted);
-}
+#corner-name:hover { color: var(--muted); }
 
 #corner-txt {
   font-size: 16px;
@@ -86,16 +97,9 @@ html, body {
   text-decoration: none;
 }
 
-#corner-txt:hover {
-  color: var(--ink);
-}
+#corner-txt:hover { color: var(--ink); }
 
 @media (max-width: 600px) {
-  :root {
-    --gap: 8vw;
-  }
-  #corner {
-    left: 16px;
-    bottom: 16px;
-  }
+  :root { --gap: 8vw; }
+  #corner { left: 16px; bottom: 16px; }
 }
