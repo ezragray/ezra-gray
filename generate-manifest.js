@@ -1,49 +1,37 @@
-// generate-manifest.js
-// Scans ./Image and writes manifest.json — a numerically ordered list of filenames.
-// Run automatically by your host's build step (see netlify.toml / vercel.json / .github/workflows).
-// You never need to run this by hand or edit it: just add or swap files in Image/.
-
-const fs = require("fs");
+const fs   = require("fs");
 const path = require("path");
 
-const IMAGE_DIR = path.join(__dirname, "Image");
-const OUT_FILE = path.join(__dirname, "manifest.json");
-const VALID_EXT = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif"]);
+const IMAGE_DIR = "Image";
+const MANIFEST  = "manifest.json";
 
-function leadingNumber(filename) {
-  const match = filename.match(/^(\d+)/);
-  return match ? parseInt(match[1], 10) : null;
+// Load existing manifest so we can preserve any descriptions already written
+let existing = [];
+try {
+  existing = JSON.parse(fs.readFileSync(MANIFEST, "utf8"));
+} catch {}
+
+// Build a lookup: filename → description
+const saved = {};
+for (const item of existing) {
+  if (item && item.filename) saved[item.filename] = item.description || "";
 }
 
-function naturalCompare(a, b) {
-  const numA = leadingNumber(a);
-  const numB = leadingNumber(b);
+// Scan the Image folder, sort numerically by leading number
+const exts = new Set([".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"]);
+const files = fs.readdirSync(IMAGE_DIR)
+  .filter(f => exts.has(path.extname(f).toLowerCase()))
+  .sort((a, b) => {
+    const na = parseFloat(a);
+    const nb = parseFloat(b);
+    if (!isNaN(na) && !isNaN(nb)) return na - nb;
+    return a.localeCompare(b);
+  });
 
-  if (numA !== null && numB !== null && numA !== numB) {
-    return numA - numB;
-  }
-  if (numA !== null && numB === null) return -1;
-  if (numA === null && numB !== null) return 1;
+// Build new manifest, carrying over any description that was already there
+const manifest = files.map(filename => ({
+  filename,
+  description: saved[filename] || ""
+}));
 
-  return a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" });
-}
-
-function main() {
-  let files = [];
-
-  if (fs.existsSync(IMAGE_DIR)) {
-    files = fs
-      .readdirSync(IMAGE_DIR)
-      .filter((f) => !f.startsWith("."))
-      .filter((f) => VALID_EXT.has(path.extname(f).toLowerCase()));
-  } else {
-    console.warn(`No Image/ folder found at ${IMAGE_DIR} — manifest will be empty.`);
-  }
-
-  files.sort(naturalCompare);
-
-  fs.writeFileSync(OUT_FILE, JSON.stringify(files, null, 2));
-  console.log(`manifest.json written with ${files.length} file(s).`);
-}
-
-main();
+fs.writeFileSync(MANIFEST, JSON.stringify(manifest, null, 2));
+console.log(`manifest.json written — ${manifest.length} images`);
