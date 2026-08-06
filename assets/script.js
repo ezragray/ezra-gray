@@ -17,7 +17,6 @@ async function buildFeed() {
   }
 
   for (const item of items) {
-    // Support both {filename, description} (gallery manager) and plain strings (old format)
     const filename    = item.filename || item;
     const description = item.description || "";
 
