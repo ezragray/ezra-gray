@@ -2,30 +2,41 @@ async function buildFeed() {
   const feed       = document.getElementById("feed");
   const emptyState = document.getElementById("empty-state");
 
-  let files = [];
+  let items = [];
   try {
     const res = await fetch("manifest.json", { cache: "no-store" });
     if (!res.ok) throw new Error("manifest missing");
-    files = await res.json();
+    items = await res.json();
   } catch (err) {
     console.error("Could not load manifest.json", err);
   }
 
-  if (!files || files.length === 0) {
+  if (!items || items.length === 0) {
     emptyState.hidden = false;
     return;
   }
 
-  for (const file of files) {
+  for (const item of items) {
+    // Support both {filename, description} (gallery manager) and plain strings (old format)
+    const filename    = item.filename || item;
+    const description = item.description || "";
+
     const frame = document.createElement("div");
     frame.className = "frame";
 
     const img = document.createElement("img");
-    img.src     = `Image/${file}`;
+    img.src     = `Image/${filename}`;
     img.loading = "lazy";
-    img.alt     = "";
-
+    img.alt     = description;
     frame.appendChild(img);
+
+    if (description) {
+      const cap = document.createElement("p");
+      cap.className   = "caption";
+      cap.textContent = description;
+      frame.appendChild(cap);
+    }
+
     feed.appendChild(frame);
   }
 
