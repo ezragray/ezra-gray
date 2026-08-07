@@ -23,19 +23,24 @@ async function buildFeed() {
     const frame = document.createElement("div");
     frame.className = "frame";
 
+    // Wrapper so caption width tracks image width
+    const wrap = document.createElement("div");
+    wrap.className = "img-wrap";
+
     const img = document.createElement("img");
     img.src     = `Image/${filename}`;
     img.loading = "lazy";
     img.alt     = description;
-    frame.appendChild(img);
+    wrap.appendChild(img);
 
     if (description) {
       const cap = document.createElement("p");
       cap.className   = "caption";
       cap.textContent = description;
-      frame.appendChild(cap);
+      wrap.appendChild(cap);
     }
 
+    frame.appendChild(wrap);
     feed.appendChild(frame);
   }
 
