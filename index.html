@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#000000" />
 <title>Ezra Gray</title>
 <link rel="stylesheet" href="assets/style.css" />
 </head>
@@ -18,6 +19,16 @@
   <div id="corner">
     <a id="corner-name" href="index.html">Ezra Gray</a>
     <a id="corner-txt" href="text.html">info</a>
+  </div>
+
+  <div id="lightbox" hidden aria-modal="true" role="dialog" aria-label="Image viewer">
+    <button id="lightbox-close" type="button" aria-label="Close">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <path d="M4 4 L20 20 M20 4 L4 20" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none" />
+      </svg>
+    </button>
+    <img id="lightbox-img" alt="" draggable="false" />
+    <p id="lightbox-caption"></p>
   </div>
 
   <script src="assets/script.js"></script>
